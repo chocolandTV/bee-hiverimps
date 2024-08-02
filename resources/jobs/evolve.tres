@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Job" load_steps=2 format=3 uid="uid://d2pqa1by2kfyu"]
+
+[ext_resource type="Script" path="res://resources/jobs/job_class.gd" id="1_msymx"]
+
+[resource]
+script = ExtResource("1_msymx")
+job_name = "Evolve"
+job_level = 1
+job_current_users = 0
+base_job_resource_yield = 1.0
+base_job_reource_capacity = 10
