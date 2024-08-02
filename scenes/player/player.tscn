@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://boocm068ecwmh"]
+
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_j2eym"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6vas8"]
+
+[node name="Player" type="Node3D"]
+script = ExtResource("1_j2eym")
+
+[node name="Bee" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_6vas8")
