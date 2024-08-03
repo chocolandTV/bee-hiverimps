@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://0v7dk14wvykm"]
+
+[ext_resource type="Script" path="res://components/job_resources/nectar_component.gd" id="1_1hll8"]
+[ext_resource type="Script" path="res://components/job_resources/resoruce_job_area_3d.gd" id="2_0q0cy"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xk4cy"]
+
+[node name="nectar_component" type="Node"]
+script = ExtResource("1_1hll8")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("2_0q0cy")
+job = 6
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_xk4cy")

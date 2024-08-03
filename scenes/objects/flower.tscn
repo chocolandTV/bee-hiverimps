@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxr5mtmbapypy"]
+
+[ext_resource type="PackedScene" uid="uid://0v7dk14wvykm" path="res://components/job_resources/nectar_component.tscn" id="1_f5uhg"]
+[ext_resource type="Script" path="res://components/job_resources/nectar_component.gd" id="2_8anl5"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_gpwr4"]
+size = Vector3(1, 5, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_knf4c"]
+
+[node name="Flower" type="Node3D"]
+
+[node name="nectar_component" parent="." instance=ExtResource("1_f5uhg")]
+script = ExtResource("2_8anl5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.49352, 0)
+mesh = SubResource("PrismMesh_gpwr4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 0.772844, -0.634596, 0, 0.634596, 0.772844, 0, 2.42925, 0)
+mesh = SubResource("PlaneMesh_knf4c")

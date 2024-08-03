@@ -1,6 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://bjqd41cbb1lb0"]
+[gd_scene load_steps=3 format=3 uid="uid://bjqd41cbb1lb0"]
 
 [ext_resource type="Script" path="res://components/jobs/job_component.gd" id="1_5rryx"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_a7te1"]
+
 [node name="job_component" type="Node"]
 script = ExtResource("1_5rryx")
+current_job = 6
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_a7te1")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]

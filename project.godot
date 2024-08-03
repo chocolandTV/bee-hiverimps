@@ -14,6 +14,24 @@ config/name="Bee-Hiverimps"
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Globals="*res://global/globals.tscn"
+JobGlobalManager="*res://components/jobs/job_global_manager.tscn"
+Ui="*res://scenes/menu/ui.tscn"
+
+[layer_names]
+
+3d_physics/layer_1="Terrain"
+3d_physics/layer_2="Player"
+3d_physics/layer_3="Worker"
+3d_physics/layer_4="Enemy"
+3d_physics/layer_5="water"
+3d_physics/layer_6="nectar"
+3d_physics/layer_7="construction"
+3d_physics/layer_8="guard"
+3d_physics/layer_9="evolve"
+
 [rendering]
 
 renderer/rendering_method="mobile"

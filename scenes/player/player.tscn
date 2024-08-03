@@ -8,8 +8,8 @@
 [node name="Player" type="Node3D"]
 script = ExtResource("1_j2eym")
 
+[node name="job_component" parent="." instance=ExtResource("2_k0l6u")]
+
 [node name="Bee" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_6vas8")
-
-[node name="job_component" parent="." instance=ExtResource("2_k0l6u")]

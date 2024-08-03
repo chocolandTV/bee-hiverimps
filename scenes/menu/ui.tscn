@@ -1,0 +1,115 @@
+[gd_scene load_steps=2 format=3 uid="uid://c01xrshddxx6h"]
+
+[ext_resource type="Script" path="res://scenes/menu/ui.gd" id="1_q36sn"]
+
+[node name="UI" type="Control" node_paths=PackedStringArray("job_water_value", "job_nectar_value", "job_construction_value", "job_guard_value", "job_evolve_value")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q36sn")
+job_water_value = NodePath("HBoxContainer/Panel/Water_Title/water_value")
+job_nectar_value = NodePath("HBoxContainer/nectar_panel/nectar_title/nectar_value")
+job_construction_value = NodePath("HBoxContainer/Panel3/cumbs_title/cumbs_value")
+job_guard_value = NodePath("HBoxContainer/Panel4/guards_title/guards_value")
+job_evolve_value = NodePath("HBoxContainer/Panel5/evolve_title/evolve_value")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 1150.0
+offset_bottom = 50.0
+
+[node name="Panel" type="Panel" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Water_Title" type="Label" parent="HBoxContainer/Panel"]
+layout_mode = 0
+offset_right = 127.0
+offset_bottom = 61.0
+text = "Water"
+
+[node name="water_value" type="Label" parent="HBoxContainer/Panel/Water_Title"]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 1.0
+offset_right = 152.0
+offset_bottom = 24.0
+text = "water_value"
+
+[node name="nectar_panel" type="Panel" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="nectar_title" type="Label" parent="HBoxContainer/nectar_panel"]
+layout_mode = 0
+offset_left = 182.0
+offset_top = 3.0
+offset_right = 309.0
+offset_bottom = 64.0
+text = "Nectar"
+
+[node name="nectar_value" type="Label" parent="HBoxContainer/nectar_panel/nectar_title"]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 1.0
+offset_right = 152.0
+offset_bottom = 24.0
+text = "nectar_value"
+
+[node name="Panel3" type="Panel" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="cumbs_title" type="Label" parent="HBoxContainer/Panel3"]
+layout_mode = 0
+offset_left = 359.0
+offset_top = 5.0
+offset_right = 486.0
+offset_bottom = 66.0
+text = "cumbs"
+
+[node name="cumbs_value" type="Label" parent="HBoxContainer/Panel3/cumbs_title"]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 1.0
+offset_right = 152.0
+offset_bottom = 24.0
+text = "cumbs_value"
+
+[node name="Panel4" type="Panel" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="guards_title" type="Label" parent="HBoxContainer/Panel4"]
+layout_mode = 0
+offset_left = 554.0
+offset_top = 8.0
+offset_right = 681.0
+offset_bottom = 69.0
+text = "Guards"
+
+[node name="guards_value" type="Label" parent="HBoxContainer/Panel4/guards_title"]
+layout_mode = 0
+offset_left = 68.0
+offset_top = -1.0
+offset_right = 162.0
+offset_bottom = 22.0
+text = "guard_value"
+
+[node name="Panel5" type="Panel" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="evolve_title" type="Label" parent="HBoxContainer/Panel5"]
+layout_mode = 0
+offset_left = 756.0
+offset_top = 9.0
+offset_right = 883.0
+offset_bottom = 70.0
+text = "evolve"
+
+[node name="evolve_value" type="Label" parent="HBoxContainer/Panel5/evolve_title"]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 1.0
+offset_right = 152.0
+offset_bottom = 24.0
+text = "evolve_value"
