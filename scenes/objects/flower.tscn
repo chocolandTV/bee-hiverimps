@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxr5mtmbapypy"]
+[gd_scene load_steps=4 format=3 uid="uid://cxr5mtmbapypy"]
 
 [ext_resource type="PackedScene" uid="uid://0v7dk14wvykm" path="res://components/job_resources/nectar_component.tscn" id="1_f5uhg"]
-[ext_resource type="Script" path="res://components/job_resources/nectar_component.gd" id="2_8anl5"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_gpwr4"]
 size = Vector3(1, 5, 1)
@@ -11,7 +10,6 @@ size = Vector3(1, 5, 1)
 [node name="Flower" type="Node3D"]
 
 [node name="nectar_component" parent="." instance=ExtResource("1_f5uhg")]
-script = ExtResource("2_8anl5")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.49352, 0)

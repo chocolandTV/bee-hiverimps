@@ -7,6 +7,7 @@
 
 [node name="nectar_component" type="Node"]
 script = ExtResource("1_1hll8")
+resource_yield_factor = 2.0
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 32

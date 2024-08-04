@@ -14,10 +14,6 @@ var job_current_nectar_currency : float = 0
 var job_current_construction_currency : float = 0
 var job_current_guard_currency : float  = 0
 var job_current_evolve_currency : float = 0
-# handle signals for each job
-
-
-# handle ui on change
 
 func increment_job_currency(_job : Globals.JOBS):
 	match _job:
@@ -39,4 +35,4 @@ func increment_job_currency(_job : Globals.JOBS):
 		_:
 			#default
 			print("error cant find a match id: _jobs = ",_job)
-	print("Add currency")
+
