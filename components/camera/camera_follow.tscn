@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2vmyhxdk1rta"]
+
+[ext_resource type="Environment" uid="uid://bk3t4txqtw2hg" path="res://resources/materials/main_environment.tres" id="1_rhas3"]
+[ext_resource type="Script" path="res://components/camera/camera_follow.gd" id="2_axpj6"]
+
+[node name="Camera3D" type="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.52135)
+environment = ExtResource("1_rhas3")
+current = true
+script = ExtResource("2_axpj6")
