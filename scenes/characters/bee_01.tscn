@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://f7jd86v4qhna"]
+
+[ext_resource type="Texture2D" uid="uid://cshb0ddjx3gb0" path="res://assets/images/bee_prototype.png" id="1_2su2w"]
+[ext_resource type="Script" path="res://scenes/characters/bee_01.gd" id="1_k853x"]
+[ext_resource type="StyleBox" uid="uid://bgo7voqqqdss2" path="res://resources/menu_themes/Drag_box_panel.tres" id="1_xxrsn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tr08v"]
+radius = 30.0666
+
+[node name="Bee" type="CharacterBody2D" groups=["units"]]
+script = ExtResource("1_k853x")
+
+[node name="Selection_box" type="Panel" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(40, 40)
+theme_override_styles/panel = ExtResource("1_xxrsn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_tr08v")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_2su2w")

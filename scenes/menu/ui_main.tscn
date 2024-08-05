@@ -1,3 +1,17 @@
-[gd_scene format=3 uid="uid://bik2cbn0rjw6u"]
+[gd_scene load_steps=3 format=3 uid="uid://bik2cbn0rjw6u"]
 
-[node name="UI" type="CanvasLayer"]
+[ext_resource type="PackedScene" uid="uid://djeb41lehnuv8" path="res://scenes/menu/Menu.tscn" id="2_e7461"]
+[ext_resource type="StyleBox" uid="uid://bgo7voqqqdss2" path="res://resources/menu_themes/Drag_box_panel.tres" id="2_fra2i"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Drag_Box_Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = ExtResource("2_fra2i")
+
+[node name="Control" parent="." instance=ExtResource("2_e7461")]
+visible = false

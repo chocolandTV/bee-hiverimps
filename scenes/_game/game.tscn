@@ -1,3 +1,33 @@
-[gd_scene format=3 uid="uid://10o7abboi48p"]
+[gd_scene load_steps=5 format=3 uid="uid://10o7abboi48p"]
+
+[ext_resource type="PackedScene" uid="uid://bkv4dodye6n45" path="res://components/mechanics/selection_component.tscn" id="1_eyuot"]
+[ext_resource type="PackedScene" uid="uid://bik2cbn0rjw6u" path="res://scenes/menu/ui_main.tscn" id="1_mk7sj"]
+[ext_resource type="PackedScene" uid="uid://f7jd86v4qhna" path="res://scenes/characters/bee_01.tscn" id="3_6sx46"]
+[ext_resource type="PackedScene" uid="uid://c2vmyhxdk1rta" path="res://components/camera/camera_follow.tscn" id="3_n5p8o"]
 
 [node name="world" type="Node2D"]
+
+[node name="Selection_Component" parent="." instance=ExtResource("1_eyuot")]
+
+[node name="Camera" parent="." node_paths=PackedStringArray("selection_component") instance=ExtResource("3_n5p8o")]
+selection_component = NodePath("../Selection_Component")
+
+[node name="UI" parent="." instance=ExtResource("1_mk7sj")]
+
+[node name="Drag_Box_Panel" parent="UI" index="0"]
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="Bee" parent="." instance=ExtResource("3_6sx46")]
+position = Vector2(240, 99)
+
+[node name="Bee2" parent="." instance=ExtResource("3_6sx46")]
+position = Vector2(404, 99)
+
+[node name="Bee3" parent="." instance=ExtResource("3_6sx46")]
+position = Vector2(240, 215)
+
+[node name="Bee4" parent="." instance=ExtResource("3_6sx46")]
+position = Vector2(402, 216)
+
+[editable path="UI"]
