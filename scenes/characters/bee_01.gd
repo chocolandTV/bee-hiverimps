@@ -8,6 +8,7 @@ extends CharacterBody2D
 @onready var target = position
 var follow_cursor  = false
 var unit_speed = 50
+var body_radius = 30
 #### Debug
 
 func _input(event):
@@ -18,6 +19,7 @@ func _input(event):
 		follow_cursor = false
 
 func _ready():
+	body_radius = $CollisionShape2D.shape.radius
 	set_selected(selected)
 
 func _physics_process(_delta):

@@ -22,29 +22,35 @@ func _input(event):
 	if event is InputEventMouse:
 		mouse_pos = event.position
 		mouse_global_position = get_global_mouse_position()
-func _process(_delta):
-	if Input.is_action_just_pressed("left_click"):
-		start = mouse_global_position
-		start_v = mouse_pos
+	if event is InputEventMouseButton:
+		var mouse_button : InputEventMouseButton = event
 
-		isDragging = true
+		if mouse_button.button_index == 1 and mouse_button.pressed:
+			draw_area(false)
+			start = mouse_global_position
+			start_v = mouse_pos
+			isDragging = true
+			emit_signal("area_selected",self)
+
+		if mouse_button.button_index == 1 and !mouse_button.pressed:
+			if start_v.distance_to(mouse_pos) > 20:
+				end = mouse_global_position
+				end_v = mouse_pos
+				isDragging =false
+				draw_area(false)
+				emit_signal("area_selected",self)
+			else:
+				end = start
+				end_v = start
+				isDragging = false
+				draw_area(false)
+
+func _process(_delta):
 	if isDragging:
 		end = mouse_global_position
 		end_v = mouse_pos
 		draw_area()
 
-
-	if Input.is_action_just_released("left_click"):
-		if start_v.distance_to(mouse_pos) > 20:
-			end = mouse_global_position
-			end_v = mouse_pos
-			isDragging =false
-			draw_area(false)
-			emit_signal("area_selected",self)
-		else:
-			end = start
-			isDragging = false
-			draw_area(false)
 
 
 func draw_area(s =true):

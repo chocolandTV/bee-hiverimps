@@ -24,7 +24,9 @@ func on_area_selected(_object):
 func get_units_in_area(area):
 	var area_units = []
 	for unit in units:
-		if (unit.position.x > area[0].x) and (unit.position.x < area[1].x):
+		if (unit.position).distance_to(area[0])< unit.body_radius:
+			area_units.append(unit)
+		elif (unit.position.x > area[0].x) and (unit.position.x < area[1].x):
 			if(unit.position.y > area[0].y) and (unit.position.y < area[1].y):
 				area_units.append(unit)
 	return area_units

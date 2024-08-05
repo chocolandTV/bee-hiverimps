@@ -6,6 +6,7 @@
 [node name="UI" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+mouse_filter = 1
 
 [node name="Drag_Box_Panel" type="Panel" parent="."]
 layout_mode = 0
