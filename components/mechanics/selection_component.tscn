@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkv4dodye6n45"]
+
+[ext_resource type="Script" path="res://components/mechanics/selection_component.gd" id="1_hh3jb"]
+
+[node name="Selection_Component" type="Node"]
+script = ExtResource("1_hh3jb")
