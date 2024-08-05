@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://10o7abboi48p"]
+[gd_scene load_steps=6 format=3 uid="uid://10o7abboi48p"]
 
 [ext_resource type="PackedScene" uid="uid://bkv4dodye6n45" path="res://components/mechanics/selection_component.tscn" id="1_eyuot"]
 [ext_resource type="PackedScene" uid="uid://bik2cbn0rjw6u" path="res://scenes/menu/ui_main.tscn" id="1_mk7sj"]
 [ext_resource type="PackedScene" uid="uid://f7jd86v4qhna" path="res://scenes/characters/bee_01.tscn" id="3_6sx46"]
 [ext_resource type="PackedScene" uid="uid://c2vmyhxdk1rta" path="res://components/camera/camera_follow.tscn" id="3_n5p8o"]
+[ext_resource type="PackedScene" uid="uid://binnqbqikhi8s" path="res://scenes/game_resource/flower_resource_01.tscn" id="5_yqo6f"]
 
 [node name="world" type="Node2D"]
 
@@ -29,5 +30,8 @@ position = Vector2(240, 215)
 
 [node name="Bee4" parent="." instance=ExtResource("3_6sx46")]
 position = Vector2(402, 216)
+
+[node name="Flower_Resource_01" parent="." instance=ExtResource("5_yqo6f")]
+position = Vector2(822, 182)
 
 [editable path="UI"]

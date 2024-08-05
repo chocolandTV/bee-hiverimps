@@ -2,7 +2,7 @@ extends Node
 
 @export var current_job : Globals.JOBS = Globals.JOBS.IDLE
 # need for Movement_component
-@onready var trigger_area : Area3D =$Area3D
+@onready var trigger_area : Area2D =$Area2D
 @onready var timer : Timer = $Timer
 var current_base
 
@@ -30,13 +30,13 @@ func change_trigger_area_mask():
 	trigger_area.set_collision_mask_value(current_job, true)
 
 
-func _on_area_3d_area_entered(_area:Area3D):
+func _on_area_2d_area_entered(_area:Area2D):
 	if current_job == _area.job:
 		print("AREA DETECTED")
 		collecting = true
 		change_current_job_location(_area)
 
-func _on_area_3d_area_exited(_area:Area3D):
+func _on_area_2d_area_exited(_area:Area2D):
 	if current_job == _area.job:
 		collecting = false
 		current_base = null

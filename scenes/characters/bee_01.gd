@@ -1,11 +1,41 @@
 extends CharacterBody2D
 
+# @export var unit_settings : UnitSettings
+
 @export var selected = false
 @onready var box = $Selection_box
+@onready var anim :AnimationPlayer = $AnimationPlayer
+@onready var target = position
+var follow_cursor  = false
+var unit_speed = 50
+#### Debug
+
+func _input(event):
+	if event.is_action_pressed("right_click"):
+		follow_cursor = true
+		
+	if event.is_action_released("right_click"):
+		follow_cursor = false
 
 func _ready():
 	set_selected(selected)
 
+func _physics_process(_delta):
+	follow_target()
+
 func set_selected(value):
+	selected = value
 	box.visible = value
 	#effect ?
+
+func follow_target():
+	if follow_cursor:
+		if selected:
+			target = get_global_mouse_position()
+
+			anim.play("walk")
+	velocity = position.direction_to(target) * unit_speed
+	if position.distance_to(target) > 15:
+		move_and_slide()
+	else: 
+		anim.stop()

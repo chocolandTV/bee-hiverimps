@@ -1,4 +1,4 @@
-extends Area3D
+extends Area2D
 
 @export var job : Globals.JOBS = Globals.JOBS.IDLE
 
