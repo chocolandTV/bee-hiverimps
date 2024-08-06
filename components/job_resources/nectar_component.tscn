@@ -1,20 +1,92 @@
-[gd_scene load_steps=4 format=3 uid="uid://0v7dk14wvykm"]
+[gd_scene load_steps=7 format=3 uid="uid://0v7dk14wvykm"]
 
 [ext_resource type="Script" path="res://components/job_resources/nectar_component.gd" id="1_1hll8"]
-[ext_resource type="Script" path="res://components/job_resources/resource_job_area2d.gd" id="2_0q0cy"]
+[ext_resource type="Texture2D" uid="uid://c0smc533805oj" path="res://assets/images/resource_nectar.png" id="2_a67dv"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_rhiko"]
-radius = 81.0247
+[sub_resource type="Animation" id="Animation_3jm2s"]
+resource_name = "nectar_wiggle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("nectar_component/nectar:offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.266667, 0.633333, 1),
+"transitions": PackedFloat32Array(1, 1.36604, 1, 1.86607),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 1), Vector2(0, -1.55), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("nectar_component/nectar:skew")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.266667, 0.633333, 1),
+"transitions": PackedFloat32Array(1, 1.93187, 2.54912, 0.594604),
+"update": 0,
+"values": [0.0, 0.174533, -0.0890118, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_x8tg1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("nectar_component/nectar:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("nectar_component/nectar:skew")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dq1pa"]
+_data = {
+"RESET": SubResource("Animation_x8tg1"),
+"nectar_wiggle": SubResource("Animation_3jm2s")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_61x5w"]
+radius = 38.1182
 
 [node name="nectar_component" type="Node"]
 script = ExtResource("1_1hll8")
-resource_yield_factor = 2.0
+
+[node name="nectar" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(23, 18)
+scale = Vector2(0.09, 0.09)
+texture = ExtResource("2_a67dv")
+
+[node name="resource_anim" type="AnimationPlayer" parent="."]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_dq1pa")
+}
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_layer = 32
-collision_mask = 0
-script = ExtResource("2_0q0cy")
-job = 6
+collision_layer = 0
+collision_mask = 8
+monitoring = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CircleShape2D_rhiko")
+shape = SubResource("CircleShape2D_61x5w")
