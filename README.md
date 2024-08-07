@@ -13,3 +13,5 @@ and fastclick event and flower object with nectar_collectable
 today i decided to create only 1 unitstypes without any special mechanics between the kind ( bee, wasp and hornets)
 creating final flower object with signal and capacity
 decided to rebuild all structur parts, all objects and all component scripts
+# DAY_05 : 
+Hive and return to hive implemented, fixed bee nectar component area2d
