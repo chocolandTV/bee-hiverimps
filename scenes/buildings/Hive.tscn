@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://bh6utm72le5g7"]
+
+[ext_resource type="Script" path="res://scenes/buildings/hive.gd" id="1_3mn1t"]
+[ext_resource type="PackedScene" uid="uid://ckgmixj1y4evb" path="res://components/mechanics/selection_highlight_box.tscn" id="1_ddaxk"]
+[ext_resource type="Texture2D" uid="uid://cpe5cpi3fx0qj" path="res://assets/images/comb_01.png" id="1_w5888"]
+[ext_resource type="Texture2D" uid="uid://dv8yj3tpxh35" path="res://assets/images/UI/home.png" id="2_fsl0b"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5dnqk"]
+radius = 128.413
+
+[node name="Hive" type="StaticBody2D"]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_3mn1t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4, 27)
+shape = SubResource("CircleShape2D_5dnqk")
+
+[node name="Selection_box" parent="." instance=ExtResource("1_ddaxk")]
+offset_left = -34.0
+offset_top = -8.99999
+offset_right = 46.0
+offset_bottom = 71.0
+scale = Vector2(3.885, 3.885)
+
+[node name="Label" type="Label" parent="Selection_box"]
+layout_mode = 0
+offset_left = 2.41956
+offset_top = -22.8057
+offset_right = 46.4196
+offset_bottom = 0.194336
+theme_override_font_sizes/font_size = 15
+text = "Home"
+
+[node name="TextureRect" type="TextureRect" parent="Selection_box"]
+layout_mode = 0
+offset_left = 50.296
+offset_top = -20.4891
+offset_right = 66.296
+offset_bottom = -4.48906
+texture = ExtResource("2_fsl0b")
+expand_mode = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(5, 36)
+texture = ExtResource("1_w5888")

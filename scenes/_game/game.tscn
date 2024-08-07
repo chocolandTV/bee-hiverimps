@@ -1,12 +1,29 @@
-[gd_scene load_steps=6 format=3 uid="uid://10o7abboi48p"]
+[gd_scene load_steps=9 format=3 uid="uid://10o7abboi48p"]
 
 [ext_resource type="PackedScene" uid="uid://bkv4dodye6n45" path="res://components/mechanics/selection_component.tscn" id="1_eyuot"]
 [ext_resource type="PackedScene" uid="uid://bik2cbn0rjw6u" path="res://scenes/menu/ui_main.tscn" id="1_mk7sj"]
 [ext_resource type="PackedScene" uid="uid://f7jd86v4qhna" path="res://scenes/characters/bee_01.tscn" id="3_6sx46"]
 [ext_resource type="PackedScene" uid="uid://c2vmyhxdk1rta" path="res://components/camera/camera_follow.tscn" id="3_n5p8o"]
 [ext_resource type="PackedScene" uid="uid://binnqbqikhi8s" path="res://scenes/game_resource/flower_resource_01.tscn" id="5_yqo6f"]
+[ext_resource type="PackedScene" uid="uid://bh6utm72le5g7" path="res://scenes/buildings/Hive.tscn" id="6_lrhr5"]
+
+[sub_resource type="Gradient" id="Gradient_qi842"]
+colors = PackedColorArray(0, 0.14902, 0, 1, 0.345168, 0.339695, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_s8b1o"]
+gradient = SubResource("Gradient_qi842")
+width = 1024
 
 [node name="world" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = -2
+offset_left = 1163.0
+offset_top = -12.0
+offset_right = 2187.0
+offset_bottom = 1803.0
+rotation = 1.56032
+texture = SubResource("GradientTexture1D_s8b1o")
 
 [node name="Selection_Component" parent="." instance=ExtResource("1_eyuot")]
 
@@ -31,7 +48,10 @@ position = Vector2(240, 215)
 [node name="Bee4" parent="." instance=ExtResource("3_6sx46")]
 position = Vector2(402, 216)
 
-[node name="Flower_Resource_01" parent="." instance=ExtResource("5_yqo6f")]
+[node name="Flower_Resource_01" parent="." groups=["flowers"] instance=ExtResource("5_yqo6f")]
 position = Vector2(822, 182)
+
+[node name="Hive" parent="." groups=["Hive"] instance=ExtResource("6_lrhr5")]
+position = Vector2(133, 473)
 
 [editable path="UI"]

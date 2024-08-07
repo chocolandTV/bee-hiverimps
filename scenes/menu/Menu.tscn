@@ -1,27 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://djeb41lehnuv8"]
-
-[ext_resource type="Texture2D" uid="uid://bkq51wk4kbcl2" path="res://assets/images/frame_01.png" id="1_ot84y"]
+[gd_scene format=3 uid="uid://djeb41lehnuv8"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
-
-[node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color(0.543924, 0.451793, 1.05888e-06, 1)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -512.0
-offset_top = -512.0
-offset_right = 512.0
-offset_bottom = 512.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("1_ot84y")
-expand_mode = 2
-metadata/_edit_use_anchors_ = true

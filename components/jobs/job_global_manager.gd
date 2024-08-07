@@ -15,21 +15,21 @@ var job_current_construction_currency : float = 0
 var job_current_guard_currency : float  = 0
 var job_current_evolve_currency : float = 0
 
-func increment_job_currency(_job : Globals.JOBS):
+func increment_job_currency(_job : int):
 	match _job:
-		Globals.JOBS.WATER:
+		1:
 			job_current_water_currency += sub_job_handler_water.get_increment(job_current_water_currency)
 			Ui.update_currency_values(0, job_current_water_currency)
-		Globals.JOBS.NEKTAR:
+		2:
 			job_current_nectar_currency += sub_job_handler_nectar.get_increment(job_current_nectar_currency)
 			Ui.update_currency_values(1, job_current_nectar_currency)
-		Globals.JOBS.CONSTRUCTION:
+		3:
 			job_current_construction_currency += sub_job_handler_construction.get_increment(job_current_construction_currency)
 			Ui.update_currency_values(2, job_current_construction_currency)
-		Globals.JOBS.GUARD:
+		4:
 			job_current_guard_currency += sub_job_handler_guard.get_increment(job_current_guard_currency)
 			Ui.update_currency_values(3, job_current_guard_currency)
-		Globals.JOBS.EVOLVE:
+		5:
 			job_current_evolve_currency += sub_job_handler_evolve.get_increment(job_current_evolve_currency)
 			Ui.update_currency_values(4, job_current_evolve_currency)
 		_:

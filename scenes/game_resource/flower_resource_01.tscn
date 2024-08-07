@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://binnqbqikhi8s"]
+[gd_scene load_steps=10 format=3 uid="uid://binnqbqikhi8s"]
 
 [ext_resource type="Texture2D" uid="uid://c50txqs0gt83" path="res://assets/images/flower_01.png" id="1_8orbh"]
 [ext_resource type="Script" path="res://scenes/game_resource/flower_resource_01.gd" id="1_15scy"]
+[ext_resource type="StyleBox" uid="uid://bgo7voqqqdss2" path="res://resources/menu_themes/Drag_box_panel.tres" id="2_krkfy"]
+[ext_resource type="Texture2D" uid="uid://c0smc533805oj" path="res://assets/images/resource_nectar.png" id="3_y0bax"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3ah0a"]
 radius = 41.0
@@ -47,6 +49,8 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_a0iea"]
 resource_name = "give_nectar"
+length = 2.0
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -54,10 +58,10 @@ tracks/0/path = NodePath(".:offset")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.566667, 0.733333, 0.866667, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 0.933033, 1),
+"times": PackedFloat32Array(0, 0.3, 0.566667, 0.733333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(0, -1), Vector2(0, 0), Vector2(1, 0), Vector2(0.5, 0.3), Vector2(0, 0)]
+"values": [Vector2(0, 0), Vector2(0, -1), Vector2(0, 0), Vector2(1, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -66,10 +70,10 @@ tracks/1/path = NodePath(".:skew")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.566667, 0.733333, 0.866667, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1.23114, 1, 1),
+"times": PackedFloat32Array(0, 0.3, 0.566667, 0.733333),
+"transitions": PackedFloat32Array(1, 1, 1, 1.23114),
 "update": 0,
-"values": [0.0, 0.0366519, -0.0523599, 0.0191986, 0.00349066, 0.0]
+"values": [0.0, 0.0366519, -0.0523599, 0.0191986]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -78,10 +82,10 @@ tracks/2/path = NodePath(".:scale")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.566667, 0.733333, 0.866667, 1),
-"transitions": PackedFloat32Array(1, 1.8025, 1, 0.5, 1, 1),
+"times": PackedFloat32Array(0, 0.3, 0.566667, 0.733333),
+"transitions": PackedFloat32Array(1, 1.8025, 1, 2.63902),
 "update": 0,
-"values": [Vector2(0.1, 0.1), Vector2(0.08, 0.08), Vector2(0.095, 0.095), Vector2(0.115, 0.115), Vector2(0.1, 0.1), Vector2(0.1, 0.1)]
+"values": [Vector2(0.1, 0.1), Vector2(0.095, 0.095), Vector2(0.098, 0.098), Vector2(0.1, 0.1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vc7al"]
@@ -94,13 +98,51 @@ _data = {
 radius = 30.1496
 
 [node name="Flower_Resource_01" type="StaticBody2D"]
+collision_layer = 32
+collision_mask = 0
 script = ExtResource("1_15scy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_3ah0a")
 debug_color = Color(0.97275, 0, 0.43886, 0.42)
 
+[node name="Selection_box" type="Panel" parent="."]
+visible = false
+z_index = -2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -51.0
+offset_top = -41.0
+offset_right = 55.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(40, 40)
+theme_override_styles/panel = ExtResource("2_krkfy")
+
+[node name="TextureRect" type="TextureRect" parent="Selection_box"]
+layout_mode = 0
+offset_left = 68.0
+offset_top = -31.0
+offset_right = 100.0
+offset_bottom = 1.0
+texture = ExtResource("3_y0bax")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Selection_box"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = -31.0
+offset_right = 77.0
+offset_bottom = 3.0
+theme_override_font_sizes/font_size = 21
+text = "Nectar"
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_8orbh")
 
@@ -111,6 +153,8 @@ libraries = {
 }
 
 [node name="nectar_area" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="nectar_area"]
 shape = SubResource("CircleShape2D_q8ynf")

@@ -10,106 +10,123 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_q36sn")
-job_water_value = NodePath("HBoxContainer/Panel/Water_Title/water_value")
-job_nectar_value = NodePath("HBoxContainer/nectar_panel/nectar_title/nectar_value")
-job_construction_value = NodePath("HBoxContainer/Panel3/cumbs_title/cumbs_value")
-job_guard_value = NodePath("HBoxContainer/Panel4/guards_title/guards_value")
-job_evolve_value = NodePath("HBoxContainer/Panel5/evolve_title/evolve_value")
+job_water_value = NodePath("PanelContainer/MarginContainer/GridContainer/water_value")
+job_nectar_value = NodePath("PanelContainer/MarginContainer/GridContainer/nectar_value")
+job_construction_value = NodePath("PanelContainer/MarginContainer/GridContainer/organics_value")
+job_guard_value = NodePath("PanelContainer/MarginContainer/GridContainer/honey_value")
+job_evolve_value = NodePath("PanelContainer/MarginContainer/GridContainer/hives_value")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 1150.0
-offset_bottom = 50.0
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -387.0
+offset_right = 387.0
+offset_bottom = 59.0
+grow_horizontal = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="Panel" type="Panel" parent="HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 5
 
-[node name="Water_Title" type="Label" parent="HBoxContainer/Panel"]
-layout_mode = 0
-offset_right = 127.0
-offset_bottom = 61.0
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+columns = 7
+
+[node name="Water_Title" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
 text = "Water"
 
-[node name="water_value" type="Label" parent="HBoxContainer/Panel/Water_Title"]
-layout_mode = 0
-offset_left = 58.0
-offset_top = 1.0
-offset_right = 152.0
-offset_bottom = 24.0
-text = "water_value"
-
-[node name="nectar_panel" type="Panel" parent="HBoxContainer"]
+[node name="nectar_title" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
-
-[node name="nectar_title" type="Label" parent="HBoxContainer/nectar_panel"]
-layout_mode = 0
-offset_left = 182.0
-offset_top = 3.0
-offset_right = 309.0
-offset_bottom = 64.0
 text = "Nectar"
 
-[node name="nectar_value" type="Label" parent="HBoxContainer/nectar_panel/nectar_title"]
-layout_mode = 0
-offset_left = 58.0
-offset_top = 1.0
-offset_right = 152.0
-offset_bottom = 24.0
-text = "nectar_value"
+[node name="organics_title" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+text = "Organics"
 
-[node name="Panel3" type="Panel" parent="HBoxContainer"]
+[node name="honey_title" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+text = "Honey"
+
+[node name="hives_title" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+text = "Hives"
+
+[node name="sector_title" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+text = "Sectors"
+
+[node name="population_title" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+text = "Population"
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/GridContainer"]
 layout_mode = 2
 
-[node name="cumbs_title" type="Label" parent="HBoxContainer/Panel3"]
-layout_mode = 0
-offset_left = 359.0
-offset_top = 5.0
-offset_right = 486.0
-offset_bottom = 66.0
-text = "cumbs"
-
-[node name="cumbs_value" type="Label" parent="HBoxContainer/Panel3/cumbs_title"]
-layout_mode = 0
-offset_left = 58.0
-offset_top = 1.0
-offset_right = 152.0
-offset_bottom = 24.0
-text = "cumbs_value"
-
-[node name="Panel4" type="Panel" parent="HBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="PanelContainer/MarginContainer/GridContainer"]
 layout_mode = 2
 
-[node name="guards_title" type="Label" parent="HBoxContainer/Panel4"]
-layout_mode = 0
-offset_left = 554.0
-offset_top = 8.0
-offset_right = 681.0
-offset_bottom = 69.0
-text = "Guards"
-
-[node name="guards_value" type="Label" parent="HBoxContainer/Panel4/guards_title"]
-layout_mode = 0
-offset_left = 68.0
-offset_top = -1.0
-offset_right = 162.0
-offset_bottom = 22.0
-text = "guard_value"
-
-[node name="Panel5" type="Panel" parent="HBoxContainer"]
+[node name="HSeparator3" type="HSeparator" parent="PanelContainer/MarginContainer/GridContainer"]
 layout_mode = 2
 
-[node name="evolve_title" type="Label" parent="HBoxContainer/Panel5"]
-layout_mode = 0
-offset_left = 756.0
-offset_top = 9.0
-offset_right = 883.0
-offset_bottom = 70.0
-text = "evolve"
+[node name="HSeparator4" type="HSeparator" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
 
-[node name="evolve_value" type="Label" parent="HBoxContainer/Panel5/evolve_title"]
-layout_mode = 0
-offset_left = 58.0
-offset_top = 1.0
-offset_right = 152.0
-offset_bottom = 24.0
-text = "evolve_value"
+[node name="HSeparator5" type="HSeparator" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+
+[node name="HSeparator6" type="HSeparator" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+
+[node name="HSeparator7" type="HSeparator" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+
+[node name="water_value" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+text = "1234"
+
+[node name="nectar_value" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+text = "1234"
+
+[node name="organics_value" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+text = "1234"
+
+[node name="honey_value" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+text = "1234"
+
+[node name="hives_value" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+text = "1234"
+
+[node name="sector_value" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+text = "1234"
+
+[node name="population_value" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+text = "1234"

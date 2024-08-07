@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cshb0ddjx3gb0" path="res://assets/images/bee_prototype.png" id="1_2su2w"]
 [ext_resource type="Script" path="res://scenes/characters/bee_01.gd" id="1_k853x"]
-[ext_resource type="StyleBox" uid="uid://bgo7voqqqdss2" path="res://resources/menu_themes/Drag_box_panel.tres" id="1_xxrsn"]
+[ext_resource type="PackedScene" uid="uid://ckgmixj1y4evb" path="res://components/mechanics/selection_highlight_box.tscn" id="2_kpf0h"]
 [ext_resource type="PackedScene" uid="uid://0v7dk14wvykm" path="res://components/job_resources/nectar_component.tscn" id="5_0qnlv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tr08v"]
@@ -71,23 +71,10 @@ _data = {
 
 [node name="Bee" type="CharacterBody2D" groups=["units"]]
 script = ExtResource("1_k853x")
-selected = null
 
-[node name="Selection_box" type="Panel" parent="."]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -40.0
-offset_right = 40.0
-offset_bottom = 40.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(40, 40)
-theme_override_styles/panel = ExtResource("1_xxrsn")
+[node name="nectar_component" parent="." instance=ExtResource("5_0qnlv")]
+
+[node name="Selection_box" parent="." instance=ExtResource("2_kpf0h")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_tr08v")
@@ -101,10 +88,6 @@ libraries = {
 "": SubResource("AnimationLibrary_j2ehy")
 }
 
-[node name="nectar_component" parent="." instance=ExtResource("5_0qnlv")]
-
 [node name="resource_timer" type="Timer" parent="."]
 
 [connection signal="timeout" from="resource_timer" to="." method="_on_resource_timer_timeout"]
-
-[editable path="nectar_component"]
