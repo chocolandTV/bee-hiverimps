@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://djdnup6u2od52"]
+
+[ext_resource type="PackedScene" uid="uid://dxx52n1q2yx82" path="res://assets/models/sunfLower.glb" id="1_dtwdj"]
+[ext_resource type="Script" path="res://components/mechanics/nectar_area.gd" id="2_260dj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_osmr8"]
+radius = 2.363
+
+[node name="sunfLower" instance=ExtResource("1_dtwdj")]
+
+[node name="Nectar_Area" type="Area3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.0163, 0)
+script = ExtResource("2_260dj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Nectar_Area" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.919187, 0, 0)
+shape = SubResource("SphereShape3D_osmr8")

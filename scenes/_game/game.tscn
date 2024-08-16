@@ -1,57 +1,98 @@
-[gd_scene load_steps=9 format=3 uid="uid://10o7abboi48p"]
+[gd_scene load_steps=4 format=3 uid="uid://10o7abboi48p"]
 
-[ext_resource type="PackedScene" uid="uid://bkv4dodye6n45" path="res://components/mechanics/selection_component.tscn" id="1_eyuot"]
-[ext_resource type="PackedScene" uid="uid://bik2cbn0rjw6u" path="res://scenes/menu/ui_main.tscn" id="1_mk7sj"]
-[ext_resource type="PackedScene" uid="uid://f7jd86v4qhna" path="res://scenes/characters/bee_01.tscn" id="3_6sx46"]
-[ext_resource type="PackedScene" uid="uid://c2vmyhxdk1rta" path="res://components/camera/camera_follow.tscn" id="3_n5p8o"]
-[ext_resource type="PackedScene" uid="uid://binnqbqikhi8s" path="res://scenes/game_resource/flower_resource_01.tscn" id="5_yqo6f"]
-[ext_resource type="PackedScene" uid="uid://bh6utm72le5g7" path="res://scenes/buildings/Hive.tscn" id="6_lrhr5"]
+[ext_resource type="PackedScene" uid="uid://djdnup6u2od52" path="res://scenes/objects/sunf_lower.tscn" id="1_08la1"]
+[ext_resource type="PackedScene" uid="uid://bakjg7lmdboxx" path="res://scenes/characters/Bee_player.tscn" id="2_5dbd4"]
 
-[sub_resource type="Gradient" id="Gradient_qi842"]
-colors = PackedColorArray(0, 0.14902, 0, 1, 0.345168, 0.339695, 0, 1)
+[sub_resource type="GDScript" id="GDScript_ci8mv"]
+script/source = "extends Node
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_s8b1o"]
-gradient = SubResource("Gradient_qi842")
-width = 1024
+# Grid and chunk configuration
+var chunk_size = Vector2(100, 100)
+var grid_size = Vector2(1000, 1000)
 
-[node name="world" type="Node2D"]
+# Distance in chunks to keep loaded around the player
+var load_distance = 2
 
-[node name="TextureRect" type="TextureRect" parent="."]
-z_index = -2
-offset_left = 1163.0
-offset_top = -12.0
-offset_right = 2187.0
-offset_bottom = 1803.0
-rotation = 1.56032
-texture = SubResource("GradientTexture1D_s8b1o")
+# Dictionary to keep track of loaded chunks
+var loaded_chunks = {}
 
-[node name="Selection_Component" parent="." instance=ExtResource("1_eyuot")]
+# Reference to the player node
+@export var player: Node2D
 
-[node name="Camera" parent="." node_paths=PackedStringArray("selection_component") instance=ExtResource("3_n5p8o")]
-selection_component = NodePath("../Selection_Component")
+# Reference to the scene you want to spawn in chunks
+@export var object_scene: PackedScene
 
-[node name="UI" parent="." instance=ExtResource("1_mk7sj")]
+func _ready():
+    if player == null:
+        player = get_node(\"Player\")
 
-[node name="Drag_Box_Panel" parent="UI" index="0"]
-offset_right = 0.0
-offset_bottom = 0.0
+    _update_chunks()
 
-[node name="Bee" parent="." instance=ExtResource("3_6sx46")]
-position = Vector2(240, 99)
+func _process(_delta):
+    _update_chunks()
 
-[node name="Bee2" parent="." instance=ExtResource("3_6sx46")]
-position = Vector2(404, 99)
+# Function to update the chunks based on player position
+func _update_chunks():
+    var player_chunk = _get_chunk(player.position)
 
-[node name="Bee3" parent="." instance=ExtResource("3_6sx46")]
-position = Vector2(240, 215)
+    for x in range(player_chunk.x - load_distance, player_chunk.x + load_distance + 1):
+        for y in range(player_chunk.y - load_distance, player_chunk.y + load_distance + 1):
+            var chunk_pos = Vector2(x, y)
+            if not loaded_chunks.has(chunk_pos):
+                _load_chunk(chunk_pos)
 
-[node name="Bee4" parent="." instance=ExtResource("3_6sx46")]
-position = Vector2(402, 216)
+    # Unload chunks that are no longer within the range
+    for chunk_pos in loaded_chunks.keys():
+        if chunk_pos.distance_to(player_chunk) > load_distance:
+            _unload_chunk(chunk_pos)
 
-[node name="Flower_Resource_01" parent="." groups=["flowers"] instance=ExtResource("5_yqo6f")]
-position = Vector2(822, 182)
+# Function to get the chunk position from the world position
+func _get_chunk(world_pos: Vector2) -> Vector2:
+    return Vector2(int(world_pos.x / chunk_size.x), int(world_pos.y / chunk_size.y))
 
-[node name="Hive" parent="." groups=["Hive"] instance=ExtResource("6_lrhr5")]
-position = Vector2(133, 473)
+# Function to load a chunk
+func _load_chunk(chunk_pos: Vector2):
+    var chunk = Node2D.new()
+    chunk.position = chunk_pos * chunk_size
+    add_child(chunk)
 
-[editable path="UI"]
+    for i in range(chunk_size.x):
+        for j in range(chunk_size.y):
+            var instance = object_scene.instantiate()
+            instance.position = Vector2(i, j) + chunk.position
+            chunk.add_child(instance)
+
+    loaded_chunks[chunk_pos] = chunk
+
+# Function to unload a chunk
+func _unload_chunk(chunk_pos: Vector2):
+    if loaded_chunks.has(chunk_pos):
+        var chunk = loaded_chunks[chunk_pos]
+        chunk.queue_free()
+        loaded_chunks.erase(chunk_pos)"
+
+[node name="Game_World" type="Node3D"]
+
+[node name="Ground" type="Node3D" parent="."]
+
+[node name="Wasp_Fraction" type="Node3D" parent="."]
+
+[node name="Wasp_Hive" type="Node3D" parent="."]
+
+[node name="Hornet_Fraction" type="Node3D" parent="."]
+
+[node name="Hornet_Hive" type="Node3D" parent="."]
+
+[node name="Enviroment" type="Node3D" parent="."]
+
+[node name="Flowers" type="Node3D" parent="."]
+
+[node name="sunfLower" parent="Flowers" instance=ExtResource("1_08la1")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -9.35436)
+
+[node name="Fraction_Manager" type="Node" parent="."]
+
+[node name="Chunk_Manager" type="Node" parent="."]
+script = SubResource("GDScript_ci8mv")
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("2_5dbd4")]

@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://bvppk5kwtdwpf"]
+
+[ext_resource type="PackedScene" uid="uid://bkv4dodye6n45" path="res://components/mechanics/selection_component.tscn" id="1_vu4ex"]
+[ext_resource type="PackedScene" uid="uid://c2vmyhxdk1rta" path="res://components/camera/camera_follow.tscn" id="2_k373s"]
+[ext_resource type="PackedScene" uid="uid://bik2cbn0rjw6u" path="res://scenes/menu/ui_main.tscn" id="3_sa6pa"]
+[ext_resource type="PackedScene" uid="uid://f7jd86v4qhna" path="res://scenes/characters/bee_01.tscn" id="4_e0xsd"]
+[ext_resource type="PackedScene" uid="uid://binnqbqikhi8s" path="res://scenes/game_resource/flower_resource_01.tscn" id="5_ig7f1"]
+[ext_resource type="PackedScene" uid="uid://bh6utm72le5g7" path="res://scenes/buildings/Hive.tscn" id="6_5ed72"]
+
+[sub_resource type="Gradient" id="Gradient_qi842"]
+colors = PackedColorArray(0, 0.14902, 0, 1, 0.345168, 0.339695, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_s8b1o"]
+gradient = SubResource("Gradient_qi842")
+width = 1024
+
+[node name="world" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = -2
+offset_left = 1163.0
+offset_top = -12.0
+offset_right = 2187.0
+offset_bottom = 1803.0
+rotation = 1.56032
+texture = SubResource("GradientTexture1D_s8b1o")
+
+[node name="Selection_Component" parent="." instance=ExtResource("1_vu4ex")]
+
+[node name="Camera" parent="." node_paths=PackedStringArray("selection_component") instance=ExtResource("2_k373s")]
+selection_component = NodePath("../Selection_Component")
+
+[node name="UI" parent="." instance=ExtResource("3_sa6pa")]
+
+[node name="Drag_Box_Panel" parent="UI" index="0"]
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="Bee" parent="." instance=ExtResource("4_e0xsd")]
+position = Vector2(240, 99)
+
+[node name="Bee2" parent="." instance=ExtResource("4_e0xsd")]
+position = Vector2(404, 99)
+
+[node name="Bee3" parent="." instance=ExtResource("4_e0xsd")]
+position = Vector2(240, 215)
+
+[node name="Bee4" parent="." instance=ExtResource("4_e0xsd")]
+position = Vector2(402, 216)
+
+[node name="Flower_Resource_01" parent="." groups=["flowers"] instance=ExtResource("5_ig7f1")]
+position = Vector2(822, 182)
+
+[node name="Hive" parent="." groups=["Hive"] instance=ExtResource("6_5ed72")]
+position = Vector2(133, 473)
+
+[editable path="UI"]

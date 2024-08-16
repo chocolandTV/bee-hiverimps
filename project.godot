@@ -22,6 +22,8 @@ Ui="*res://scenes/menu/ui.tscn"
 
 [display]
 
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 window/stretch/aspect="expand"
 
 [global_group]
@@ -75,13 +77,21 @@ menu={
 [layer_names]
 
 2d_physics/layer_1="Terrain"
+3d_physics/layer_1="Terrain"
 2d_physics/layer_2="Player"
+3d_physics/layer_2="Player"
 2d_physics/layer_3="Enemy"
+3d_physics/layer_3="Enemy"
 2d_physics/layer_4="Hive"
+3d_physics/layer_4="Hive"
 2d_physics/layer_5="water"
+3d_physics/layer_5="water"
 2d_physics/layer_6="nectar"
+3d_physics/layer_6="nectar"
 2d_physics/layer_7="construction"
+3d_physics/layer_7="construction"
 2d_physics/layer_8="guard"
+3d_physics/layer_8="guard"
 
 [rendering]
 

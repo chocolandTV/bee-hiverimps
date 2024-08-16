@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://krtja86ac801"]
+
+[ext_resource type="PackedScene" uid="uid://blryktpc55md8" path="res://assets/models/mainBee.glb" id="1_grsis"]
+
+[node name="mainBee" instance=ExtResource("1_grsis")]

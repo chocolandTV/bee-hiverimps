@@ -23,7 +23,7 @@ anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -387.0
 offset_right = 387.0
-offset_bottom = 59.0
+offset_bottom = 72.0
 grow_horizontal = 2
 metadata/_edit_use_anchors_ = true
 
