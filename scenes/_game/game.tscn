@@ -43,6 +43,7 @@ camera = NodePath("../Camera3D")
 [node name="Camera3D" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_qhusv")]
 transform = Transform3D(-1, 1.77636e-15, -8.74228e-08, -2.26267e-08, 0.965926, 0.258819, 8.44439e-08, 0.258819, -0.965926, -0.06, 263.691, -192.965)
 player = NodePath("../Player")
+target_distance = 8.92
 
 [node name="Makro_AI" parent="." instance=ExtResource("4_xcci7")]
 

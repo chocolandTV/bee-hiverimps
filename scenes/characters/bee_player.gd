@@ -57,7 +57,7 @@ func _input(event):
         mouse_relative = event.relative
 
 func _process(_delta):
-    rotate_y(-mouse_relative.x * (mouse_sensitivity / 1000))
+    bee_mesh.rotate_y(-mouse_relative.x * (mouse_sensitivity / 1000))
 
 func _physics_process(_delta):
     if input_direction.length() !=0 or fly_relative != 0:
@@ -66,5 +66,6 @@ func _physics_process(_delta):
         current_acceleration  = move_toward(current_acceleration, 0, acceleeration_damping *  _delta)
 
     move_direction = Vector3(input_direction.x * STRAFE_DAMPING,fly_relative, input_direction.y)
+    move_direction = move_direction.rotated(Vector3.UP, bee_mesh.rotation.y)
     velocity = velocity.move_toward(move_direction* speed, current_acceleration)
     move_and_slide()

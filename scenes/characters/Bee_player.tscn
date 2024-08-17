@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bakjg7lmdboxx"]
+[gd_scene load_steps=8 format=3 uid="uid://bakjg7lmdboxx"]
 
 [ext_resource type="Script" path="res://scenes/characters/bee_player.gd" id="1_jivfb"]
 [ext_resource type="PackedScene" uid="uid://krtja86ac801" path="res://scenes/characters/Instance_Characters/main_bee.tscn" id="2_sb44p"]
@@ -47,6 +47,9 @@ _data = {
 "flying": SubResource("Animation_c338g")
 }
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_40vqx"]
+radius = 5.469
+
 [node name="Bee_player" type="CharacterBody3D" groups=["Player"]]
 script = ExtResource("1_jivfb")
 
@@ -63,5 +66,10 @@ bones/15/position = Vector3(-0.50341, 2.11793, 1.02283)
 libraries = {
 "": SubResource("AnimationLibrary_i21t4")
 }
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_40vqx")
 
 [editable path="mainBee"]
