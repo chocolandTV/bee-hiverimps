@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Fraction_Settings" load_steps=2 format=3 uid="uid://d4fihh6o6vixf"]
+
+[ext_resource type="Script" path="res://resources/scriptclasses/fractionSettings.gd" id="1_qh76o"]
+
+[resource]
+script = ExtResource("1_qh76o")
+fraction = 2
+fraction_difficult = 1
+unit_limit = 100
+unit_start_water = 1
+unit_start_nectar = 1
+unit_start_organic = 1
+unit_start_honey = 1
+unit_start_population = 1
+unit_damage = 2.0
+unit_speed = 5.0
+unit_base_wingpower = 2.0
+unit_health = 20.0
+unit_health_reg = 1.0
+unit_base_height = 2.0

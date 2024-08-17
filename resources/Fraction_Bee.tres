@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Fraction_Settings" load_steps=2 format=3 uid="uid://ba1tacjeh5s8k"]
+
+[ext_resource type="Script" path="res://resources/scriptclasses/fractionSettings.gd" id="1_plxs4"]
+
+[resource]
+script = ExtResource("1_plxs4")
+fraction = 0
+fraction_difficult = 0
+unit_limit = 200
+unit_start_water = 5
+unit_start_nectar = 5
+unit_start_organic = 5
+unit_start_honey = 5
+unit_start_population = 1
+unit_damage = 1.0
+unit_speed = 1.0
+unit_base_wingpower = 1.0
+unit_health = 10.0
+unit_health_reg = 0.25
+unit_base_height = 1.0

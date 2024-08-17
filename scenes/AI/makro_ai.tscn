@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqnwjn7m2bolx"]
+
+[ext_resource type="Script" path="res://scenes/AI/makro_ai.gd" id="1_vw1ed"]
+
+[node name="Makro_AI" type="Node"]
+script = ExtResource("1_vw1ed")

@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cs3ll1hdkv0kw"]
+
+[ext_resource type="Texture2D" uid="uid://c86f1t6l6e3tv" path="res://assets/images/Particle_System_Comb.png" id="1_l1wbn"]
+
+[resource]
+transparency = 1
+blend_mode = 1
+albedo_color = Color(0.701175, 0.313284, 3.85046e-07, 1)
+albedo_texture = ExtResource("1_l1wbn")
+rim_enabled = true

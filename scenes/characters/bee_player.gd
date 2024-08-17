@@ -6,13 +6,13 @@ extends CharacterBody3D
 
 # For smoother controller/mouse movement
 @export var acceleration := 5.0
-
+@export var fraction : GAME_FRACTION.CLASS
 var player_velocity := Vector3.ZERO
 var is_boosting := false
 
 # Mouse sensitivity for look around
 @export var mouse_sensitivity := Vector2(0.1, 0.1)
-
+var mouse_position : Vector2
 # Camera and orientation
 @export var camera: Camera3D
 var rotation_x := 0.0
@@ -27,6 +27,10 @@ func _process(delta):
     _handle_input(delta)
     _move(delta)
     _rotate(delta)
+
+func _input(event):
+    if event is InputEventMouseMotion:
+        mouse_position = event.position
 
 # Handle both keyboard/mouse and controller input
 func _handle_input(delta):
@@ -61,11 +65,11 @@ func _handle_input(delta):
     if input_direction.length() > 1:
         input_direction = input_direction.normalized()
 
-    # Boost handling (for both controller and keyboard)
-    is_boosting = Input.is_action_pressed("fly_boost")
+    # # Boost handling (for both controller and keyboard)
+    # is_boosting = Input.is_action_pressed("fly_boost")
 
     # Update player_velocity smoothly
-    var target_speed := boost_speed if is_boosting else speed
+    var target_speed := boost_speed #if is_boosting else speed
     var target_velocity := input_direction * target_speed
     player_velocity = player_velocity.lerp(target_velocity, acceleration * delta)
 
@@ -76,7 +80,7 @@ func _move(_delta):
 # Rotate the bee based on mouse or controller input
 func _rotate(delta):
     # Mouse look
-    var mouse_delta := Input.get_last_mouse_delta() * mouse_sensitivity
+    var mouse_delta := mouse_position * mouse_sensitivity
     rotation_x -= mouse_delta.y
     rotation_y -= mouse_delta.x
 
@@ -85,10 +89,10 @@ func _rotate(delta):
 
     # Rotate the bee
     rotation.y = rotation_y
-    camera.rotation.x = deg2rad(rotation_x)
+    camera.rotation.x = deg_to_rad(rotation_x)
 
     # Controller look
-    var controller_look := Vector2(
+    var controller_look : Vector2 = Vector2(
         Input.get_axis("right_stick_left", "right_stick_right"),
         Input.get_axis("right_stick_up", "right_stick_down")
     ) * rotation_speed * delta
@@ -99,4 +103,4 @@ func _rotate(delta):
 
     # Apply the rotations
     rotation.y = rotation_y
-    camera.rotation.x = deg2rad(rotation_x)
+    camera.rotation.x = deg_to_rad(rotation_x)

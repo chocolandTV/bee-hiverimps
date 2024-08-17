@@ -1,9 +1,51 @@
-[gd_scene load_steps=4 format=3 uid="uid://bakjg7lmdboxx"]
+[gd_scene load_steps=7 format=3 uid="uid://bakjg7lmdboxx"]
 
 [ext_resource type="Script" path="res://scenes/characters/bee_player.gd" id="1_jivfb"]
 [ext_resource type="PackedScene" uid="uid://krtja86ac801" path="res://scenes/characters/Instance_Characters/main_bee.tscn" id="2_sb44p"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lcj0i"]
+
+[sub_resource type="Animation" id="Animation_fiu5l"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("mainBee/Armature/Skeleton3D:Wing_Right_Base")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.507713, 2.11793, 0.98719)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("mainBee/Armature/Skeleton3D:Wing_Left_Base")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, -0.50341, 2.11793, 1.02283)
+
+[sub_resource type="Animation" id="Animation_c338g"]
+resource_name = "flying"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("mainBee/Armature/Skeleton3D:Wing_Right_Base")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.507713, 2.11793, 0.98719, 0.0333333, 1, 0, 0, 0)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("mainBee/Armature/Skeleton3D:Wing_Left_Base")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, -0.50341, 2.11793, 1.02283, 0.0333333, 1, 0, 0, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i21t4"]
+_data = {
+"RESET": SubResource("Animation_fiu5l"),
+"flying": SubResource("Animation_c338g")
+}
 
 [node name="Bee_player" type="CharacterBody3D"]
 script = ExtResource("1_jivfb")
@@ -12,3 +54,15 @@ script = ExtResource("1_jivfb")
 shape = SubResource("CapsuleShape3D_lcj0i")
 
 [node name="mainBee" parent="." instance=ExtResource("2_sb44p")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Skeleton3D" parent="mainBee/Armature" index="0"]
+bones/11/position = Vector3(0.507713, 2.11793, 0.98719)
+bones/15/position = Vector3(-0.50341, 2.11793, 1.02283)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_i21t4")
+}
+
+[editable path="mainBee"]

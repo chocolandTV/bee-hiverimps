@@ -1,75 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://10o7abboi48p"]
+[gd_scene load_steps=7 format=3 uid="uid://10o7abboi48p"]
 
 [ext_resource type="PackedScene" uid="uid://djdnup6u2od52" path="res://scenes/objects/sunf_lower.tscn" id="1_08la1"]
 [ext_resource type="PackedScene" uid="uid://bakjg7lmdboxx" path="res://scenes/characters/Bee_player.tscn" id="2_5dbd4"]
-
-[sub_resource type="GDScript" id="GDScript_ci8mv"]
-script/source = "extends Node
-
-# Grid and chunk configuration
-var chunk_size = Vector2(100, 100)
-var grid_size = Vector2(1000, 1000)
-
-# Distance in chunks to keep loaded around the player
-var load_distance = 2
-
-# Dictionary to keep track of loaded chunks
-var loaded_chunks = {}
-
-# Reference to the player node
-@export var player: Node2D
-
-# Reference to the scene you want to spawn in chunks
-@export var object_scene: PackedScene
-
-func _ready():
-    if player == null:
-        player = get_node(\"Player\")
-
-    _update_chunks()
-
-func _process(_delta):
-    _update_chunks()
-
-# Function to update the chunks based on player position
-func _update_chunks():
-    var player_chunk = _get_chunk(player.position)
-
-    for x in range(player_chunk.x - load_distance, player_chunk.x + load_distance + 1):
-        for y in range(player_chunk.y - load_distance, player_chunk.y + load_distance + 1):
-            var chunk_pos = Vector2(x, y)
-            if not loaded_chunks.has(chunk_pos):
-                _load_chunk(chunk_pos)
-
-    # Unload chunks that are no longer within the range
-    for chunk_pos in loaded_chunks.keys():
-        if chunk_pos.distance_to(player_chunk) > load_distance:
-            _unload_chunk(chunk_pos)
-
-# Function to get the chunk position from the world position
-func _get_chunk(world_pos: Vector2) -> Vector2:
-    return Vector2(int(world_pos.x / chunk_size.x), int(world_pos.y / chunk_size.y))
-
-# Function to load a chunk
-func _load_chunk(chunk_pos: Vector2):
-    var chunk = Node2D.new()
-    chunk.position = chunk_pos * chunk_size
-    add_child(chunk)
-
-    for i in range(chunk_size.x):
-        for j in range(chunk_size.y):
-            var instance = object_scene.instantiate()
-            instance.position = Vector2(i, j) + chunk.position
-            chunk.add_child(instance)
-
-    loaded_chunks[chunk_pos] = chunk
-
-# Function to unload a chunk
-func _unload_chunk(chunk_pos: Vector2):
-    if loaded_chunks.has(chunk_pos):
-        var chunk = loaded_chunks[chunk_pos]
-        chunk.queue_free()
-        loaded_chunks.erase(chunk_pos)"
+[ext_resource type="PackedScene" uid="uid://cc7keg0pkgr2d" path="res://scenes/Game_Camera.tscn" id="3_qhusv"]
+[ext_resource type="Script" path="res://scenes/camera/bee_game_camera.gd" id="4_mt2we"]
+[ext_resource type="PackedScene" uid="uid://dqnwjn7m2bolx" path="res://scenes/AI/makro_ai.tscn" id="4_xcci7"]
+[ext_resource type="PackedScene" uid="uid://b60euih65a4qy" path="res://scenes/AI/mikro_ai.tscn" id="5_0pq0v"]
 
 [node name="Game_World" type="Node3D"]
 
@@ -90,9 +26,15 @@ func _unload_chunk(chunk_pos: Vector2):
 [node name="sunfLower" parent="Flowers" instance=ExtResource("1_08la1")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -9.35436)
 
-[node name="Fraction_Manager" type="Node" parent="."]
+[node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_5dbd4")]
+mouse_sensitivity = Vector2(0.345, 0.37)
+camera = NodePath("../Camera3D")
 
-[node name="Chunk_Manager" type="Node" parent="."]
-script = SubResource("GDScript_ci8mv")
+[node name="Camera3D" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_qhusv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.06674)
+script = ExtResource("4_mt2we")
+player = NodePath("../Player")
 
-[node name="CharacterBody3D" parent="." instance=ExtResource("2_5dbd4")]
+[node name="Makro_AI" parent="." instance=ExtResource("4_xcci7")]
+
+[node name="Mikro_AI" parent="." instance=ExtResource("5_0pq0v")]

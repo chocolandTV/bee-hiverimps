@@ -1,34 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bhpjo4gtrj6kh"]
+[gd_scene load_steps=2 format=3 uid="uid://bhpjo4gtrj6kh"]
 
 [ext_resource type="Script" path="res://components/jobs/job_global_manager.gd" id="1_4sy83"]
-[ext_resource type="PackedScene" uid="uid://vycdfy05gljo" path="res://components/jobs/sub_global_handler/sub_global_handler.tscn" id="2_77h1v"]
-[ext_resource type="Resource" uid="uid://py7gm2mj2yek" path="res://resources/jobs/Nektar.tres" id="3_krjqw"]
-[ext_resource type="Resource" uid="uid://dicrvkpatx8se" path="res://resources/jobs/construction.tres" id="4_i6hsr"]
-[ext_resource type="Resource" uid="uid://d3cq1cwah8odj" path="res://resources/jobs/guard_duty.tres" id="5_yb18q"]
-[ext_resource type="Resource" uid="uid://d2pqa1by2kfyu" path="res://resources/jobs/evolve.tres" id="6_bouvh"]
 
-[node name="job_global_manager" type="Node" node_paths=PackedStringArray("sub_job_handler_water", "sub_job_handler_nectar", "sub_job_handler_construction", "sub_job_handler_guard", "sub_job_handler_evolve")]
+[node name="job_global_manager" type="Node"]
 script = ExtResource("1_4sy83")
-sub_job_handler_water = NodePath("water_global_handler")
-sub_job_handler_nectar = NodePath("nectar_global_handler")
-sub_job_handler_construction = NodePath("cons_global_handler")
-sub_job_handler_guard = NodePath("defend_global_handler")
-sub_job_handler_evolve = NodePath("evolve_global_handler")
-
-[node name="water_global_handler" parent="." instance=ExtResource("2_77h1v")]
-
-[node name="nectar_global_handler" parent="." instance=ExtResource("2_77h1v")]
-sub_job = ExtResource("3_krjqw")
-job_name = "Collect Nectar"
-
-[node name="cons_global_handler" parent="." instance=ExtResource("2_77h1v")]
-sub_job = ExtResource("4_i6hsr")
-job_name = "Extend Hive"
-
-[node name="defend_global_handler" parent="." instance=ExtResource("2_77h1v")]
-sub_job = ExtResource("5_yb18q")
-job_name = "Defend Hive"
-
-[node name="evolve_global_handler" parent="." instance=ExtResource("2_77h1v")]
-sub_job = ExtResource("6_bouvh")
-job_name = "Evolve"

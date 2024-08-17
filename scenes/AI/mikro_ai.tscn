@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b60euih65a4qy"]
+
+[ext_resource type="Script" path="res://scenes/AI/mikro_ai.gd" id="1_67d7b"]
+
+[node name="Mikro_AI" type="Node"]
+script = ExtResource("1_67d7b")
