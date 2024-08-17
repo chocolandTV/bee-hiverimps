@@ -28,6 +28,7 @@
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 42.2278)
 
 [node name="Player" parent="." instance=ExtResource("2_5dbd4")]
+fly_speed = 0.3
 mouse_sensitivity = Vector2(0.345, 0.37)
 
 [node name="Camera3D" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_qhusv")]
