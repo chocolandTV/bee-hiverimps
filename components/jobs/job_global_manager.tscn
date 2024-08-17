@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://bhpjo4gtrj6kh"]
+[gd_scene load_steps=5 format=3 uid="uid://bhpjo4gtrj6kh"]
 
 [ext_resource type="Script" path="res://components/jobs/job_global_manager.gd" id="1_4sy83"]
+[ext_resource type="Resource" uid="uid://ba1tacjeh5s8k" path="res://resources/Fraction_Bee.tres" id="2_vyocm"]
+[ext_resource type="Resource" uid="uid://d4fihh6o6vixf" path="res://resources/Fraction_Wasp.tres" id="3_jd7vu"]
+[ext_resource type="Resource" uid="uid://bvxcigr0ghdry" path="res://resources/Fraction_Hornet.tres" id="4_0d78g"]
 
 [node name="job_global_manager" type="Node"]
 script = ExtResource("1_4sy83")
+fraction_bee = ExtResource("2_vyocm")
+fraction_wasp = ExtResource("3_jd7vu")
+fraction_hornet = ExtResource("4_0d78g")

@@ -10,10 +10,10 @@ class_name job_main_manager
 func add_resource( _fraction : GAME_FRACTION.CLASS, _resource : GAME_RESOURCE.TYPE):
 	match _fraction:
 		GAME_FRACTION.CLASS.BEE:
-			fraction_bee.add_resource(GAME_RESOURCE.TYPE.NECTAR)
+			fraction_bee.add_resource(_resource)
 		GAME_FRACTION.CLASS.WASP:
-			fraction_wasp.add_resource(GAME_RESOURCE.TYPE.NECTAR)
+			fraction_wasp.add_resource(_resource)
 		GAME_FRACTION.CLASS.HORNET:
-			fraction_hornet.add_resource(GAME_RESOURCE.TYPE.NECTAR)
+			fraction_hornet.add_resource(_resource)
 		_:
 			print("Error, no fraction selected")

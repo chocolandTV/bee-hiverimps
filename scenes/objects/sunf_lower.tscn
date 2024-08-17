@@ -23,6 +23,8 @@ transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
 
 [node name="Nectar_Area" type="Area3D" parent="." index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 287.194, 0)
+collision_layer = 0
+collision_mask = 32
 script = ExtResource("2_260dj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Nectar_Area" index="0"]
