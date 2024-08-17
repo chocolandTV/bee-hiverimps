@@ -1,3 +1,6 @@
-[gd_scene format=3 uid="uid://cc7keg0pkgr2d"]
+[gd_scene load_steps=2 format=3 uid="uid://cc7keg0pkgr2d"]
+
+[ext_resource type="Script" path="res://scenes/camera/bee_game_camera.gd" id="1_w1v0q"]
 
 [node name="Camera3D" type="Camera3D"]
+script = ExtResource("1_w1v0q")

@@ -6,6 +6,7 @@ extends Camera3D
 
 # CAMERA LERP SPEED
 var camera_lerp_speed : float = 20.0
+var camera_look_speed : float = 5.0
 # FOLLOW TARGET 
 var follow_target  =null
 
@@ -38,3 +39,4 @@ func followTargetPos(_delta):
 	last_lookat = last_lookat.lerp(follow_target.global_transform.origin, _delta * camera_lerp_speed)
 
 	look_at(last_lookat, Vector3(0.0,1,0))
+	rotation.x = rotate_toward(rotation.x,follow_target.rotation.x,camera_look_speed)

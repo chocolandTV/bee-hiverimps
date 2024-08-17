@@ -6,11 +6,10 @@
 [ext_resource type="Material" uid="uid://cs3ll1hdkv0kw" path="res://resources/materials/sunf_lower_Particlesystem.tres" id="3_qtf4r"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_osmr8"]
-radius = 2.363
+radius = 22.86
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_v2eul"]
 material = ExtResource("3_qtf4r")
-size = Vector2(0.3, 0.3)
 
 [sub_resource type="Curve" id="Curve_yp5rf"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.983278, 0.00269175), 0.0, 0.0, 0, 0]
@@ -19,16 +18,19 @@ point_count = 2
 [node name="sunfLower" instance=ExtResource("1_dtwdj")]
 script = ExtResource("2_8etbr")
 
+[node name="SunFlower" parent="." index="0"]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
+
 [node name="Nectar_Area" type="Area3D" parent="." index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.0163, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 287.194, 0)
 script = ExtResource("2_260dj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Nectar_Area" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.919187, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.1937, -9.43622, 0)
 shape = SubResource("SphereShape3D_osmr8")
 
 [node name="CPUParticles3D" type="CPUParticles3D" parent="." index="2"]
-transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.979459, 13.9828, 0)
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 27.7888, 281.771, 0.437983)
 emitting = false
 amount = 16
 lifetime = 0.43
@@ -40,10 +42,9 @@ emission_sphere_radius = 1.0
 direction = Vector3(0, 5, 0)
 spread = 180.0
 gravity = Vector3(10, 0, 0)
-initial_velocity_max = 1.0
+initial_velocity_max = 25.0
 angle_max = 720.0
-scale_amount_min = 0.0
-scale_amount_max = 0.5
+scale_amount_max = 5.0
 scale_amount_curve = SubResource("Curve_yp5rf")
 
 [node name="Timer" type="Timer" parent="." index="3"]

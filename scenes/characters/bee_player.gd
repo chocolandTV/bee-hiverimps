@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @export var speed := 35.0
 @export var rotation_speed := 35.0
+@export var rotation_damping := 0.5
 @export var fly_speed := 1.0
 
 # For smoother controller/mouse movement
@@ -9,13 +10,15 @@ extends CharacterBody3D
 @export var acceleeration_damping := 0.5
 @export var fraction : GAME_FRACTION.CLASS
 # Mouse sensitivity for look around
-@export var mouse_sensitivity := Vector2(0.1, 0.1)
+@export var mouse_sensitivity := 0.6
+@export var camera : Camera3D
+@export var clamp_angle : Vector2 = Vector2(-45, 45)
+@onready var bee_mesh : Node3D = $mainBee
 #CONST
 const STRAFE_DAMPING : float = 0.75
 #move_towards
 var current_acceleration :float = 0.0
 
-var camera : Camera3D
 var move_direction : Vector3
 
 ######### mouse data
@@ -23,14 +26,19 @@ var last_mouse_relative : Vector2
 ## get difference from mouse motion
 var mouse_relative : Vector2
 var fly_relative : float
+
+####### rotate_towards
+var current_rotation_x : float = 0
+var current_rotation_y : float = 0
+
 #### Directions 
 var input_direction : Vector2
 var look_direction : Vector2 
 var fly_direction : float = 0.0
 
 func _ready():
-    # get Camera
-    pass
+    Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 
 func _input(event):
     input_direction = Input.get_vector("move_right", "move_left", "move_backward", "move_forward")
@@ -47,11 +55,9 @@ func _input(event):
     if event is InputEventMouseMotion:
         #get new mouseposition
         mouse_relative = event.relative
-        #get vector for difference
-        look_direction = last_mouse_relative - mouse_relative
-        print("look_direction: ", look_direction)
-        #set last mouseposition
-        last_mouse_relative = mouse_relative
+
+func _process(_delta):
+    rotate_y(-mouse_relative.x * (mouse_sensitivity / 1000))
 
 func _physics_process(_delta):
     if input_direction.length() !=0 or fly_relative != 0:
