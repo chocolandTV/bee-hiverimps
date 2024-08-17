@@ -47,14 +47,13 @@ _data = {
 "flying": SubResource("Animation_c338g")
 }
 
-[node name="Bee_player" type="CharacterBody3D"]
+[node name="Bee_player" type="CharacterBody3D" groups=["Player"]]
 script = ExtResource("1_jivfb")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_lcj0i")
 
 [node name="mainBee" parent="." instance=ExtResource("2_sb44p")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="mainBee/Armature" index="0"]
 bones/11/position = Vector3(0.507713, 2.11793, 0.98719)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://10o7abboi48p"]
+[gd_scene load_steps=8 format=3 uid="uid://10o7abboi48p"]
 
 [ext_resource type="PackedScene" uid="uid://djdnup6u2od52" path="res://scenes/objects/sunf_lower.tscn" id="1_08la1"]
 [ext_resource type="PackedScene" uid="uid://bakjg7lmdboxx" path="res://scenes/characters/Bee_player.tscn" id="2_5dbd4"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scenes/camera/bee_game_camera.gd" id="4_mt2we"]
 [ext_resource type="PackedScene" uid="uid://dqnwjn7m2bolx" path="res://scenes/AI/makro_ai.tscn" id="4_xcci7"]
 [ext_resource type="PackedScene" uid="uid://b60euih65a4qy" path="res://scenes/AI/mikro_ai.tscn" id="5_0pq0v"]
+[ext_resource type="Environment" uid="uid://dqgx2xd3lwjpw" path="res://resources/enviroment.tres" id="7_63ppr"]
 
 [node name="Game_World" type="Node3D"]
 
@@ -24,17 +25,20 @@
 [node name="Flowers" type="Node3D" parent="."]
 
 [node name="sunfLower" parent="Flowers" instance=ExtResource("1_08la1")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -9.35436)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 42.2278)
 
-[node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_5dbd4")]
+[node name="Player" parent="." instance=ExtResource("2_5dbd4")]
 mouse_sensitivity = Vector2(0.345, 0.37)
-camera = NodePath("../Camera3D")
 
 [node name="Camera3D" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_qhusv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.06674)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -16.369)
 script = ExtResource("4_mt2we")
 player = NodePath("../Player")
+target_distance = 10.53
 
 [node name="Makro_AI" parent="." instance=ExtResource("4_xcci7")]
 
 [node name="Mikro_AI" parent="." instance=ExtResource("5_0pq0v")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("7_63ppr")

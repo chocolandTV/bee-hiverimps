@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c01xrshddxx6h"]
+[gd_scene load_steps=3 format=3 uid="uid://c01xrshddxx6h"]
 
 [ext_resource type="Script" path="res://scenes/menu/ui.gd" id="1_q36sn"]
+[ext_resource type="Script" path="res://scenes/menu/debug_player_speed.gd" id="2_rpau7"]
 
 [node name="UI" type="Control" node_paths=PackedStringArray("job_water_value", "job_nectar_value", "job_construction_value", "job_guard_value", "job_evolve_value")]
 layout_mode = 3
@@ -130,3 +131,34 @@ text = "1234"
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 text = "1234"
+
+[node name="Speed_Debug" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Speed_Debug"]
+layout_mode = 2
+script = ExtResource("2_rpau7")
+
+[node name="Label_x" type="Label" parent="Speed_Debug/VBoxContainer"]
+custom_minimum_size = Vector2(150, 25)
+layout_mode = 2
+text = "Speed: X = 555"
+
+[node name="Label_y" type="Label" parent="Speed_Debug/VBoxContainer"]
+custom_minimum_size = Vector2(150, 25)
+layout_mode = 2
+text = "Speed: Y = 555"
+
+[node name="Label_z" type="Label" parent="Speed_Debug/VBoxContainer"]
+custom_minimum_size = Vector2(150, 25)
+layout_mode = 2
+text = "Speed: Z = 555"

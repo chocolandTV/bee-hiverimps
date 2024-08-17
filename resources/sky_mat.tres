@@ -1,0 +1,4 @@
+[gd_resource type="ProceduralSkyMaterial" format=3 uid="uid://b0kgu8fmfn224"]
+
+[resource]
+ground_bottom_color = Color(0.2, 0.541176, 0.133333, 1)
