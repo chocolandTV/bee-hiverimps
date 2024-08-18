@@ -1,6 +1,8 @@
 extends Node3D
 
 @onready var timer :Timer = $Timer
+@onready var particles : CPUParticles3D = $CPUParticles3D
+
 var max_nectar : float
 var current_nectar : float
 
@@ -38,3 +40,4 @@ func on_area_exited(area : Area3D):
 func on_timer_timeout():
 	for x in collectors:
 		JobGlobalManager.add_resource(x.fraction, GAME_RESOURCE.TYPE.NECTAR)
+		particles.emitting = true
