@@ -58,7 +58,12 @@ shape = SubResource("CapsuleShape3D_lcj0i")
 
 [node name="Skeleton3D" parent="mainBee/Armature" index="0"]
 bones/11/position = Vector3(0.507713, 2.11793, 0.98719)
+bones/11/rotation = Quaternion(6.87907e-08, 0.60639, 0.709247, -0.359528)
 bones/15/position = Vector3(-0.50341, 2.11793, 1.02283)
+bones/15/rotation = Quaternion(8.24585e-09, 0.614555, 0.709247, 0.345385)
+
+[node name="AnimationPlayer" parent="mainBee" index="1"]
+autoplay = "flying"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
