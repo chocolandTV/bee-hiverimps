@@ -3,26 +3,18 @@ extends Node3D
 @onready var timer :Timer = $Timer
 @onready var particles : CPUParticles3D = $CPUParticles3D
 
-var max_nectar : float
-var current_nectar : float
-
-var current_sunflower_state: int
-#### states: 0 is full of resource
-#### 1 is lose some >75%
-#### 2 > 50%
-#### 3 > 25%
-#### 4 = 0%
+var max_organic : float
+var current_organic : float
 
 var is_collecting : bool = false
 var collectors : Array[CharacterBody3D]
-func set_state():
-	pass
+
 
 func on_area_entered(area : Area3D):
 	if collectors.is_empty():
 		print("collector empty start timer")
 		timer.start()
-		
+		particles.global_position.y = area.get_parent().global_position.y
 	### add collector
 	collectors.append(area.get_parent())
 
@@ -36,5 +28,6 @@ func on_area_exited(area : Area3D):
 
 func on_timer_timeout():
 	for x in collectors:
-		JobGlobalManager.add_resource(x.fraction, GAME_RESOURCE.TYPE.NECTAR)
+		JobGlobalManager.add_resource(x.faction, GAME_RESOURCE.TYPE.ORGANIC)
+		
 		particles.emitting = true

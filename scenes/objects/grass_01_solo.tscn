@@ -1,5 +1,120 @@
-[gd_scene load_steps=2 format=3 uid="uid://ceaq50ybm5c31"]
+[gd_scene load_steps=10 format=3 uid="uid://ceaq50ybm5c31"]
 
 [ext_resource type="PackedScene" uid="uid://bh7pduqtmuvbd" path="res://assets/models/Grass.glb" id="1_mvqf5"]
+[ext_resource type="Script" path="res://scenes/objects/grass_area.gd" id="2_qsqip"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dceam"]
+size = Vector3(22.9627, 85.524, 17.9979)
+
+[sub_resource type="Animation" id="Animation_imyx6"]
+resource_name = "grass_idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Grass:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(0.965, 0.965, 0.965), Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Grass:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.5, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_3bbwl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Grass:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Grass:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6kyu4"]
+_data = {
+"RESET": SubResource("Animation_3bbwl"),
+"grass_idle": SubResource("Animation_imyx6")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u7p2c"]
+albedo_color = Color(0, 0.550514, 0.190391, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yd14p"]
+material = SubResource("StandardMaterial3D_u7p2c")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="Curve" id="Curve_ts4yx"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.983278, 0.00269175), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="Grass2" instance=ExtResource("1_mvqf5")]
+script = ExtResource("2_qsqip")
+
+[node name="Grass_Area" type="Area3D" parent="." index="1"]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grass_Area" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.74833, 40.262, -1.61546)
+shape = SubResource("BoxShape3D_dceam")
+
+[node name="Timer" type="Timer" parent="." index="2"]
+wait_time = 0.5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
+libraries = {
+"": SubResource("AnimationLibrary_6kyu4")
+}
+autoplay = "grass_idle"
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="." index="4"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -4.55509, 61.4117, -3.6415)
+emitting = false
+amount = 16
+lifetime = 1.06
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+mesh = SubResource("BoxMesh_yd14p")
+direction = Vector3(0, 5, 0)
+spread = 180.0
+gravity = Vector3(10, 0, 0)
+initial_velocity_max = 25.0
+angle_max = 720.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_ts4yx")
+
+[connection signal="area_entered" from="Grass_Area" to="." method="on_area_entered"]
+[connection signal="area_exited" from="Grass_Area" to="." method="on_area_exited"]
+[connection signal="timeout" from="Timer" to="." method="on_timer_timeout"]

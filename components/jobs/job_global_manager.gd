@@ -2,18 +2,28 @@ extends Node
 
 class_name job_main_manager
 
-@export var fraction_bee : Fraction_Settings
-@export var fraction_wasp : Fraction_Settings
-@export var fraction_hornet : Fraction_Settings
+var faction_bee : HiveManager  =null 
+var faction_wasp : HiveManager = null
+var faction_hornet : HiveManager = null
 
-#JobGlobalManager.add_nectar(x.fraction)
-func add_resource( _fraction : GAME_FRACTION.CLASS, _resource : GAME_RESOURCE.TYPE):
-	match _fraction:
-		GAME_FRACTION.CLASS.BEE:
-			fraction_bee.add_resource(_resource)
-		GAME_FRACTION.CLASS.WASP:
-			fraction_wasp.add_resource(_resource)
-		GAME_FRACTION.CLASS.HORNET:
-			fraction_hornet.add_resource(_resource)
+
+func set_faction_manager( _faction : GAME_FACTION.CLASS, _data : HiveManager):
+	match _faction:
+		GAME_FACTION.CLASS.BEE:
+			faction_bee = _data
+		GAME_FACTION.CLASS.WASP:
+			faction_wasp = _data
+		GAME_FACTION.CLASS.HORNET:
+			faction_hornet = _data
 		_:
-			print("Error, no fraction selected")
+			print("Error, no faction selected")
+func add_resource( _faction : GAME_FACTION.CLASS, _resource : GAME_RESOURCE.TYPE):
+	match _faction:
+		GAME_FACTION.CLASS.BEE:
+			faction_bee.add_resource(_resource)
+		GAME_FACTION.CLASS.WASP:
+			faction_wasp.add_resource(_resource)
+		GAME_FACTION.CLASS.HORNET:
+			faction_hornet.add_resource(_resource)
+		_:
+			print("Error, no faction selected")

@@ -1,5 +1,5 @@
 extends Node
-class_name GAME_FRACTION
+class_name GAME_FACTION
 
 enum CLASS {
 	BEE,

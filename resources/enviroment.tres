@@ -5,3 +5,6 @@
 [resource]
 background_mode = 2
 sky = ExtResource("1_5u5cs")
+glow_enabled = true
+fog_aerial_perspective = 0.071
+fog_sky_affect = 0.245

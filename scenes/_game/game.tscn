@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://10o7abboi48p"]
+[gd_scene load_steps=17 format=3 uid="uid://10o7abboi48p"]
 
 [ext_resource type="PackedScene" uid="uid://wbvmp7qbi0xw" path="res://scenes/objects/hive_01.tscn" id="1_1exdv"]
 [ext_resource type="PackedScene" uid="uid://djdnup6u2od52" path="res://scenes/objects/sunf_lower.tscn" id="1_08la1"]
 [ext_resource type="PackedScene" uid="uid://b3ksoestnon2y" path="res://scenes/objects/grass_02_bulk.tscn" id="1_8xcln"]
+[ext_resource type="Script" path="res://components/jobs/sub_global_handler/hive_manager.gd" id="1_js5e2"]
 [ext_resource type="PackedScene" uid="uid://bakjg7lmdboxx" path="res://scenes/characters/Bee_player.tscn" id="2_5dbd4"]
 [ext_resource type="PackedScene" uid="uid://ceaq50ybm5c31" path="res://scenes/objects/grass_01_solo.tscn" id="2_rmus4"]
 [ext_resource type="PackedScene" uid="uid://bpj8hrbmy3pji" path="res://scenes/objects/grass_03_big.tscn" id="3_5wb30"]
@@ -10,9 +11,10 @@
 [ext_resource type="PackedScene" uid="uid://dp71t7qav017u" path="res://assets/models/erdtree_small.glb" id="5_jibn8"]
 [ext_resource type="PackedScene" uid="uid://dey86aqjnvykb" path="res://assets/models/erdtree.glb" id="6_wfbr0"]
 [ext_resource type="Environment" uid="uid://dqgx2xd3lwjpw" path="res://resources/enviroment.tres" id="7_63ppr"]
+[ext_resource type="PackedScene" uid="uid://d37l1ft2xicf4" path="res://scenes/objects/bee_comb_collectable.tscn" id="9_85m5b"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aocdq"]
-albedo_color = Color(0.348695, 0.510107, 5.77569e-07, 1)
+albedo_color = Color(0.2, 0.541176, 0.133333, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_6oqxw"]
 material = SubResource("StandardMaterial3D_aocdq")
@@ -32,19 +34,14 @@ size = Vector2(350, 350)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
 mesh = SubResource("PlaneMesh_6oqxw")
 
-[node name="Bee_sector" type="MeshInstance3D" parent="Ground"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1410.64, 2.83051, -1560.9)
-mesh = SubResource("PlaneMesh_bt4xy")
-
-[node name="Wasp_Fraction" type="Node3D" parent="."]
-
 [node name="Hives" type="Node3D" parent="."]
 
 [node name="Wasp_Hive" type="Node3D" parent="Hives"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 884.266, 0, -893.275)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1409.62, 233.974, -1560.07)
+script = ExtResource("1_js5e2")
 
 [node name="hive" parent="Hives/Wasp_Hive" instance=ExtResource("1_1exdv")]
-transform = Transform3D(56.075, 0, 0, 0, 56.075, 0, 0, 0, 56.075, 527.684, 234.772, -667.103)
+transform = Transform3D(56.075, 0, 0, 0, 56.075, 0, 0, 0, 56.075, 0, 0, 0)
 
 [node name="Hornet_Hive" type="Node3D" parent="Hives"]
 
@@ -57,7 +54,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.3986, 81.7285, 1887.21)
 [node name="hive" parent="Hives/Bee_Hive" instance=ExtResource("1_1exdv")]
 transform = Transform3D(33, 0, 0, 0, 33, 0, 0, 0, 33, 0, 0, 0)
 
-[node name="Hornet_Fraction" type="Node3D" parent="."]
+[node name="Bee_sector" type="MeshInstance3D" parent="Hives/Bee_Hive"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1466.03, -78.898, -3448.11)
+mesh = SubResource("PlaneMesh_bt4xy")
+skeleton = NodePath("../../../Ground")
 
 [node name="Enviroment" type="Node3D" parent="."]
 
@@ -304,9 +304,14 @@ transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 
 [node name="sunfLower10" parent="Flowers" instance=ExtResource("1_08la1")]
 transform = Transform3D(-0.046967, 0, 0.998896, 0, 1, 0, -0.998896, 0, -0.046967, -259.598, 0, 433.991)
 
+[node name="Objects" type="Node3D" parent="."]
+
+[node name="bee_Comb_collectable" parent="Objects" instance=ExtResource("9_85m5b")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 259.036, -156.305)
+
 [node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_5dbd4")]
 transform = Transform3D(1, 0, 0, -3.55271e-15, 1, 0, 7.10543e-15, 0, 1, -3.72529e-09, 258.871, -183.212)
-fly_speed = 0.3
+fly_speed = 5.0
 camera = NodePath("../Camera3D")
 
 [node name="Camera3D" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_qhusv")]

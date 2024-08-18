@@ -1,0 +1,88 @@
+[gd_scene load_steps=8 format=3 uid="uid://d37l1ft2xicf4"]
+
+[ext_resource type="PackedScene" uid="uid://q22nccst0g4k" path="res://assets/models/bee_Comb_collectable.glb" id="1_0vasr"]
+[ext_resource type="Texture2D" uid="uid://dm3mnqlpmmymo" path="res://assets/models/beeComb_tex.png" id="2_t7e8g"]
+[ext_resource type="Texture2D" uid="uid://bv8xbk3oqcyko" path="res://assets/models/beeComb_tex_normal_02.png" id="3_g5h5o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_40csd"]
+albedo_texture = ExtResource("2_t7e8g")
+roughness = 0.0
+emission = Color(1, 1, 0, 1)
+emission_energy_multiplier = 0.0
+normal_enabled = true
+normal_scale = 5.0
+normal_texture = ExtResource("3_g5h5o")
+rim_texture = ExtResource("2_t7e8g")
+
+[sub_resource type="Animation" id="Animation_pg2o8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cube:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cube:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_4hu57"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cube:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 3.14159, 0), Vector3(0, 6.28319, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cube:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.5, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8ouvq"]
+_data = {
+"RESET": SubResource("Animation_pg2o8"),
+"idle": SubResource("Animation_4hu57")
+}
+
+[node name="bee_Comb_collectable" instance=ExtResource("1_0vasr")]
+
+[node name="Cube" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_40csd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_8ouvq")
+}
+autoplay = "idle"

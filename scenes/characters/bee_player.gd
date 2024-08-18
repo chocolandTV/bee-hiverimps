@@ -8,7 +8,7 @@ extends CharacterBody3D
 # For smoother controller/mouse movement
 @export var acceleration := 3.5
 @export var acceleeration_damping := 0.5
-@export var fraction : GAME_FRACTION.CLASS
+@export var faction : GAME_FACTION.CLASS
 # Mouse sensitivity for look around
 @export var mouse_sensitivity := 0.6
 @export var camera : Camera3D
@@ -65,7 +65,7 @@ func _physics_process(_delta):
     else:
         current_acceleration  = move_toward(current_acceleration, 0, acceleeration_damping *  _delta)
 
-    move_direction = Vector3(input_direction.x * STRAFE_DAMPING,fly_relative, input_direction.y)
+    move_direction = Vector3(input_direction.x * STRAFE_DAMPING,fly_relative *fly_speed, input_direction.y)
     move_direction = move_direction.rotated(Vector3.UP, bee_mesh.rotation.y)
     velocity = velocity.move_toward(move_direction* speed, current_acceleration)
     move_and_slide()
