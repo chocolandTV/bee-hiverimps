@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://10o7abboi48p"]
+[gd_scene load_steps=13 format=3 uid="uid://10o7abboi48p"]
 
 [ext_resource type="PackedScene" uid="uid://wbvmp7qbi0xw" path="res://scenes/objects/hive_01.tscn" id="1_1exdv"]
 [ext_resource type="PackedScene" uid="uid://djdnup6u2od52" path="res://scenes/objects/sunf_lower.tscn" id="1_08la1"]
@@ -7,18 +7,44 @@
 [ext_resource type="PackedScene" uid="uid://ceaq50ybm5c31" path="res://scenes/objects/grass_01_solo.tscn" id="2_rmus4"]
 [ext_resource type="PackedScene" uid="uid://bpj8hrbmy3pji" path="res://scenes/objects/grass_03_big.tscn" id="3_5wb30"]
 [ext_resource type="PackedScene" uid="uid://cc7keg0pkgr2d" path="res://scenes/Game_Camera.tscn" id="3_qhusv"]
+[ext_resource type="PackedScene" uid="uid://dp71t7qav017u" path="res://assets/models/erdtree_small.glb" id="5_jibn8"]
+[ext_resource type="PackedScene" uid="uid://dey86aqjnvykb" path="res://assets/models/erdtree.glb" id="6_wfbr0"]
 [ext_resource type="Environment" uid="uid://dqgx2xd3lwjpw" path="res://resources/enviroment.tres" id="7_63ppr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aocdq"]
+albedo_color = Color(0.348695, 0.510107, 5.77569e-07, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6oqxw"]
+material = SubResource("StandardMaterial3D_aocdq")
+size = Vector2(4000, 4000)
 
 [node name="Game_World" type="Node3D"]
 
 [node name="Ground" type="Node3D" parent="."]
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_6oqxw")
+
 [node name="Wasp_Fraction" type="Node3D" parent="."]
 
 [node name="Hives" type="Node3D" parent="."]
 
-[node name="hive" parent="Hives" instance=ExtResource("1_1exdv")]
-transform = Transform3D(56.075, 0, 0, 0, 56.075, 0, 0, 0, 56.075, 527.684, -7.53206, -667.103)
+[node name="Wasp_Hive" type="Node3D" parent="Hives"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 884.266, 0, -893.275)
+
+[node name="hive" parent="Hives/Wasp_Hive" instance=ExtResource("1_1exdv")]
+transform = Transform3D(56.075, 0, 0, 0, 56.075, 0, 0, 0, 56.075, 527.684, 234.772, -667.103)
+
+[node name="Hornet_Hive" type="Node3D" parent="Hives"]
+
+[node name="hive2" parent="Hives/Hornet_Hive" instance=ExtResource("1_1exdv")]
+transform = Transform3D(77, 0, 0, 0, 70, 0, 0, 0, 77, -1579.05, 1141.04, 41.7412)
+
+[node name="Bee_Hive" type="Node3D" parent="Hives"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.3986, 81.7285, 1993.02)
+
+[node name="hive" parent="Hives/Bee_Hive" instance=ExtResource("1_1exdv")]
+transform = Transform3D(33, 0, 0, 0, 33, 0, 0, 0, 33, 0, 0, 0)
 
 [node name="Hornet_Fraction" type="Node3D" parent="."]
 
@@ -225,6 +251,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -123.5, 0, 449.096)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.3282, 0, 449.096)
 
 [node name="grass_26" parent="Enviroment" instance=ExtResource("3_5wb30")]
+
+[node name="erdtree_small" parent="Enviroment" instance=ExtResource("5_jibn8")]
+transform = Transform3D(72.345, 0, 0, 0, 72.345, 0, 0, 0, 72.345, 1409.87, 0, -1565.18)
+
+[node name="erdtree_small_bee" parent="Enviroment" instance=ExtResource("5_jibn8")]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, -54.3888, 0, 1993)
+
+[node name="erdtree" parent="Enviroment" instance=ExtResource("6_wfbr0")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -1580.69, 0, 0)
 
 [node name="Flowers" type="Node3D" parent="."]
 
