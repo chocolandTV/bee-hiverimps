@@ -1,11 +1,39 @@
-[gd_scene load_steps=11 format=3 uid="uid://ceaq50ybm5c31"]
+[gd_scene load_steps=12 format=3 uid="uid://ceaq50ybm5c31"]
 
 [ext_resource type="PackedScene" uid="uid://bh7pduqtmuvbd" path="res://assets/models/Grass.glb" id="1_mvqf5"]
 [ext_resource type="Script" path="res://scenes/objects/grass_area.gd" id="2_qsqip"]
 [ext_resource type="PackedScene" uid="uid://b1dsdo0y2qcjt" path="res://components/resource/resource_point.tscn" id="3_eenty"]
+[ext_resource type="PackedScene" uid="uid://itgxjcd0xb53" path="res://components/resource/resource_health_comp.tscn" id="4_x3xvb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dceam"]
 size = Vector3(22.9627, 85.524, 17.9979)
+
+[sub_resource type="Animation" id="Animation_3bbwl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Grass:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Grass:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_imyx6"]
 resource_name = "grass_idle"
@@ -33,33 +61,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0.5, 0, 0), Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_3bbwl"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Grass:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Grass:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6kyu4"]
@@ -118,6 +119,9 @@ scale_amount_curve = SubResource("Curve_ts4yx")
 
 [node name="Resource_Point" parent="." index="5" instance=ExtResource("3_eenty")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.77329, 52.9619, -0.666401)
+
+[node name="Resource_Health_Comp" parent="." index="6" instance=ExtResource("4_x3xvb")]
+max_resource_range = Vector2i(10, 50)
 
 [connection signal="area_entered" from="Grass_Area" to="." method="on_area_entered"]
 [connection signal="area_exited" from="Grass_Area" to="." method="on_area_exited"]

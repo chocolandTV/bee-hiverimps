@@ -143,7 +143,7 @@ material = ExtResource("6_f6s32")
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.983278, 0.00269175), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[node name="bee_Comb_collectable" instance=ExtResource("1_0vasr")]
+[node name="bee_Comb_collectable" groups=["honey"] instance=ExtResource("1_0vasr")]
 script = ExtResource("2_l2tow")
 
 [node name="Cube" parent="." index="0"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://djdnup6u2od52"]
+[gd_scene load_steps=13 format=3 uid="uid://djdnup6u2od52"]
 
 [ext_resource type="PackedScene" uid="uid://dxx52n1q2yx82" path="res://assets/models/sunfLower.glb" id="1_dtwdj"]
 [ext_resource type="Script" path="res://scenes/objects/sunf_lower.gd" id="2_8etbr"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cm7uey6f12gcv" path="res://components/resource/nectar_area.tscn" id="3_d45g8"]
 [ext_resource type="Material" uid="uid://cs3ll1hdkv0kw" path="res://resources/materials/sunf_lower_Particlesystem.tres" id="3_qtf4r"]
 [ext_resource type="PackedScene" uid="uid://b1dsdo0y2qcjt" path="res://components/resource/resource_point.tscn" id="5_wkubj"]
+[ext_resource type="PackedScene" uid="uid://itgxjcd0xb53" path="res://components/resource/resource_health_comp.tscn" id="7_qq7ek"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_v2eul"]
 material = ExtResource("3_qtf4r")
@@ -13,6 +14,16 @@ material = ExtResource("3_qtf4r")
 [sub_resource type="Curve" id="Curve_yp5rf"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.983278, 0.00269175), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="Animation" id="Animation_1fa0m"]
+length = 0.001
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SunFlower/Skeleton3D:AnimCurve")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.0582709, -0.0264482, 0.705212, 0.706103)
 
 [sub_resource type="Animation" id="Animation_8ily2"]
 resource_name = "sun_flower_dance"
@@ -25,16 +36,6 @@ tracks/0/path = NodePath("SunFlower/Skeleton3D:AnimCurve")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array(0, 1, 0.0582709, -0.0264482, 0.705212, 0.706103, 0.266667, 1, 0.059, -0.027, 0.705, 0.706, 0.566667, 1, 0.053, -0.021, 0.706, 0.706, 1, 1, 0.058, -0.026, 0.705, 0.706, 1.3, 1, 0.059, -0.027, 0.705, 0.706, 1.63333, 1, 0.056, -0.024, 0.705, 0.706, 2, 1, 0.0582709, -0.0264482, 0.705212, 0.706103)
-
-[sub_resource type="Animation" id="Animation_1fa0m"]
-length = 0.001
-tracks/0/type = "rotation_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SunFlower/Skeleton3D:AnimCurve")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0.0582709, -0.0264482, 0.705212, 0.706103)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2ldrp"]
 _data = {
@@ -50,7 +51,7 @@ bee_comb_scene = ExtResource("3_4o65q")
 transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
 
 [node name="Skeleton3D" parent="SunFlower" index="0"]
-bones/1/rotation = Quaternion(0.0582709, -0.0264483, 0.705212, 0.706103)
+bones/1/rotation = Quaternion(0.0582709, -0.0264482, 0.705212, 0.706103)
 
 [node name="Nectar_Area" parent="." index="1" instance=ExtResource("3_d45g8")]
 
@@ -73,16 +74,16 @@ angle_max = 720.0
 scale_amount_max = 5.0
 scale_amount_curve = SubResource("Curve_yp5rf")
 
-[node name="Timer" type="Timer" parent="." index="3"]
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
 libraries = {
 "": SubResource("AnimationLibrary_2ldrp")
 }
 autoplay = "sun_flower_dance"
 
-[node name="Resource_Point" parent="." index="5" instance=ExtResource("5_wkubj")]
+[node name="Resource_Point" parent="." index="4" instance=ExtResource("5_wkubj")]
+
+[node name="Resource_Health_Comp" parent="." index="5" instance=ExtResource("7_qq7ek")]
+max_resource_range = Vector2i(100, 200)
 
 [connection signal="area_entered" from="Nectar_Area" to="." method="on_area_entered"]
 [connection signal="area_exited" from="Nectar_Area" to="." method="on_area_exited"]
-[connection signal="timeout" from="Timer" to="." method="on_timer_timeout"]

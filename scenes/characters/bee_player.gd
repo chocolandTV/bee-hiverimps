@@ -20,10 +20,10 @@ var current_acceleration :float = 0.0
 var move_direction : Vector3
 ##### ITEM VARS
 var items : Dictionary ={
-    "water":55,
-    "nectar" : 10,
-    "organic":55,
-    "honey" : 5
+    "water":0,
+    "nectar" : 100,
+    "organic":0,
+    "honey" : 0
 }
 var max_items : int = 1
 var item_count : int = 0
@@ -45,7 +45,7 @@ var fly_direction : float = 0.0
 
 func _ready():
     Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-    JobGlobalManager.increase_unit_capacity.connect(on_upgrade)
+    JobGlobalManager.increase_unit_upgrade.connect(on_upgrade)
 
 func _input(event):
     input_direction = Input.get_vector("move_right", "move_left", "move_backward", "move_forward")

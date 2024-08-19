@@ -15,6 +15,7 @@ enum DIFFICULT{
 @export var faction_isPlayer : bool
 @export var unit_limit : int
 @export var faction_sector_object : MeshInstance3D
+@export var facton_sector_objects_size: float
 @export var faction_hive : Node3D
 ####### UNIT SETUP
 
@@ -81,12 +82,13 @@ func buy_unit():
 	spawn_unit()
 
 	current_factionpower += unit_base_power_value
-	faction_sector_object.scale += Vector3(unit_base_power_value,unit_base_power_value,unit_base_power_value)
+	faction_sector_object.scale += Vector3(unit_base_power_value,unit_base_power_value,unit_base_power_value) *facton_sector_objects_size
 	##### UPGRADE CAPACITY
 	current_unit_count += 1
 	if current_unit_count >= current_unit_max_capacity:
 		current_unit_max_capacity *= 2
-		JobGlobalManager.global_increase_unit_capacity(current_faction, current_unit_max_capacity)
+		print("FACTION UPGRADE %d : LEVEL %d" % [current_faction, current_unit_max_capacity])
+		JobGlobalManager.global_increase_unit_upgrade(current_faction, current_unit_max_capacity)
 
 	Ui.update_faction_power(current_faction,current_factionpower)
 	
@@ -144,5 +146,6 @@ func spawn_unit():
 	instance.speed = unit_speed
 	instance.fly_speed = unit_base_wingpower
 	instance.max_items = current_unit_max_capacity
+	
 	print(" finished spawned unit")
 	

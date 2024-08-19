@@ -26,6 +26,21 @@ corner_detail = 1
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tlya5"]
 
+[sub_resource type="Animation" id="Animation_r2ymc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/TextureRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-0.0763982, -14.6731)]
+}
+
 [sub_resource type="Animation" id="Animation_f5b41"]
 resource_name = "UI_new_bee"
 loop_mode = 1
@@ -40,21 +55,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1.93187, 1, 1, 0.392292, 1),
 "update": 0,
 "values": [Vector2(-0.0763982, -14.6731), Vector2(-0.076, -5.723), Vector2(-0.0763982, -14.6731), Vector2(-0.076, -5.563), Vector2(-0.0763982, -14.6731), Vector2(-0.0763982, -14.6731)]
-}
-
-[sub_resource type="Animation" id="Animation_r2ymc"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Panel/TextureRect:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-0.0763982, -14.6731)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5ypi3"]

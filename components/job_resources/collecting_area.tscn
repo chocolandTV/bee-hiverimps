@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://ch8tuj4883sgv"]
+[gd_scene load_steps=3 format=3 uid="uid://ch8tuj4883sgv"]
+
+[ext_resource type="Script" path="res://components/job_resources/collecting_area.gd" id="1_d1f8d"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_40vqx"]
 radius = 5.469
@@ -6,6 +8,10 @@ radius = 5.469
 [node name="Collecting_Area" type="Area3D"]
 collision_layer = 240
 collision_mask = 0
+script = ExtResource("1_d1f8d")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_40vqx")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.7

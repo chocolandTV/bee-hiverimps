@@ -6,7 +6,7 @@ var faction_bee : HiveManager  =null
 var faction_wasp : HiveManager = null
 var faction_hornet : HiveManager = null
 
-signal increase_unit_capacity(_faction : GAME_FACTION,_value : int)
+signal increase_unit_upgrade(_faction : GAME_FACTION,_value : int)
 
 func set_difficult():
 	pass
@@ -31,5 +31,5 @@ func add_resource(_faction : GAME_FACTION.CLASS, _resource : GAME_RESOURCE.TYPE,
 		_:
 			print("Error, no faction selected")
 
-func global_increase_unit_capacity(_faction : GAME_FACTION.CLASS,_value : int):
-	increase_unit_capacity.emit(_faction,_value)
+func global_increase_unit_upgrade(_faction : GAME_FACTION.CLASS,_value : int):
+	increase_unit_upgrade.emit(_faction,_value)

@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://b3ksoestnon2y"]
+[gd_scene load_steps=9 format=3 uid="uid://b3ksoestnon2y"]
 
 [ext_resource type="PackedScene" uid="uid://be4lj8i4fcp4m" path="res://assets/models/grass_02.glb" id="1_7sq0d"]
 [ext_resource type="Script" path="res://scenes/objects/grass_area.gd" id="2_1oi40"]
 [ext_resource type="PackedScene" uid="uid://b1dsdo0y2qcjt" path="res://components/resource/resource_point.tscn" id="2_8yfui"]
+[ext_resource type="PackedScene" uid="uid://itgxjcd0xb53" path="res://components/resource/resource_health_comp.tscn" id="4_b6bu3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0hyxj"]
 size = Vector3(58.8891, 85.524, 55.2028)
@@ -51,3 +52,6 @@ scale_amount_curve = SubResource("Curve_1yl7x")
 
 [node name="Resource_Point" parent="." index="4" instance=ExtResource("2_8yfui")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.77329, 52.9619, -0.666401)
+
+[node name="Resource_Health_Comp" parent="." index="5" instance=ExtResource("4_b6bu3")]
+max_resource_range = Vector2i(25, 100)

@@ -215,6 +215,9 @@ radius = 2.34387
 [node name="unit_Bee" groups=["units"] instance=ExtResource("1_qjt5v")]
 script = ExtResource("2_srrj5")
 
+[node name="Armature" parent="." index="0"]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, 0, 0)
+
 [node name="Skeleton3D" parent="Armature" index="0"]
 bones/0/position = Vector3(0, 0, -2.08088)
 bones/1/position = Vector3(0, 0.882737, 0)
@@ -238,6 +241,7 @@ surface_material_override/1 = SubResource("StandardMaterial3D_tmebm")
 libraries = {
 "": SubResource("AnimationLibrary_j7nin")
 }
+autoplay = "flying"
 
 [node name="Collecting_Area" parent="." index="2" instance=ExtResource("4_216ih")]
 collision_layer = 244
@@ -254,5 +258,3 @@ collision_mask = 256
 shape = SubResource("SphereShape3D_4q1dl")
 
 [connection signal="area_entered" from="HitBox_Area" to="." method="on_enemy_entered"]
-
-[editable path="Collecting_Area"]
