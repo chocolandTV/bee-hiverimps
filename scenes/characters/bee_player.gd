@@ -1,8 +1,5 @@
 extends CharacterBody3D
-
 @export var speed := 35.0
-@export var rotation_speed := 35.0
-@export var rotation_damping := 0.5
 @export var fly_speed := 1.0
 
 # For smoother controller/mouse movement
@@ -14,13 +11,23 @@ extends CharacterBody3D
 @export var camera : Camera3D
 @export var clamp_angle : Vector2 = Vector2(-45, 45)
 @onready var bee_mesh : Node3D = $mainBee
+@onready var anim : AnimationPlayer = $mainBee/AnimationPlayer
 #CONST
 const STRAFE_DAMPING : float = 0.75
 #move_towards
 var current_acceleration :float = 0.0
 
 var move_direction : Vector3
-
+##### ITEM VARS
+var items : Dictionary ={
+    "water":55,
+    "nectar" : 10,
+    "organic":55,
+    "honey" : 5
+}
+var max_items : int = 1
+var item_count : int = 0
+var capacity_multiplier : int = 10
 ######### mouse data
 var last_mouse_relative : Vector2
 ## get difference from mouse motion
@@ -38,7 +45,7 @@ var fly_direction : float = 0.0
 
 func _ready():
     Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
+    JobGlobalManager.increase_unit_capacity.connect(on_upgrade)
 
 func _input(event):
     input_direction = Input.get_vector("move_right", "move_left", "move_backward", "move_forward")
@@ -58,6 +65,11 @@ func _input(event):
 
 func _process(_delta):
     bee_mesh.rotate_y(-mouse_relative.x * (mouse_sensitivity / 1000))
+    if input_direction.length() ==0:
+        anim.play("idle")
+    else:
+        anim.play("flying")
+
 
 func _physics_process(_delta):
     if input_direction.length() !=0 or fly_relative != 0:
@@ -69,3 +81,41 @@ func _physics_process(_delta):
     move_direction = move_direction.rotated(Vector3.UP, bee_mesh.rotation.y)
     velocity = velocity.move_toward(move_direction* speed, current_acceleration)
     move_and_slide()
+
+func get_resource(_resource : GAME_RESOURCE.TYPE):
+    if  item_count >= (max_items * capacity_multiplier):
+        return #### later drop nectar
+    if _resource == GAME_RESOURCE.TYPE.WATER:
+        items["water"] += 1
+        item_count += 1
+        Ui.update_player_backpack(GAME_RESOURCE.TYPE.WATER,items["water"])
+    if _resource == GAME_RESOURCE.TYPE.NECTAR:
+        items["nectar"] += 1
+        item_count += 1
+        Ui.update_player_backpack(GAME_RESOURCE.TYPE.NECTAR,items["nectar"])
+    if _resource == GAME_RESOURCE.TYPE.ORGANIC:
+        items["organic"] +=1
+        item_count += 1
+        Ui.update_player_backpack(GAME_RESOURCE.TYPE.ORGANIC,items["organic"])
+    if _resource == GAME_RESOURCE.TYPE.HONEY:
+        items["honey"] +=1
+        item_count += 1
+        Ui.update_player_backpack(GAME_RESOURCE.TYPE.HONEY,items["honey"])
+
+func send_resource():
+
+    JobGlobalManager.add_resource(faction, GAME_RESOURCE.TYPE.WATER, items["water"])
+    JobGlobalManager.add_resource(faction, GAME_RESOURCE.TYPE.NECTAR, items["nectar"])
+    JobGlobalManager.add_resource(faction, GAME_RESOURCE.TYPE.ORGANIC, items["organic"])
+    JobGlobalManager.add_resource(faction, GAME_RESOURCE.TYPE.HONEY, items["honey"])
+
+    item_count = 0
+    items["water"] = 0
+    items["nectar"] = 0
+    items["organic"] =0
+    items["honey"] =0
+    Ui.clear_player_backpack()
+
+func on_upgrade(_faction, _value):
+    if(_faction == faction):
+        max_items = _value

@@ -10,43 +10,104 @@ enum DIFFICULT{
 ##### DEFINE FACTION START SETTINGS AND DEFINES
 
 @export_category("Faction Defines")
-@export var faction : GAME_FACTION.CLASS
+@export var current_faction : GAME_FACTION.CLASS
 @export var faction_difficult : DIFFICULT
 @export var faction_isPlayer : bool
 @export var unit_limit : int
-
+@export var faction_sector_object : MeshInstance3D
+@export var faction_hive : Node3D
 ####### UNIT SETUP
 
 @export_category("Unit Settings")
 @export var unit_main_prefab : PackedScene
-@export var unit_damage : float  = 1
+@export var unit_cost : int = 1
 @export var unit_speed : float = 50
 @export var unit_base_wingpower :float = 1
-@export var unit_base_power_value : float = 1
+@export var unit_base_power_value : int = 1
 #### INGAME VARIABLES - CURRENT GAMES
 
 var current_water : float = 0
 var current_nectar : float  = 0
 var current_organic : float = 0
 var current_honey : float  = 0
-var current_hivepower : int = 0
-
+var current_factionpower : int = 0
+########  current unit count
+var current_unit_count : int = 0
+var current_unit_max_capacity : int = 1
+var is_buyable :bool = false
 func _ready():
-	JobGlobalManager.set_faction_manager(faction, self)
-func add_resource(_resource : GAME_RESOURCE.TYPE):
+	JobGlobalManager.set_faction_manager(current_faction, self)
+func _process(_delta):
+	is_buyable = check_resource()
+	if is_buyable:
+		buy_unit()
+		is_buyable = false
+
+func check_resource() -> bool:
+	if current_water > unit_cost * 10:
+		print(" can buy with water")
+		return true
+	if current_nectar > unit_cost *5 :
+		print(" can buy with nectar")
+		return true
+	if current_organic > unit_cost *2 :
+		print(" can buy with organic")
+		return true
+	if current_honey > unit_cost :
+		print(" can buy with honey")
+		return true
+	return false
+
+func buy_unit():
+	if current_water > unit_cost * 10:
+		current_water -= unit_cost * 10
+		if faction_isPlayer:
+			Ui.update_resource_values(GAME_RESOURCE.TYPE.WATER, current_water)
+
+	if current_nectar > unit_cost *5 :
+		current_nectar -= unit_cost * 5
+		if faction_isPlayer:
+			Ui.update_resource_values(GAME_RESOURCE.TYPE.NECTAR, current_nectar)
+
+	if current_organic > unit_cost *2 :
+		current_organic -= unit_cost *2
+		if faction_isPlayer:
+			Ui.update_resource_values(GAME_RESOURCE.TYPE.ORGANIC, current_organic)
+
+	if current_honey > unit_cost :
+		current_honey -= unit_cost
+		if faction_isPlayer:
+			Ui.update_resource_values(GAME_RESOURCE.TYPE.HONEY, current_honey)
+	spawn_unit()
+
+	current_factionpower += unit_base_power_value
+	faction_sector_object.scale += Vector3(unit_base_power_value,unit_base_power_value,unit_base_power_value)
+	##### UPGRADE CAPACITY
+	current_unit_count += 1
+	if current_unit_count >= current_unit_max_capacity:
+		current_unit_max_capacity *= 2
+		JobGlobalManager.global_increase_unit_capacity(current_faction, current_unit_max_capacity)
+
+	Ui.update_faction_power(current_faction,current_factionpower)
+	
+func add_resource(_resource : GAME_RESOURCE.TYPE, _amount :int):
 	match _resource:
 		GAME_RESOURCE.TYPE.WATER:
-			current_water += faction_difficult
-			Ui.update_resource_values(_resource, current_water)
+			current_water += _amount
+			if faction_isPlayer:
+				Ui.update_resource_values(_resource, current_water)
 		GAME_RESOURCE.TYPE.NECTAR:
-			current_nectar += faction_difficult
-			Ui.update_resource_values(_resource, current_nectar)
+			current_nectar += _amount
+			if faction_isPlayer:
+				Ui.update_resource_values(_resource, current_nectar)
 		GAME_RESOURCE.TYPE.HONEY:
-			current_honey += faction_difficult
-			Ui.update_resource_values(_resource, current_honey)
+			current_honey += _amount
+			if faction_isPlayer:
+				Ui.update_resource_values(_resource, current_honey)
 		GAME_RESOURCE.TYPE.ORGANIC:
-			current_organic += faction_difficult
-			Ui.update_resource_values(_resource, current_organic)
+			current_organic += _amount
+			if faction_isPlayer:
+				Ui.update_resource_values(_resource, current_organic)
 		_:
 			print("FACTION_RESOURCE ERROR: cant add new resource, invalid resource type.")
 
@@ -54,15 +115,34 @@ func remove_resource(_resource : GAME_RESOURCE.TYPE, value : float):
 	match _resource:
 		GAME_RESOURCE.TYPE.WATER:
 			current_water -= value
-			Ui.update_resource_values(_resource, current_water)
+			if faction_isPlayer:
+				Ui.update_resource_values(_resource, current_water)
 		GAME_RESOURCE.TYPE.NECTAR:
 			current_nectar -= value
-			Ui.update_resource_values(_resource, current_nectar)
+			if faction_isPlayer:
+				Ui.update_resource_values(_resource, current_nectar)
 		GAME_RESOURCE.TYPE.HONEY:
 			current_honey -= value
-			Ui.update_resource_values(_resource, current_honey)
+			if faction_isPlayer:
+				Ui.update_resource_values(_resource, current_honey)
 		GAME_RESOURCE.TYPE.ORGANIC:
 			current_organic -= value
-			Ui.update_resource_values(_resource, current_organic)
+			if faction_isPlayer:
+				Ui.update_resource_values(_resource, current_organic)
 		_:
 			print("FACTION_RESOURCE ERROR: cant remove resource, invalid resource type.")
+
+
+func spawn_unit():
+	#### prefab
+	var instance = unit_main_prefab.instantiate()
+	add_child(instance)
+	instance.global_position = global_position
+	###give stats
+	instance.faction = current_faction
+	instance.hive = faction_hive
+	instance.speed = unit_speed
+	instance.fly_speed = unit_base_wingpower
+	instance.max_items = current_unit_max_capacity
+	print(" finished spawned unit")
+	

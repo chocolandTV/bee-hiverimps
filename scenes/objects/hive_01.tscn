@@ -1,5 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://wbvmp7qbi0xw"]
+[gd_scene load_steps=4 format=3 uid="uid://wbvmp7qbi0xw"]
 
 [ext_resource type="PackedScene" uid="uid://bga4kjutk7mxg" path="res://assets/models/hive.glb" id="1_jc3br"]
+[ext_resource type="Script" path="res://scenes/objects/hive_collector.gd" id="2_vclts"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s46p5"]
+size = Vector3(5.94724, 7.44286, 5.64594)
 
 [node name="hive" instance=ExtResource("1_jc3br")]
+
+[node name="Hive_Collector" type="Area3D" parent="." index="1"]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("2_vclts")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hive_Collector" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.037735, 1.64547, 0.157867)
+shape = SubResource("BoxShape3D_s46p5")
+
+[connection signal="area_entered" from="Hive_Collector" to="Hive_Collector" method="_on_area_entered"]

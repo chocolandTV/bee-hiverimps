@@ -1,5 +1,53 @@
-[gd_scene load_steps=2 format=3 uid="uid://b3ksoestnon2y"]
+[gd_scene load_steps=8 format=3 uid="uid://b3ksoestnon2y"]
 
 [ext_resource type="PackedScene" uid="uid://be4lj8i4fcp4m" path="res://assets/models/grass_02.glb" id="1_7sq0d"]
+[ext_resource type="Script" path="res://scenes/objects/grass_area.gd" id="2_1oi40"]
+[ext_resource type="PackedScene" uid="uid://b1dsdo0y2qcjt" path="res://components/resource/resource_point.tscn" id="2_8yfui"]
 
-[node name="grass_02" instance=ExtResource("1_7sq0d")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_0hyxj"]
+size = Vector3(58.8891, 85.524, 55.2028)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u7p2c"]
+albedo_color = Color(0, 0.550514, 0.190391, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_d7ffh"]
+material = SubResource("StandardMaterial3D_u7p2c")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="Curve" id="Curve_1yl7x"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.983278, 0.00269175), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="grass_02" groups=["organic"] instance=ExtResource("1_7sq0d")]
+script = ExtResource("2_1oi40")
+
+[node name="Grass_Area" type="Area3D" parent="." index="1"]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grass_Area" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0717669, 40.262, -5.21444)
+shape = SubResource("BoxShape3D_0hyxj")
+
+[node name="Timer" type="Timer" parent="." index="2" groups=["organic"]]
+wait_time = 0.5
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="." index="3"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -4.55509, 61.4117, -3.6415)
+emitting = false
+amount = 16
+lifetime = 1.06
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+mesh = SubResource("BoxMesh_d7ffh")
+direction = Vector3(0, 5, 0)
+spread = 180.0
+gravity = Vector3(10, 0, 0)
+initial_velocity_max = 25.0
+angle_max = 720.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_1yl7x")
+
+[node name="Resource_Point" parent="." index="4" instance=ExtResource("2_8yfui")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.77329, 52.9619, -0.666401)

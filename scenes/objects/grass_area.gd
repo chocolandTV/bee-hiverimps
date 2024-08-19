@@ -28,6 +28,6 @@ func on_area_exited(area : Area3D):
 
 func on_timer_timeout():
 	for x in collectors:
-		JobGlobalManager.add_resource(x.faction, GAME_RESOURCE.TYPE.ORGANIC)
+		x.get_resource(GAME_RESOURCE.TYPE.ORGANIC)
 		
 		particles.emitting = true

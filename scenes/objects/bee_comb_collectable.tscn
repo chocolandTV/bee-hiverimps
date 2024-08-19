@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://d37l1ft2xicf4"]
+[gd_scene load_steps=14 format=3 uid="uid://d37l1ft2xicf4"]
 
 [ext_resource type="PackedScene" uid="uid://q22nccst0g4k" path="res://assets/models/bee_Comb_collectable.glb" id="1_0vasr"]
+[ext_resource type="Script" path="res://scenes/objects/bee_comb_collectable.gd" id="2_l2tow"]
 [ext_resource type="Texture2D" uid="uid://dm3mnqlpmmymo" path="res://assets/models/beeComb_tex.png" id="2_t7e8g"]
 [ext_resource type="Texture2D" uid="uid://bv8xbk3oqcyko" path="res://assets/models/beeComb_tex_normal_02.png" id="3_g5h5o"]
+[ext_resource type="Material" uid="uid://cs3ll1hdkv0kw" path="res://resources/materials/sunf_lower_Particlesystem.tres" id="6_f6s32"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_40csd"]
 albedo_texture = ExtResource("2_t7e8g")
@@ -40,6 +42,60 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector3(0, 0, 0)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Cube:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_85erv"]
+resource_name = "collected"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cube:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1.93187),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cube:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1.93187),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 3.14159, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_4hu57"]
 resource_name = "idle"
@@ -73,10 +129,22 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8ouvq"]
 _data = {
 "RESET": SubResource("Animation_pg2o8"),
+"collected": SubResource("Animation_85erv"),
 "idle": SubResource("Animation_4hu57")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_gpblu"]
+size = Vector3(3.44885, 4.93947, 4.28284)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_w1x6k"]
+material = ExtResource("6_f6s32")
+
+[sub_resource type="Curve" id="Curve_vc46v"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.983278, 0.00269175), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [node name="bee_Comb_collectable" instance=ExtResource("1_0vasr")]
+script = ExtResource("2_l2tow")
 
 [node name="Cube" parent="." index="0"]
 surface_material_override/0 = SubResource("StandardMaterial3D_40csd")
@@ -86,3 +154,38 @@ libraries = {
 "": SubResource("AnimationLibrary_8ouvq")
 }
 autoplay = "idle"
+
+[node name="Resource_Area" type="Area3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18141, 0)
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Resource_Area" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0342411, 0.104347, -0.0983276)
+shape = SubResource("BoxShape3D_gpblu")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="." index="3"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 27.7888, 281.771, 0.437983)
+emitting = false
+amount = 16
+lifetime = 1.06
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+mesh = SubResource("PlaneMesh_w1x6k")
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(0, 5, 0)
+spread = 180.0
+gravity = Vector3(10, 0, 0)
+initial_velocity_max = 25.0
+angle_max = 720.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_vc46v")
+
+[node name="Timer" type="Timer" parent="." index="4"]
+wait_time = 0.1
+
+[connection signal="area_entered" from="Resource_Area" to="." method="on_area_entered"]
+[connection signal="area_exited" from="Resource_Area" to="." method="on_area_exited"]
+[connection signal="timeout" from="Timer" to="." method="on_timer_timeout"]

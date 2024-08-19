@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://10o7abboi48p"]
+[gd_scene load_steps=21 format=3 uid="uid://10o7abboi48p"]
 
 [ext_resource type="PackedScene" uid="uid://wbvmp7qbi0xw" path="res://scenes/objects/hive_01.tscn" id="1_1exdv"]
 [ext_resource type="PackedScene" uid="uid://djdnup6u2od52" path="res://scenes/objects/sunf_lower.tscn" id="1_08la1"]
@@ -8,8 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://ceaq50ybm5c31" path="res://scenes/objects/grass_01_solo.tscn" id="2_rmus4"]
 [ext_resource type="PackedScene" uid="uid://bpj8hrbmy3pji" path="res://scenes/objects/grass_03_big.tscn" id="3_5wb30"]
 [ext_resource type="PackedScene" uid="uid://cc7keg0pkgr2d" path="res://scenes/Game_Camera.tscn" id="3_qhusv"]
+[ext_resource type="ArrayMesh" uid="uid://digv65gkf8ylv" path="res://assets/meshes/circle_mesh.obj" id="4_j13bd"]
 [ext_resource type="PackedScene" uid="uid://dp71t7qav017u" path="res://assets/models/erdtree_small.glb" id="5_jibn8"]
+[ext_resource type="Material" uid="uid://cl0diahkluxpi" path="res://resources/materials/hornet_sector_material.tres" id="5_mdvfb"]
 [ext_resource type="PackedScene" uid="uid://dey86aqjnvykb" path="res://assets/models/erdtree.glb" id="6_wfbr0"]
+[ext_resource type="PackedScene" uid="uid://bdkvlb4x5o5i6" path="res://scenes/units/spawning_bee.tscn" id="6_ymln0"]
 [ext_resource type="Environment" uid="uid://dqgx2xd3lwjpw" path="res://resources/enviroment.tres" id="7_63ppr"]
 [ext_resource type="PackedScene" uid="uid://d37l1ft2xicf4" path="res://scenes/objects/bee_comb_collectable.tscn" id="9_85m5b"]
 
@@ -20,12 +23,13 @@ albedo_color = Color(0.2, 0.541176, 0.133333, 1)
 material = SubResource("StandardMaterial3D_aocdq")
 size = Vector2(4000, 4000)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r2r6c"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2gvh5"]
+albedo_color = Color(1, 0.611765, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_420oc"]
 albedo_color = Color(1, 1, 0, 1)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_bt4xy"]
-material = SubResource("StandardMaterial3D_r2r6c")
-size = Vector2(350, 350)
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_bp3jq"]
 
 [node name="Game_World" type="Node3D"]
 
@@ -36,28 +40,62 @@ mesh = SubResource("PlaneMesh_6oqxw")
 
 [node name="Hives" type="Node3D" parent="."]
 
-[node name="Wasp_Hive" type="Node3D" parent="Hives"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1409.62, 233.974, -1560.07)
+[node name="Wasp_Hive" type="Node3D" parent="Hives" node_paths=PackedStringArray("faction_sector_object", "faction_hive")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1541.21, 233.974, 1532.28)
 script = ExtResource("1_js5e2")
+faction_difficult = 1
+unit_limit = 200
+faction_sector_object = NodePath("wasp_sector")
+faction_hive = NodePath("hive")
+unit_main_prefab = ExtResource("6_ymln0")
+unit_speed = 40.0
+unit_base_wingpower = 5.0
 
 [node name="hive" parent="Hives/Wasp_Hive" instance=ExtResource("1_1exdv")]
 transform = Transform3D(56.075, 0, 0, 0, 56.075, 0, 0, 0, 56.075, 0, 0, 0)
 
-[node name="Hornet_Hive" type="Node3D" parent="Hives"]
+[node name="wasp_sector" type="MeshInstance3D" parent="Hives/Wasp_Hive"]
+transform = Transform3D(400, 0, 0, 0, 400, 0, 0, 0, 400, -28.1118, -231.141, -5.63306)
+mesh = ExtResource("4_j13bd")
+skeleton = NodePath("../../../Ground")
+surface_material_override/0 = SubResource("StandardMaterial3D_2gvh5")
+
+[node name="Hornet_Hive" type="Node3D" parent="Hives" node_paths=PackedStringArray("faction_sector_object", "faction_hive")]
+script = ExtResource("1_js5e2")
+faction_difficult = 1
+unit_limit = 25
+faction_sector_object = NodePath("hornet_sector")
+faction_hive = NodePath("hive2")
+unit_main_prefab = ExtResource("6_ymln0")
+unit_speed = 10.0
+unit_base_wingpower = 3.0
 
 [node name="hive2" parent="Hives/Hornet_Hive" instance=ExtResource("1_1exdv")]
 transform = Transform3D(77, 0, 0, 0, 70, 0, 0, 0, 77, -1579.05, 1141.04, 41.7412)
 
-[node name="Bee_Hive" type="Node3D" parent="Hives"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.3986, 81.7285, 1887.21)
+[node name="hornet_sector" type="MeshInstance3D" parent="Hives/Hornet_Hive"]
+transform = Transform3D(400, 0, 0, 0, 400, 0, 0, 0, 400, -1582.21, 5.58646, 0)
+mesh = ExtResource("4_j13bd")
+surface_material_override/0 = ExtResource("5_mdvfb")
+
+[node name="Bee_Hive" type="Node3D" parent="Hives" node_paths=PackedStringArray("faction_sector_object", "faction_hive")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.3986, 81.7285, -1901.72)
+script = ExtResource("1_js5e2")
+faction_difficult = 1
+faction_isPlayer = true
+unit_limit = 10000
+faction_sector_object = NodePath("Bee_sector")
+faction_hive = NodePath("hive")
+unit_main_prefab = ExtResource("6_ymln0")
 
 [node name="hive" parent="Hives/Bee_Hive" instance=ExtResource("1_1exdv")]
 transform = Transform3D(33, 0, 0, 0, 33, 0, 0, 0, 33, 0, 0, 0)
 
 [node name="Bee_sector" type="MeshInstance3D" parent="Hives/Bee_Hive"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1466.03, -78.898, -3448.11)
-mesh = SubResource("PlaneMesh_bt4xy")
+transform = Transform3D(60, 0, 0, 0, 60, 0, 0, 0, 60, 0, -78.8954, 0)
+mesh = ExtResource("4_j13bd")
 skeleton = NodePath("../../../Ground")
+surface_material_override/0 = SubResource("StandardMaterial3D_420oc")
 
 [node name="Enviroment" type="Node3D" parent="."]
 
@@ -264,10 +302,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.3282, 0, 449.096)
 [node name="grass_26" parent="Enviroment" instance=ExtResource("3_5wb30")]
 
 [node name="erdtree_small" parent="Enviroment" instance=ExtResource("5_jibn8")]
-transform = Transform3D(72.345, 0, 0, 0, 72.345, 0, 0, 0, 72.345, 1409.87, 0, -1565.18)
+transform = Transform3D(72.345, 0, 0, 0, 72.345, 0, 0, 0, 72.345, 1537, 0, 1534.61)
 
 [node name="erdtree_small_bee" parent="Enviroment" instance=ExtResource("5_jibn8")]
-transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, -56.3881, 0, 1885.35)
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, -54.8746, 0, -1901.2)
 
 [node name="erdtree" parent="Enviroment" instance=ExtResource("6_wfbr0")]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -1580.69, 0, 0)
@@ -309,13 +347,13 @@ transform = Transform3D(-0.046967, 0, 0.998896, 0, 1, 0, -0.998896, 0, -0.046967
 [node name="bee_Comb_collectable" parent="Objects" instance=ExtResource("9_85m5b")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 259.036, -156.305)
 
-[node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_5dbd4")]
-transform = Transform3D(1, 0, 0, -3.55271e-15, 1, 0, 7.10543e-15, 0, 1, -3.72529e-09, 258.871, -183.212)
+[node name="Player" parent="." node_paths=PackedStringArray("camera") groups=["units"] instance=ExtResource("2_5dbd4")]
+transform = Transform3D(1, 0, 0, -3.55271e-15, 1, 0, 7.10543e-15, 0, 1, -3.72529e-09, 217.019, -1908.45)
 fly_speed = 5.0
 camera = NodePath("../Camera3D")
 
 [node name="Camera3D" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_qhusv")]
-transform = Transform3D(-1, 1.77636e-15, -8.74228e-08, -2.26267e-08, 0.965926, 0.258819, 8.44439e-08, 0.258819, -0.965926, -0.06, 263.691, -192.965)
+transform = Transform3D(-1, -3.19744e-14, -8.74228e-08, -2.26267e-08, 0.965926, 0.258819, 8.44439e-08, 0.258819, -0.965926, -0.06, 221.839, -1918.21)
 current = true
 player = NodePath("../Player")
 target_distance = 8.92
@@ -325,3 +363,8 @@ environment = ExtResource("7_63ppr")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.965926, 0.258819, 0, -0.258819, -0.965926, 0, 449.53, 0)
+
+[node name="World_bounds" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World_bounds"]
+shape = SubResource("WorldBoundaryShape3D_bp3jq")

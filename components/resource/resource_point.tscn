@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://b1dsdo0y2qcjt"]
+
+[node name="Resource_Point" type="Node3D" groups=["resource_point"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.4669, 281.886, 0)

@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://djdnup6u2od52"]
+[gd_scene load_steps=12 format=3 uid="uid://djdnup6u2od52"]
 
 [ext_resource type="PackedScene" uid="uid://dxx52n1q2yx82" path="res://assets/models/sunfLower.glb" id="1_dtwdj"]
 [ext_resource type="Script" path="res://scenes/objects/sunf_lower.gd" id="2_8etbr"]
+[ext_resource type="PackedScene" uid="uid://d37l1ft2xicf4" path="res://scenes/objects/bee_comb_collectable.tscn" id="3_4o65q"]
 [ext_resource type="PackedScene" uid="uid://cm7uey6f12gcv" path="res://components/resource/nectar_area.tscn" id="3_d45g8"]
 [ext_resource type="Material" uid="uid://cs3ll1hdkv0kw" path="res://resources/materials/sunf_lower_Particlesystem.tres" id="3_qtf4r"]
+[ext_resource type="PackedScene" uid="uid://b1dsdo0y2qcjt" path="res://components/resource/resource_point.tscn" id="5_wkubj"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_v2eul"]
 material = ExtResource("3_qtf4r")
@@ -40,8 +42,9 @@ _data = {
 "sun_flower_dance": SubResource("Animation_8ily2")
 }
 
-[node name="sunfLower" instance=ExtResource("1_dtwdj")]
+[node name="sunfLower" groups=["flowers"] instance=ExtResource("1_dtwdj")]
 script = ExtResource("2_8etbr")
+bee_comb_scene = ExtResource("3_4o65q")
 
 [node name="SunFlower" parent="." index="0"]
 transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
@@ -78,4 +81,8 @@ libraries = {
 }
 autoplay = "sun_flower_dance"
 
+[node name="Resource_Point" parent="." index="5" instance=ExtResource("5_wkubj")]
+
+[connection signal="area_entered" from="Nectar_Area" to="." method="on_area_entered"]
+[connection signal="area_exited" from="Nectar_Area" to="." method="on_area_exited"]
 [connection signal="timeout" from="Timer" to="." method="on_timer_timeout"]

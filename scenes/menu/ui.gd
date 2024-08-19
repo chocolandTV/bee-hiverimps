@@ -22,6 +22,11 @@ extends Control
 @onready var label_faction_beepower_value : Label = $PanelContainer/MarginContainer/GridContainer/beepower_value
 @onready var label_faction_wasppower_value : Label = $PanelContainer/MarginContainer/GridContainer/wasppower_value
 @onready var label_faction_hornetpower_value : Label = $PanelContainer/MarginContainer/GridContainer/hornetpower_value
+########  VALUE CAPACITY RESOURCE
+@onready var label_capacity_water : Label =$Inventar_Panel/MarginContainer/GridContainer/water_label
+@onready var label_capacity_nectar : Label =$Inventar_Panel/MarginContainer/GridContainer/nectar_label
+@onready var label_capacity_organic : Label =$Inventar_Panel/MarginContainer/GridContainer/organic_label
+@onready var label_capacity_honey : Label =$Inventar_Panel/MarginContainer/GridContainer/honey_label
 
 
 var player_node : CharacterBody3D
@@ -32,7 +37,25 @@ func _ready():
 	# windows_size  =  get_viewport().get_visible_rect().size
 	window_size = get_viewport().get_window().size * 0.94
 	print(window_size)
+func clear_player_backpack():
+	label_capacity_water.text = str(0)
+	label_capacity_nectar.text = str(0)
+	label_capacity_organic.text= str(0)
+	label_capacity_honey.text = str(0)
 
+func update_player_backpack(_resource : GAME_RESOURCE.TYPE, _value : int):
+	match _resource:
+		GAME_RESOURCE.TYPE.WATER:
+			label_capacity_water.text = str(_value)
+		GAME_RESOURCE.TYPE.NECTAR:
+			label_capacity_nectar.text = str(_value)
+		GAME_RESOURCE.TYPE.ORGANIC:
+			label_capacity_organic.text= str(_value)
+		GAME_RESOURCE.TYPE.HONEY:
+			label_capacity_honey.text = str(_value)
+		_:
+			#default
+			print("Error update Resource_value, no matches on _Type were found : ", _resource)
 
 func update_resource_values(_type : GAME_RESOURCE.TYPE,_value : float):
 	match _type:
