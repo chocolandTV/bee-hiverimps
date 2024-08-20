@@ -27,7 +27,10 @@ extends Control
 @onready var label_capacity_nectar : Label =$Inventar_Panel/MarginContainer/GridContainer/nectar_label
 @onready var label_capacity_organic : Label =$Inventar_Panel/MarginContainer/GridContainer/organic_label
 @onready var label_capacity_honey : Label =$Inventar_Panel/MarginContainer/GridContainer/honey_label
-
+############# value quest label
+@onready var quest_label : Label =$New_Unit_Panel/MarginContainer/Panel/MarginContainer/VBoxContainer/Quest_Label
+############# value win screen
+@onready var win_container : PanelContainer =$Win_Container
 
 var player_node : CharacterBody3D
 var window_size : Vector2  =Vector2 (1920,1080)
@@ -37,11 +40,18 @@ func _ready():
 	# windows_size  =  get_viewport().get_visible_rect().size
 	window_size = get_viewport().get_window().size * 0.94
 	print(window_size)
+
 func clear_player_backpack():
 	label_capacity_water.text = str(0)
 	label_capacity_nectar.text = str(0)
 	label_capacity_organic.text= str(0)
 	label_capacity_honey.text = str(0)
+
+func update_quest(_value):
+	quest_label.text= ("%s /100" % str(_value))
+
+func set_win_panel(_value : bool):
+	win_container.on_win_menu(_value)
 
 func update_player_backpack(_resource : GAME_RESOURCE.TYPE, _value : int):
 	match _resource:

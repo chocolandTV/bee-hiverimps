@@ -57,4 +57,4 @@ scale_amount_curve = SubResource("Curve_yqnh3")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.773289, 52.9619, -0.666401)
 
 [node name="Resource_Health_Comp" parent="." index="5" instance=ExtResource("4_63qu5")]
-max_resource_range = Vector2i(50, 100)
+max_resource_range = Vector2i(25, 55)

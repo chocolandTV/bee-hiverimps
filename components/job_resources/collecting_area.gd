@@ -4,7 +4,7 @@ extends Area3D
 var current_resource : GAME_RESOURCE.TYPE
 var area
 func _ready():
-	pass
+	timer.timeout.connect(on_timer_timeout)
 
 func is_working(_value : bool, _type : GAME_RESOURCE.TYPE, _area):
 	current_resource = _type
@@ -17,4 +17,5 @@ func is_working(_value : bool, _type : GAME_RESOURCE.TYPE, _area):
 
 func on_timer_timeout():
 	get_parent().get_resource(current_resource)
+	
 	area.on_collected()

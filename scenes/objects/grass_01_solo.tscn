@@ -121,8 +121,6 @@ scale_amount_curve = SubResource("Curve_ts4yx")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.77329, 52.9619, -0.666401)
 
 [node name="Resource_Health_Comp" parent="." index="6" instance=ExtResource("4_x3xvb")]
-max_resource_range = Vector2i(10, 50)
+max_resource_range = Vector2i(5, 25)
 
-[connection signal="area_entered" from="Grass_Area" to="." method="on_area_entered"]
-[connection signal="area_exited" from="Grass_Area" to="." method="on_area_exited"]
 [connection signal="timeout" from="Timer" to="." method="on_timer_timeout"]

@@ -6,7 +6,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_s46p5"]
 size = Vector3(5.94724, 7.44286, 5.64594)
 
-[node name="hive" instance=ExtResource("1_jc3br")]
+[node name="hive" groups=["Hive"] instance=ExtResource("1_jc3br")]
 
 [node name="Hive_Collector" type="Area3D" parent="." index="1"]
 collision_layer = 0

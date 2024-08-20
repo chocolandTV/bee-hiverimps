@@ -1,19 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://bdkvlb4x5o5i6"]
+[gd_scene load_steps=8 format=3 uid="uid://dro6hbhtb1fn"]
 
-[ext_resource type="PackedScene" uid="uid://blryktpc55md8" path="res://assets/models/mainBee.glb" id="1_qjt5v"]
-[ext_resource type="Texture2D" uid="uid://b7denawa16kdv" path="res://assets/models/mainBee_Bee_material.png" id="2_qx53l"]
-[ext_resource type="Script" path="res://scenes/units/bee_behaviour.gd" id="2_srrj5"]
-[ext_resource type="PackedScene" uid="uid://ch8tuj4883sgv" path="res://components/job_resources/collecting_area.tscn" id="4_216ih"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uh0dr"]
-albedo_texture = ExtResource("2_qx53l")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmebm"]
-transparency = 1
-blend_mode = 1
-albedo_color = Color(0, 1, 1, 1)
-rim_enabled = true
-rim = 0.2
+[ext_resource type="PackedScene" uid="uid://gaj7ce8ijy8d" path="res://scenes/characters/Instance_Characters/base_wasp.tscn" id="1_hht5f"]
+[ext_resource type="PackedScene" uid="uid://ch8tuj4883sgv" path="res://components/job_resources/collecting_area.tscn" id="4_mhv7x"]
 
 [sub_resource type="Animation" id="Animation_fch4x"]
 length = 0.001
@@ -209,52 +197,32 @@ _data = {
 "idle": SubResource("Animation_01ocm")
 }
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_4q1dl"]
-radius = 2.34387
+[sub_resource type="SphereShape3D" id="SphereShape3D_75j2g"]
+radius = 4.66114
 
-[node name="unit_Bee" groups=["units"] instance=ExtResource("1_qjt5v")]
-script = ExtResource("2_srrj5")
+[node name="Unit_Wasp" type="Node3D"]
 
-[node name="Armature" parent="." index="0"]
-transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, 0, 0)
+[node name="mainwasp" parent="." instance=ExtResource("1_hht5f")]
 
-[node name="Skeleton3D" parent="Armature" index="0"]
-bones/0/position = Vector3(0, 0, -2.08088)
-bones/1/position = Vector3(0, 0.882737, 0)
-bones/3/position = Vector3(4.39256e-17, 1.2463, -4.65661e-10)
-bones/6/position = Vector3(-1.99912e-17, 0.868311, 1.18243e-10)
-bones/7/position = Vector3(0.601607, 0.307853, 2.44901)
-bones/8/position = Vector3(-0.572857, 0.364269, 2.35876)
-bones/9/position = Vector3(0.593032, 1.99511, -1.093)
-bones/9/rotation = Quaternion(-5.56057e-08, -0.593423, 0.708891, -0.381212)
-bones/10/position = Vector3(-0.652714, 1.99511, -1.11217)
-bones/10/rotation = Quaternion(1.36469e-07, -0.553797, 0.708891, 0.436787)
-bones/11/position = Vector3(0.508475, 2.15348, 0.987475)
-bones/11/rotation = Quaternion(6.87907e-08, 0.60639, 0.709247, -0.359528)
-bones/15/rotation = Quaternion(8.24585e-09, 0.614555, 0.709247, 0.345385)
-
-[node name="Bee" parent="Armature/Skeleton3D" index="0"]
-surface_material_override/0 = SubResource("StandardMaterial3D_uh0dr")
-surface_material_override/1 = SubResource("StandardMaterial3D_tmebm")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="mainwasp"]
+root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_j7nin")
 }
 autoplay = "flying"
 
-[node name="Collecting_Area" parent="." index="2" instance=ExtResource("4_216ih")]
+[node name="Collecting_Area" parent="." instance=ExtResource("4_mhv7x")]
 collision_layer = 180
 
-[node name="Timer" type="Timer" parent="." index="3"]
+[node name="Timer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
 
-[node name="HitBox_Area" type="Area3D" parent="." index="4"]
+[node name="HitBox_Area" type="Area3D" parent="."]
 collision_layer = 0
 collision_mask = 256
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox_Area" index="0"]
-shape = SubResource("SphereShape3D_4q1dl")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox_Area"]
+shape = SubResource("SphereShape3D_75j2g")
 
-[connection signal="area_entered" from="HitBox_Area" to="." method="on_enemy_entered"]
+[editable path="mainwasp"]

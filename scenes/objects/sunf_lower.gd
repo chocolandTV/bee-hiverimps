@@ -9,7 +9,9 @@ var current_nectar : float
 
 var current_sunflower_collected : int = 0
 
-var collectors : Array[Area3D]
+func _ready():
+	$Nectar_Area.area_entered.connect(on_area_entered)
+	$Nectar_Area.area_exited.connect(on_area_exited)
 
 func on_area_entered(area : Area3D):
 	area.is_working(true, GAME_RESOURCE.TYPE.NECTAR, self)

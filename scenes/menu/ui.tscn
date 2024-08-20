@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c01xrshddxx6h"]
+[gd_scene load_steps=22 format=3 uid="uid://c01xrshddxx6h"]
 
 [ext_resource type="Script" path="res://scenes/menu/ui.gd" id="1_q36sn"]
 [ext_resource type="Script" path="res://scenes/menu/debug_player_speed.gd" id="2_rpau7"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://x4cyhui00qwn" path="res://assets/images/UI/comb_panel.png" id="5_y2a5k"]
 [ext_resource type="Texture2D" uid="uid://cad213kgvifdc" path="res://assets/images/UI/water_icon.png" id="7_xnuv2"]
 [ext_resource type="Texture2D" uid="uid://8x43jph1unf5" path="res://assets/images/UI/nectar_icon.png" id="8_uty0f"]
+[ext_resource type="Script" path="res://scenes/menu/win_container.gd" id="9_pc234"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dr7lh"]
 
@@ -64,6 +65,9 @@ _data = {
 }
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7pcrk"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kp3pd"]
+modulate_color = Color(0.478431, 0.968627, 0.301961, 1)
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -313,9 +317,9 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer" type="VBoxContainer" parent="New_Unit_Panel/MarginContainer/Panel/MarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="New_Unit_Panel/MarginContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="Quest_Label" type="Label" parent="New_Unit_Panel/MarginContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "New Bee"
+text = "1 / 100"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="New_Unit_Panel/MarginContainer/Panel/MarginContainer/VBoxContainer"]
@@ -401,3 +405,41 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "0"
 horizontal_alignment = 1
+
+[node name="Win_Container" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 270.0
+offset_top = 208.0
+offset_right = 835.0
+offset_bottom = 461.0
+script = ExtResource("9_pc234")
+
+[node name="Panel" type="Panel" parent="Win_Container"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_kp3pd")
+
+[node name="Label" type="Label" parent="Win_Container/Panel"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 34.0
+offset_right = 566.0
+offset_bottom = 135.0
+theme_override_font_sizes/font_size = 35
+text = "You Win
+Thanks for playing"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="Win_Container/Panel"]
+layout_mode = 0
+offset_left = 177.0
+offset_top = 156.0
+offset_right = 375.0
+offset_bottom = 228.0
+theme_override_colors/font_hover_color = Color(1, 0.572549, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "Continue"
+icon = ExtResource("8_uty0f")
+
+[connection signal="pressed" from="Win_Container/Panel/Button" to="Win_Container" method="on_win_menu" binds= [false]]

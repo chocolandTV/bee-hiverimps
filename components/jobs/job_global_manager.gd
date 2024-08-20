@@ -6,6 +6,7 @@ var faction_bee : HiveManager  =null
 var faction_wasp : HiveManager = null
 var faction_hornet : HiveManager = null
 
+
 signal increase_unit_upgrade(_faction : GAME_FACTION,_value : int)
 
 func set_difficult():

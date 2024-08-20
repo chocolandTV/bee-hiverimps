@@ -83,7 +83,4 @@ autoplay = "sun_flower_dance"
 [node name="Resource_Point" parent="." index="4" instance=ExtResource("5_wkubj")]
 
 [node name="Resource_Health_Comp" parent="." index="5" instance=ExtResource("7_qq7ek")]
-max_resource_range = Vector2i(100, 200)
-
-[connection signal="area_entered" from="Nectar_Area" to="." method="on_area_entered"]
-[connection signal="area_exited" from="Nectar_Area" to="." method="on_area_exited"]
+max_resource_range = Vector2i(100, 1000)

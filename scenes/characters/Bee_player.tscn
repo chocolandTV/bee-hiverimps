@@ -1,9 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://bakjg7lmdboxx"]
+[gd_scene load_steps=16 format=3 uid="uid://bakjg7lmdboxx"]
 
 [ext_resource type="Script" path="res://scenes/characters/bee_player.gd" id="1_jivfb"]
 [ext_resource type="PackedScene" uid="uid://krtja86ac801" path="res://scenes/characters/Instance_Characters/main_bee.tscn" id="2_sb44p"]
-[ext_resource type="PackedScene" uid="uid://ch8tuj4883sgv" path="res://components/job_resources/collecting_area.tscn" id="3_kgf7j"]
 [ext_resource type="Texture2D" uid="uid://b7denawa16kdv" path="res://assets/models/mainBee_Bee_material.png" id="3_we7lj"]
+[ext_resource type="Script" path="res://components/job_resources/collecting_area.gd" id="4_dqx5w"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lcj0i"]
 
@@ -253,6 +253,9 @@ _data = {
 "flying": SubResource("Animation_c338g")
 }
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_40vqx"]
+radius = 11.68
+
 [node name="Bee_player" type="CharacterBody3D" groups=["Player"]]
 collision_layer = 5
 script = ExtResource("1_jivfb")
@@ -283,7 +286,15 @@ libraries = {
 "": SubResource("AnimationLibrary_i21t4")
 }
 
-[node name="Collecting_Area" parent="." instance=ExtResource("3_kgf7j")]
+[node name="Collecting_Area" type="Area3D" parent="."]
 collision_layer = 244
+collision_mask = 0
+script = ExtResource("4_dqx5w")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collecting_Area"]
+shape = SubResource("SphereShape3D_40vqx")
+
+[node name="Timer" type="Timer" parent="Collecting_Area"]
+wait_time = 0.7
 
 [editable path="mainBee"]

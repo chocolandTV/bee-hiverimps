@@ -294,7 +294,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -123.5, 0, 352.842)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88.2067, 0, 392.183)
 
 [node name="grass_25" parent="Enviroment" instance=ExtResource("1_8xcln")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -123.5, 0, 449.096)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -123.5, 0, -1738.3)
 
 [node name="Grass25" parent="Enviroment" instance=ExtResource("2_rmus4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.3282, 0, 449.096)

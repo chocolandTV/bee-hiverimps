@@ -22,7 +22,7 @@ enum DIFFICULT{
 @export_category("Unit Settings")
 @export var unit_main_prefab : PackedScene
 @export var unit_cost : int = 1
-@export var unit_speed : float = 50
+@export var unit_speed : float = 35
 @export var unit_base_wingpower :float = 1
 @export var unit_base_power_value : int = 1
 #### INGAME VARIABLES - CURRENT GAMES
@@ -35,6 +35,7 @@ var current_factionpower : int = 0
 ########  current unit count
 var current_unit_count : int = 0
 var current_unit_max_capacity : int = 1
+var upgrade_steps : int = 10
 var is_buyable :bool = false
 func _ready():
 	JobGlobalManager.set_faction_manager(current_faction, self)
@@ -45,16 +46,16 @@ func _process(_delta):
 		is_buyable = false
 
 func check_resource() -> bool:
-	if current_water > unit_cost * 10:
+	if current_water > unit_cost * 20:
 		print(" can buy with water")
 		return true
-	if current_nectar > unit_cost *5 :
+	if current_nectar > unit_cost *10 :
 		print(" can buy with nectar")
 		return true
-	if current_organic > unit_cost *2 :
+	if current_organic > unit_cost *10 :
 		print(" can buy with organic")
 		return true
-	if current_honey > unit_cost :
+	if current_honey > unit_cost * 5:
 		print(" can buy with honey")
 		return true
 	return false
@@ -85,12 +86,19 @@ func buy_unit():
 	faction_sector_object.scale += Vector3(unit_base_power_value,unit_base_power_value,unit_base_power_value) *facton_sector_objects_size
 	##### UPGRADE CAPACITY
 	current_unit_count += 1
-	if current_unit_count >= current_unit_max_capacity:
-		current_unit_max_capacity *= 2
-		print("FACTION UPGRADE %d : LEVEL %d" % [current_faction, current_unit_max_capacity])
+
+	if faction_isPlayer:
+		Ui.update_quest(current_unit_count)
+		if current_unit_count >= 100:
+			Ui.set_win_panel(true)
+
+	if current_unit_count >= upgrade_steps:
+		upgrade_steps += 10
+		current_unit_max_capacity += 2
+		print("FACTION UPGRADE %d : LEVEL %d" % [upgrade_steps, current_unit_max_capacity])
 		JobGlobalManager.global_increase_unit_upgrade(current_faction, current_unit_max_capacity)
 
-	Ui.update_faction_power(current_faction,current_factionpower)
+	Ui.update_faction_power(current_faction,current_unit_max_capacity)
 	
 func add_resource(_resource : GAME_RESOURCE.TYPE, _amount :int):
 	match _resource:
@@ -141,11 +149,5 @@ func spawn_unit():
 	add_child(instance)
 	instance.global_position = global_position
 	###give stats
-	instance.faction = current_faction
-	instance.hive = faction_hive
-	instance.speed = unit_speed
-	instance.fly_speed = unit_base_wingpower
-	instance.max_items = current_unit_max_capacity
-	
-	print(" finished spawned unit")
-	
+	instance.set_stats(current_faction, faction_hive, unit_speed + current_unit_max_capacity, unit_base_wingpower + current_unit_max_capacity, current_unit_max_capacity)
+

@@ -1,6 +1,7 @@
 extends Node3D
 ######### get from Mother
 @onready var timer :Timer =$Timer
+@onready var visuals_object : Node3D =$Armature
 
 ###### FOLLOW VARIABLES
 var max_player_distance : float = 1000
@@ -36,10 +37,20 @@ func _ready():
 	
 	current_state = UNIT_STATE.IDLE
 
+func set_stats(_faction, _hive, _speed, _flyspeed, _max_items):
+	### get data on birth
+	visuals_object.position = Vector3(randi_range(0,11),randi_range(0,11),randi_range(0,11)) *6.0
+	faction = _faction
+	hive = _hive
+	speed = _speed
+	fly_speed = _flyspeed
+	max_items = _max_items
 
 func on_upgrade(_faction, _value):
 	if(_faction == faction):
-		max_items = _value
+		max_items += _value
+		speed += _value
+		fly_speed += _value
 
 func _physics_process(_delta):
 	handle_state()

@@ -118,4 +118,6 @@ func send_resource():
 
 func on_upgrade(_faction, _value):
     if(_faction == faction):
-        max_items = _value
+        max_items += _value
+        speed += _value
+        fly_speed += _value
