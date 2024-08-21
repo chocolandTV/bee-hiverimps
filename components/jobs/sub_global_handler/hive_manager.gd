@@ -28,7 +28,7 @@ enum DIFFICULT{
 #### INGAME VARIABLES - CURRENT GAMES
 
 var current_water : float = 0
-var current_nectar : float  = 0
+@export  var current_nectar : float  = 0
 var current_organic : float = 0
 var current_honey : float  = 0
 var current_factionpower : int = 0
@@ -98,7 +98,7 @@ func buy_unit():
 		print("FACTION UPGRADE %d : LEVEL %d" % [upgrade_steps, current_unit_max_capacity])
 		JobGlobalManager.global_increase_unit_upgrade(current_faction, current_unit_max_capacity)
 
-	Ui.update_faction_power(current_faction,current_unit_max_capacity)
+	Ui.update_faction_power(current_faction,current_factionpower)
 	
 func add_resource(_resource : GAME_RESOURCE.TYPE, _amount :int):
 	match _resource:
@@ -142,7 +142,11 @@ func remove_resource(_resource : GAME_RESOURCE.TYPE, value : float):
 		_:
 			print("FACTION_RESOURCE ERROR: cant remove resource, invalid resource type.")
 
-
+func start_planets(_instance : PackedScene):
+	var instance = _instance.instantiate()
+	get_child(0).add_child(instance)
+	instance.global_position = get_child(0).global_position
+	get_child(0).get_child(0).visible = false
 func spawn_unit():
 	#### prefab
 	var instance = unit_main_prefab.instantiate()

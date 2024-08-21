@@ -12,6 +12,7 @@ extends CharacterBody3D
 @export var clamp_angle : Vector2 = Vector2(-45, 45)
 @onready var bee_mesh : Node3D = $mainBee
 @onready var anim : AnimationPlayer = $mainBee/AnimationPlayer
+@onready var particle : CPUParticles3D  =$CPUParticles3D
 #CONST
 const STRAFE_DAMPING : float = 0.75
 #move_towards
@@ -21,7 +22,7 @@ var move_direction : Vector3
 ##### ITEM VARS
 var items : Dictionary ={
     "water":0,
-    "nectar" : 100,
+    "nectar" : 10,
     "organic":0,
     "honey" : 0
 }
@@ -46,6 +47,16 @@ var fly_direction : float = 0.0
 func _ready():
     Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
     JobGlobalManager.increase_unit_upgrade.connect(on_upgrade)
+    JobGlobalManager.change_world.connect(on_world_change)
+
+func on_world_change():
+    global_position = Vector3.ZERO
+    velocity = Vector3.ZERO
+    item_count = 0
+    items["water"] = 0
+    items["nectar"] = 0
+    items["organic"] =0
+    items["honey"] =0
 
 func _input(event):
     input_direction = Input.get_vector("move_right", "move_left", "move_backward", "move_forward")
@@ -84,6 +95,7 @@ func _physics_process(_delta):
 
 func get_resource(_resource : GAME_RESOURCE.TYPE):
     if  item_count >= (max_items * capacity_multiplier):
+        particle.emitting = true
         return #### later drop nectar
     if _resource == GAME_RESOURCE.TYPE.WATER:
         items["water"] += 1
@@ -102,6 +114,7 @@ func get_resource(_resource : GAME_RESOURCE.TYPE):
         item_count += 1
         Ui.update_player_backpack(GAME_RESOURCE.TYPE.HONEY,items["honey"])
 
+
 func send_resource():
 
     JobGlobalManager.add_resource(faction, GAME_RESOURCE.TYPE.WATER, items["water"])
@@ -115,9 +128,10 @@ func send_resource():
     items["organic"] =0
     items["honey"] =0
     Ui.clear_player_backpack()
+    particle.emitting = false
 
 func on_upgrade(_faction, _value):
     if(_faction == faction):
         max_items += _value
         speed += _value
-        fly_speed += _value
+        fly_speed += (_value /10)

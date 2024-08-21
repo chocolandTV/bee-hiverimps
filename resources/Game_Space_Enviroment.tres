@@ -1,0 +1,21 @@
+[gd_resource type="Environment" load_steps=4 format=3 uid="uid://7l5cfaie4fb2"]
+
+[ext_resource type="Texture2D" uid="uid://c371oqj5ajlpr" path="res://assets/images/planet/stars.png" id="1_hpycd"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_jic50"]
+panorama = ExtResource("1_hpycd")
+
+[sub_resource type="Sky" id="Sky_o7opl"]
+sky_material = SubResource("PanoramaSkyMaterial_jic50")
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_o7opl")
+tonemap_mode = 2
+fog_mode = 1
+fog_light_color = Color(0.024756, 0.0299577, 0.03933, 1)
+fog_density = 1.0
+fog_height = 118.92
+adjustment_enabled = true
+adjustment_brightness = 1.46
+adjustment_saturation = 1.41

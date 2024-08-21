@@ -1,11 +1,16 @@
-[gd_scene load_steps=16 format=3 uid="uid://bakjg7lmdboxx"]
+[gd_scene load_steps=18 format=3 uid="uid://bakjg7lmdboxx"]
 
 [ext_resource type="Script" path="res://scenes/characters/bee_player.gd" id="1_jivfb"]
 [ext_resource type="PackedScene" uid="uid://krtja86ac801" path="res://scenes/characters/Instance_Characters/main_bee.tscn" id="2_sb44p"]
 [ext_resource type="Texture2D" uid="uid://b7denawa16kdv" path="res://assets/models/mainBee_Bee_material.png" id="3_we7lj"]
 [ext_resource type="Script" path="res://components/job_resources/collecting_area.gd" id="4_dqx5w"]
+[ext_resource type="ArrayMesh" uid="uid://cucl0a2mxi44o" path="res://assets/meshes/tears_full_cargo.obj" id="4_vl6cy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lcj0i"]
+
+[sub_resource type="Curve" id="Curve_q3s0w"]
+_data = [Vector2(0.0100335, 1), 0.0, 0.0, 0, 0, Vector2(0.993311, 0.0201885), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uh0dr"]
 albedo_texture = ExtResource("3_we7lj")
@@ -262,6 +267,16 @@ script = ExtResource("1_jivfb")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_lcj0i")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+transform = Transform3D(-0.183013, -0.859789, -0.476727, 0.183013, -0.506236, 0.842752, -0.965926, 0.0669873, 0.25, 2.10955, 0.73686, -0.68239)
+emitting = false
+amount = 1
+lifetime = 2.0
+mesh = ExtResource("4_vl6cy")
+direction = Vector3(0, 0, 0)
+gravity = Vector3(0, -1, 0)
+scale_amount_curve = SubResource("Curve_q3s0w")
 
 [node name="mainBee" parent="." instance=ExtResource("2_sb44p")]
 

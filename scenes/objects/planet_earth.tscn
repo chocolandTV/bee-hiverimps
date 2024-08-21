@@ -1,5 +1,58 @@
-[gd_scene load_steps=2 format=3 uid="uid://bpo68rp3mcser"]
+[gd_scene load_steps=8 format=3 uid="uid://bpo68rp3mcser"]
 
 [ext_resource type="PackedScene" uid="uid://dp4t1kecbnlmi" path="res://assets/models/planet.glb" id="1_8h5rp"]
+[ext_resource type="Script" path="res://scenes/objects/planet_earth.gd" id="2_bm6k1"]
+[ext_resource type="PackedScene" uid="uid://b1dsdo0y2qcjt" path="res://components/resource/resource_point.tscn" id="2_ta6yj"]
+[ext_resource type="PackedScene" uid="uid://itgxjcd0xb53" path="res://components/resource/resource_health_comp.tscn" id="3_xnetk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vt4qe"]
+transparency = 1
+albedo_color = Color(0.239216, 0.239216, 0.239216, 0.160784)
+
+[sub_resource type="SphereMesh" id="SphereMesh_oshwg"]
+material = SubResource("StandardMaterial3D_vt4qe")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_b13bo"]
+radius = 22.86
 
 [node name="planet" instance=ExtResource("1_8h5rp")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+script = ExtResource("2_bm6k1")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="." index="1"]
+amount = 16
+randomness = 1.0
+lifetime_randomness = 1.0
+mesh = SubResource("SphereMesh_oshwg")
+emission_shape = 1
+emission_sphere_radius = 22.0
+direction = Vector3(1, 0, 1)
+spread = 180.0
+gravity = Vector3(1, 0, 1)
+initial_velocity_max = 12.0
+angular_velocity_max = 12.0
+damping_min = 0.1
+damping_max = 0.4
+angle_max = 360.0
+scale_amount_min = 0.3
+scale_amount_max = 0.5
+
+[node name="Nectar_Area" type="Area3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 287.194, 0)
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Nectar_Area" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.1937, -9.43622, 0)
+shape = SubResource("SphereShape3D_b13bo")
+
+[node name="Resource_Point" parent="." index="3" instance=ExtResource("2_ta6yj")]
+
+[node name="Resource_Health_Comp" parent="." index="4" instance=ExtResource("3_xnetk")]
+max_resource_range = Vector2i(1000, 1000)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5.14482, 0)
+spot_range = 8.4268

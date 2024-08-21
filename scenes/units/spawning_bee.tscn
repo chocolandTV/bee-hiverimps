@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://bdkvlb4x5o5i6"]
+[gd_scene load_steps=14 format=3 uid="uid://bdkvlb4x5o5i6"]
 
 [ext_resource type="PackedScene" uid="uid://blryktpc55md8" path="res://assets/models/mainBee.glb" id="1_qjt5v"]
 [ext_resource type="Texture2D" uid="uid://b7denawa16kdv" path="res://assets/models/mainBee_Bee_material.png" id="2_qx53l"]
 [ext_resource type="Script" path="res://scenes/units/bee_behaviour.gd" id="2_srrj5"]
 [ext_resource type="PackedScene" uid="uid://ch8tuj4883sgv" path="res://components/job_resources/collecting_area.tscn" id="4_216ih"]
+[ext_resource type="ArrayMesh" uid="uid://cucl0a2mxi44o" path="res://assets/meshes/tears_full_cargo.obj" id="5_lvpuo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uh0dr"]
 albedo_texture = ExtResource("2_qx53l")
@@ -212,6 +213,10 @@ _data = {
 [sub_resource type="SphereShape3D" id="SphereShape3D_4q1dl"]
 radius = 2.34387
 
+[sub_resource type="Curve" id="Curve_noyi7"]
+_data = [Vector2(0.0100335, 1), 0.0, 0.0, 0, 0, Vector2(0.993311, 0.0201885), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [node name="unit_Bee" groups=["units"] instance=ExtResource("1_qjt5v")]
 script = ExtResource("2_srrj5")
 
@@ -256,5 +261,15 @@ collision_mask = 256
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox_Area" index="0"]
 shape = SubResource("SphereShape3D_4q1dl")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="." index="5"]
+transform = Transform3D(-0.183013, -0.859789, -0.476727, 0.183013, -0.506236, 0.842752, -0.965926, 0.0669873, 0.25, 2.10955, 0.73686, -0.68239)
+emitting = false
+amount = 1
+lifetime = 2.0
+mesh = ExtResource("5_lvpuo")
+direction = Vector3(0, 0, 0)
+gravity = Vector3(0, -1, 0)
+scale_amount_curve = SubResource("Curve_noyi7")
 
 [connection signal="area_entered" from="HitBox_Area" to="." method="on_enemy_entered"]

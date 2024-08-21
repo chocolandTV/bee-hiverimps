@@ -178,37 +178,37 @@ show_percentage = false
 [node name="water_value" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
-text = "1234"
+text = "0	"
 
 [node name="nectar_value" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
-text = "1234"
+text = "0	"
 
 [node name="organic_value" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
-text = "1234"
+text = "0	"
 
 [node name="honey_value" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
-text = "1234"
+text = "0	"
 
 [node name="beepower_value" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
-text = "1234"
+text = "0	"
 
 [node name="wasppower_value" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
-text = "1234"
+text = "0	"
 
 [node name="hornetpower_value" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
-text = "1234"
+text = "0	"
 
 [node name="Speed_Debug" type="PanelContainer" parent="."]
 layout_mode = 1

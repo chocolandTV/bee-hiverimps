@@ -1,0 +1,10 @@
+Controller available
+
+W,A,S,D to Move 
+
+Space Fly up
+Shift Fly down
+
+Mouse Look around
+
+

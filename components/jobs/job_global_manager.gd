@@ -1,13 +1,17 @@
 extends Node
 
 class_name job_main_manager
+@export var bee_earth : PackedScene
+@export var wasp_venus : PackedScene
+@export var hornet_mars : PackedScene
 
 var faction_bee : HiveManager  =null 
 var faction_wasp : HiveManager = null
 var faction_hornet : HiveManager = null
-
+var is_late_game : bool = false
 
 signal increase_unit_upgrade(_faction : GAME_FACTION,_value : int)
+signal change_world()
 
 func set_difficult():
 	pass
@@ -34,3 +38,12 @@ func add_resource(_faction : GAME_FACTION.CLASS, _resource : GAME_RESOURCE.TYPE,
 
 func global_increase_unit_upgrade(_faction : GAME_FACTION.CLASS,_value : int):
 	increase_unit_upgrade.emit(_faction,_value)
+
+func switch_game_to_late():
+	is_late_game = true
+	#### CREATE PLANETS AND HIDE HIVE
+	faction_bee.start_planets(bee_earth)
+	faction_wasp.start_planets(wasp_venus)
+	faction_hornet.start_planets(hornet_mars)
+	#CREATE WORLD 2
+	change_world.emit()

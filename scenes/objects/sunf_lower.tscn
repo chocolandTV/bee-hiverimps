@@ -3,10 +3,12 @@
 [ext_resource type="PackedScene" uid="uid://dxx52n1q2yx82" path="res://assets/models/sunfLower.glb" id="1_dtwdj"]
 [ext_resource type="Script" path="res://scenes/objects/sunf_lower.gd" id="2_8etbr"]
 [ext_resource type="PackedScene" uid="uid://d37l1ft2xicf4" path="res://scenes/objects/bee_comb_collectable.tscn" id="3_4o65q"]
-[ext_resource type="PackedScene" uid="uid://cm7uey6f12gcv" path="res://components/resource/nectar_area.tscn" id="3_d45g8"]
 [ext_resource type="Material" uid="uid://cs3ll1hdkv0kw" path="res://resources/materials/sunf_lower_Particlesystem.tres" id="3_qtf4r"]
 [ext_resource type="PackedScene" uid="uid://b1dsdo0y2qcjt" path="res://components/resource/resource_point.tscn" id="5_wkubj"]
 [ext_resource type="PackedScene" uid="uid://itgxjcd0xb53" path="res://components/resource/resource_health_comp.tscn" id="7_qq7ek"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_osmr8"]
+radius = 22.86
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_v2eul"]
 material = ExtResource("3_qtf4r")
@@ -43,7 +45,7 @@ _data = {
 "sun_flower_dance": SubResource("Animation_8ily2")
 }
 
-[node name="sunfLower" groups=["flowers"] instance=ExtResource("1_dtwdj")]
+[node name="sunfLower_Object" groups=["flowers"] instance=ExtResource("1_dtwdj")]
 script = ExtResource("2_8etbr")
 bee_comb_scene = ExtResource("3_4o65q")
 
@@ -53,7 +55,14 @@ transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
 [node name="Skeleton3D" parent="SunFlower" index="0"]
 bones/1/rotation = Quaternion(0.0582709, -0.0264482, 0.705212, 0.706103)
 
-[node name="Nectar_Area" parent="." index="1" instance=ExtResource("3_d45g8")]
+[node name="Nectar_Area" type="Area3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 287.194, 0)
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Nectar_Area" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.1937, -9.43622, 0)
+shape = SubResource("SphereShape3D_osmr8")
 
 [node name="CPUParticles3D" type="CPUParticles3D" parent="." index="2"]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 27.7888, 281.771, 0.437983)
@@ -83,4 +92,4 @@ autoplay = "sun_flower_dance"
 [node name="Resource_Point" parent="." index="4" instance=ExtResource("5_wkubj")]
 
 [node name="Resource_Health_Comp" parent="." index="5" instance=ExtResource("7_qq7ek")]
-max_resource_range = Vector2i(100, 1000)
+max_resource_range = Vector2i(1000, 5000)

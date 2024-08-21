@@ -34,6 +34,8 @@ extends Control
 
 var player_node : CharacterBody3D
 var window_size : Vector2  =Vector2 (1920,1080)
+
+var _lategame = false
 func _ready():
 	player_node = get_tree().get_nodes_in_group("Player")[0]
 	# DisplayServer.window_get_size()
@@ -131,7 +133,12 @@ func update_altitude():
 	#set position  if min 0 and max 100km and if < 1 km show in meters
 	altitude_meter.position.y = window_size.y - (player_node.global_position.y / 10000 *window_size.y) + (window_size.y * 0.03)
 	altitude_label.text = "%6.3f m" % (player_node.global_position.y / 500)
-	if (player_node.global_position.y / 500) > 3.5:
+	if (player_node.global_position.y ) > 1750:
 		altitude_label.text = "%4.0f m" % (player_node.global_position.y *10)
-		if (player_node.global_position.y * 50) > 250000:
+		if (player_node.global_position.y) > 5000:
 			altitude_label.text = "%3.2f km" % (player_node.global_position.y /100)
+			if (player_node.global_position.y) > 10000:
+				altitude_label.text = "%3.2f AU" % (player_node.global_position.y)
+				if !_lategame:
+					_lategame = true
+					JobGlobalManager.switch_game_to_late()

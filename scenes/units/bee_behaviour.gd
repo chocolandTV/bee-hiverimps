@@ -2,7 +2,7 @@ extends Node3D
 ######### get from Mother
 @onready var timer :Timer =$Timer
 @onready var visuals_object : Node3D =$Armature
-
+@onready var particle : CPUParticles3D  =$CPUParticles3D
 ###### FOLLOW VARIABLES
 var max_player_distance : float = 1000
 var min_player_distance : float = 100
@@ -32,6 +32,17 @@ func _ready():
 	var _units_flowers = get_tree().get_nodes_in_group("resource_point")
 	player = get_tree().get_first_node_in_group("Player")
 
+	for x in _units_flowers:
+		resource_list.append(x)
+	
+	current_state = UNIT_STATE.IDLE
+	JobGlobalManager.change_world.connect(on_world_change)
+
+func on_world_change():
+	
+	resource_list.clear()
+	var _units_flowers = get_tree().get_nodes_in_group("resource_point")
+	
 	for x in _units_flowers:
 		resource_list.append(x)
 	
@@ -79,7 +90,7 @@ func handle_state():
 					current_target = player
 		UNIT_STATE.COLLECTING:
 			if items.size() >= max_items:
-				print(" BEHAVOIUR: backpack full, going back to hive")
+				particle.emitting = true
 				current_state = UNIT_STATE.RETURNING
 				current_target = hive
 				### PARTICLES FINISHED COLLECTING
@@ -93,6 +104,7 @@ func handle_state():
 		UNIT_STATE.RETURNING:
 			if items.size() <= 0:
 				current_state = UNIT_STATE.IDLE
+				particle.emitting = false
 
 func get_new_target() -> Node3D:
 	var _close_targets =resource_list.filter(
