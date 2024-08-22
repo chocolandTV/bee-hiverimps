@@ -12,7 +12,7 @@ extends CharacterBody3D
 @export var clamp_angle : Vector2 = Vector2(-45, 45)
 @onready var bee_mesh : Node3D = $mainBee
 @onready var anim : AnimationPlayer = $mainBee/AnimationPlayer
-@onready var particle : CPUParticles3D  =$CPUParticles3D
+@export var particle : CPUParticles3D
 #CONST
 const STRAFE_DAMPING : float = 0.75
 #move_towards
@@ -28,7 +28,6 @@ var items : Dictionary ={
 }
 var max_items : int = 1
 var item_count : int = 0
-var capacity_multiplier : int = 10
 ######### mouse data
 var last_mouse_relative : Vector2
 ## get difference from mouse motion
@@ -48,6 +47,8 @@ func _ready():
     Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
     JobGlobalManager.increase_unit_upgrade.connect(on_upgrade)
     JobGlobalManager.change_world.connect(on_world_change)
+    ResourceListComponent.update_player_node(self)
+    ResourceListComponent.update_resource_list()
 
 func on_world_change():
     global_position = Vector3.ZERO
@@ -64,7 +65,6 @@ func _input(event):
         fly_relative = 1
     if event.is_action_released("move_up"):
         fly_relative = 0
-
     if event.is_action_pressed("move_down"):
         fly_relative = -1
     if event.is_action_released("move_down"):
@@ -81,7 +81,6 @@ func _process(_delta):
     else:
         anim.play("flying")
 
-
 func _physics_process(_delta):
     if input_direction.length() !=0 or fly_relative != 0:
         current_acceleration  = move_toward(current_acceleration, acceleration,  acceleeration_damping * _delta)
@@ -94,7 +93,7 @@ func _physics_process(_delta):
     move_and_slide()
 
 func get_resource(_resource : GAME_RESOURCE.TYPE):
-    if  item_count >= (max_items * capacity_multiplier):
+    if  item_count >= (max_items):
         particle.emitting = true
         return #### later drop nectar
     if _resource == GAME_RESOURCE.TYPE.WATER:

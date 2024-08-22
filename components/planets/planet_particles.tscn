@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://cj7ax5jru20ve"]
+
+[ext_resource type="Texture2D" uid="uid://d3v2jrqwde12n" path="res://assets/images/planet/planet_particles.png" id="1_ii4bs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jboam"]
+transparency = 1
+blend_mode = 1
+albedo_texture = ExtResource("1_ii4bs")
+rim_enabled = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_ohl44"]
+material = SubResource("StandardMaterial3D_jboam")
+radius = 2.0
+height = 4.0
+
+[sub_resource type="Curve" id="Curve_6l1hr"]
+_data = [Vector2(0.00334448, 0.340659), 0.0, 0.0, 0, 0, Vector2(0.505017, 0.252747), 0.0, 0.0, 0, 0, Vector2(1, 0.00269175), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="CPUParticles3D" type="CPUParticles3D"]
+amount = 16
+lifetime = 10.0
+randomness = 1.0
+lifetime_randomness = 1.0
+mesh = SubResource("SphereMesh_ohl44")
+emission_shape = 1
+emission_sphere_radius = 22.0
+direction = Vector3(1, 0, 1)
+spread = 180.0
+gravity = Vector3(0.1, 0, 0.1)
+initial_velocity_max = 1.0
+angular_velocity_max = 1.0
+damping_min = 0.1
+damping_max = 0.4
+angle_max = 360.0
+scale_amount_min = 0.3
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_6l1hr")

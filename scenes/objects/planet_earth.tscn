@@ -1,18 +1,108 @@
-[gd_scene load_steps=8 format=3 uid="uid://bpo68rp3mcser"]
+[gd_scene load_steps=13 format=3 uid="uid://bpo68rp3mcser"]
 
 [ext_resource type="PackedScene" uid="uid://dp4t1kecbnlmi" path="res://assets/models/planet.glb" id="1_8h5rp"]
 [ext_resource type="Script" path="res://scenes/objects/planet_earth.gd" id="2_bm6k1"]
 [ext_resource type="PackedScene" uid="uid://b1dsdo0y2qcjt" path="res://components/resource/resource_point.tscn" id="2_ta6yj"]
 [ext_resource type="PackedScene" uid="uid://itgxjcd0xb53" path="res://components/resource/resource_health_comp.tscn" id="3_xnetk"]
+[ext_resource type="Texture2D" uid="uid://db0vplfts2cul" path="res://assets/images/planet/venus_atmosphere.png" id="5_hvpsb"]
+[ext_resource type="PackedScene" uid="uid://cj7ax5jru20ve" path="res://components/planets/planet_particles.tscn" id="6_n6h8h"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vt4qe"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6dyv6"]
 transparency = 1
-albedo_color = Color(0.239216, 0.239216, 0.239216, 0.160784)
+albedo_color = Color(1, 1, 1, 0.262745)
+albedo_texture = ExtResource("5_hvpsb")
+albedo_texture_force_srgb = true
 
-[sub_resource type="SphereMesh" id="SphereMesh_oshwg"]
-material = SubResource("StandardMaterial3D_vt4qe")
-radius = 0.1
-height = 0.2
+[sub_resource type="SphereMesh" id="SphereMesh_uujjn"]
+material = SubResource("StandardMaterial3D_6dyv6")
+radius = 1.1
+height = 2.1
+
+[sub_resource type="Animation" id="Animation_6f76b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sphere:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_gjcmg"]
+resource_name = "rotate"
+length = 150.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sphere:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 150),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(6.28319, 6.28319, 6.28319)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 150),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 6.28319, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 70.9, 150),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.05, 1.05, 1.05), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fysla"]
+_data = {
+"RESET": SubResource("Animation_6f76b"),
+"rotate": SubResource("Animation_gjcmg")
+}
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_b13bo"]
 radius = 22.86
@@ -21,25 +111,16 @@ radius = 22.86
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 script = ExtResource("2_bm6k1")
 
-[node name="CPUParticles3D" type="CPUParticles3D" parent="." index="1"]
-amount = 16
-randomness = 1.0
-lifetime_randomness = 1.0
-mesh = SubResource("SphereMesh_oshwg")
-emission_shape = 1
-emission_sphere_radius = 22.0
-direction = Vector3(1, 0, 1)
-spread = 180.0
-gravity = Vector3(1, 0, 1)
-initial_velocity_max = 12.0
-angular_velocity_max = 12.0
-damping_min = 0.1
-damping_max = 0.4
-angle_max = 360.0
-scale_amount_min = 0.3
-scale_amount_max = 0.5
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
+mesh = SubResource("SphereMesh_uujjn")
 
-[node name="Nectar_Area" type="Area3D" parent="." index="2"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
+libraries = {
+"": SubResource("AnimationLibrary_fysla")
+}
+autoplay = "rotate"
+
+[node name="Nectar_Area" type="Area3D" parent="." index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 287.194, 0)
 collision_layer = 0
 collision_mask = 64
@@ -48,11 +129,13 @@ collision_mask = 64
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.1937, -9.43622, 0)
 shape = SubResource("SphereShape3D_b13bo")
 
-[node name="Resource_Point" parent="." index="3" instance=ExtResource("2_ta6yj")]
+[node name="Resource_Point" parent="." index="4" instance=ExtResource("2_ta6yj")]
 
-[node name="Resource_Health_Comp" parent="." index="4" instance=ExtResource("3_xnetk")]
+[node name="Resource_Health_Comp" parent="." index="5" instance=ExtResource("3_xnetk")]
 max_resource_range = Vector2i(1000, 1000)
 
-[node name="SpotLight3D" type="SpotLight3D" parent="." index="5"]
+[node name="SpotLight3D" type="SpotLight3D" parent="." index="6"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5.14482, 0)
 spot_range = 8.4268
+
+[node name="CPUParticles3D" parent="." index="7" instance=ExtResource("6_n6h8h")]

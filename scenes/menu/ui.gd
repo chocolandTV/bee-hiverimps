@@ -34,7 +34,7 @@ extends Control
 
 var player_node : CharacterBody3D
 var window_size : Vector2  =Vector2 (1920,1080)
-
+var game_allready_won : bool =false
 var _lategame = false
 func _ready():
 	player_node = get_tree().get_nodes_in_group("Player")[0]
@@ -53,7 +53,9 @@ func update_quest(_value):
 	quest_label.text= ("%s /100" % str(_value))
 
 func set_win_panel(_value : bool):
-	win_container.on_win_menu(_value)
+	if _value and !game_allready_won:
+		game_allready_won = true
+		win_container.on_win_menu(_value)
 
 func update_player_backpack(_resource : GAME_RESOURCE.TYPE, _value : int):
 	match _resource:

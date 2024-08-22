@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 Globals="*res://global/globals.tscn"
 JobGlobalManager="*res://components/jobs/job_global_manager.tscn"
 Ui="*res://scenes/menu/ui.tscn"
+ResourceListComponent="*res://scenes/autoloads/resource_list_component.tscn"
 
 [display]
 

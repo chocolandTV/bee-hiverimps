@@ -3,20 +3,19 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b3u6qdbbmoqcr"
-path.s3tc="res://.godot/imported/mars.png-b71e5e83586882cd4f409f4e1edeeb3e.s3tc.ctex"
+path="res://.godot/imported/mars.png-b71e5e83586882cd4f409f4e1edeeb3e.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://assets/images/planet/mars.png"
-dest_files=["res://.godot/imported/mars.png-b71e5e83586882cd4f409f4e1edeeb3e.s3tc.ctex"]
+dest_files=["res://.godot/imported/mars.png-b71e5e83586882cd4f409f4e1edeeb3e.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

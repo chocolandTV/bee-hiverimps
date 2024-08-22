@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://g7wbhbdwvpcs"]
+[gd_scene load_steps=12 format=3 uid="uid://g7wbhbdwvpcs"]
 
 [ext_resource type="PackedScene" uid="uid://dp4t1kecbnlmi" path="res://assets/models/planet.glb" id="1_ss4aq"]
 [ext_resource type="Texture2D" uid="uid://b3u6qdbbmoqcr" path="res://assets/images/planet/mars.png" id="2_31y5c"]
 [ext_resource type="Script" path="res://scenes/buildings/planet.gd" id="3_45876"]
 [ext_resource type="PackedScene" uid="uid://b1dsdo0y2qcjt" path="res://components/resource/resource_point.tscn" id="3_ko0mi"]
 [ext_resource type="PackedScene" uid="uid://itgxjcd0xb53" path="res://components/resource/resource_health_comp.tscn" id="4_h34nx"]
+[ext_resource type="PackedScene" uid="uid://cj7ax5jru20ve" path="res://components/planets/planet_particles.tscn" id="4_qsfw6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tj3ca"]
 albedo_texture = ExtResource("2_31y5c")
@@ -27,6 +28,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_vi5a5"]
 resource_name = "rotate"
 length = 120.0
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -46,15 +48,6 @@ _data = {
 "rotate": SubResource("Animation_vi5a5")
 }
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jboam"]
-transparency = 1
-albedo_color = Color(0.239216, 0.239216, 0.239216, 0.160784)
-
-[sub_resource type="SphereMesh" id="SphereMesh_ohl44"]
-material = SubResource("StandardMaterial3D_jboam")
-radius = 0.1
-height = 0.2
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_o3a22"]
 radius = 22.86
 
@@ -69,24 +62,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_tj3ca")
 libraries = {
 "": SubResource("AnimationLibrary_20hjh")
 }
+autoplay = "rotate"
 
-[node name="CPUParticles3D" type="CPUParticles3D" parent="." index="2"]
-amount = 16
-randomness = 1.0
-lifetime_randomness = 1.0
-mesh = SubResource("SphereMesh_ohl44")
-emission_shape = 1
-emission_sphere_radius = 22.0
-direction = Vector3(1, 0, 1)
-spread = 180.0
-gravity = Vector3(1, 0, 1)
-initial_velocity_max = 12.0
-angular_velocity_max = 12.0
-damping_min = 0.1
-damping_max = 0.4
-angle_max = 360.0
-scale_amount_min = 0.3
-scale_amount_max = 0.5
+[node name="CPUParticles3D" parent="." index="2" instance=ExtResource("4_qsfw6")]
 
 [node name="Nectar_Area" type="Area3D" parent="." index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 287.194, 0)

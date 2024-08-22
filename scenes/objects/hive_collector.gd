@@ -2,5 +2,7 @@ extends Area3D
 
 
 func _on_area_entered(area:Area3D):
-
-	area.get_parent().send_resource()
+	if area.get_parent().faction == get_parent().get_parent().current_faction:
+		area.get_parent().send_resource()
+	elif area.get_parent().faction != get_parent().get_parent().current_faction:
+		print("different faction, cant give resource here")

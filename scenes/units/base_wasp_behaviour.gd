@@ -1,8 +1,8 @@
 extends Node3D
 ######### get from Mother
-@onready var timer :Timer =$Timer
-@onready var visuals_object : Node3D =$Armature
 
+@onready var visuals_object : Node3D =$Armature
+@export var particle : CPUParticles3D
 var faction : GAME_FACTION.CLASS
 var hive : Node3D
 var speed := 35.0
@@ -32,16 +32,11 @@ func _ready():
 	JobGlobalManager.change_world.connect(on_world_change)
 
 func on_world_change():
-	resource_list.clear()
-	var _units_flowers = get_tree().get_nodes_in_group("resource_point")
-	
-	for x in _units_flowers:
-		resource_list.append(x)
-	
 	current_state = UNIT_STATE.IDLE
+
 func set_stats(_faction, _hive, _speed, _flyspeed, _max_items):
 	### get data on birth
-	visuals_object.position = Vector3(randi_range(0,11),randi_range(0,11),randi_range(0,11)) *6.0
+	visuals_object.position = Vector3(randi_range(0,15),randi_range(0,15),randi_range(0,15))
 	faction = _faction
 	hive = _hive
 	speed = _speed
@@ -69,12 +64,16 @@ func handle_state():
 				current_state = UNIT_STATE.RETURNING
 				current_target = hive
 			else:
-				if unit_start_searching():
+				var _temp = ResourceListComponent.get_random_resource()
+				if _temp != null:
+					current_target = _temp
 					current_state = UNIT_STATE.COLLECTING
+				else: 
+					current_target  = null
+					current_state = UNIT_STATE.IDLE
 		UNIT_STATE.COLLECTING:
-
 			if items.size() >= max_items:
-				print(" ENEMY: backpack full")
+				particle.emitting = true
 				current_state = UNIT_STATE.RETURNING
 				current_target = hive
 				### PARTICLES FINISHED COLLECTING
@@ -84,25 +83,11 @@ func handle_state():
 				current_state = UNIT_STATE.IDLE
 		UNIT_STATE.RETURNING:
 			if items.size() <= 0:
+				particle.emitting = false
 				current_state = UNIT_STATE.IDLE
-
-func get_new_target() -> Node3D:
-	return resource_list.pick_random()
-
-func unit_start_searching() -> bool :
-	var _temp_target = get_new_target()
-
-	if _temp_target != null:
-		current_target = _temp_target
-		return true
-	else:
-		return false
-
 func move(_delta):
-
 	if current_state != UNIT_STATE.IDLE and global_position.distance_to(current_target.global_position)> 5:
 		global_position = global_position.move_toward(current_target.global_position, speed *_delta)
-
 
 func get_resource(_resource : GAME_RESOURCE.TYPE):
 	if items.size() >= (max_items):
@@ -113,18 +98,4 @@ func get_resource(_resource : GAME_RESOURCE.TYPE):
 func send_resource():
 	for x in items:
 		JobGlobalManager.add_resource(faction, x,1)
-	items.clear()
-	unit_start_searching()
-
-func on_timer_timeout():
-	
-	if current_state == UNIT_STATE.IDLE:
-		unit_start_searching()
-
-func on_enemy_entered(area : Area3D):
-
-	timer.start()
-	current_state = UNIT_STATE.IDLE
-	for x in items:
-		area.get_parent().get_resource(x)
 	items.clear()

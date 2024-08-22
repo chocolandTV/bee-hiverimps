@@ -1,16 +1,12 @@
-[gd_scene load_steps=18 format=3 uid="uid://bakjg7lmdboxx"]
+[gd_scene load_steps=14 format=3 uid="uid://bakjg7lmdboxx"]
 
 [ext_resource type="Script" path="res://scenes/characters/bee_player.gd" id="1_jivfb"]
 [ext_resource type="PackedScene" uid="uid://krtja86ac801" path="res://scenes/characters/Instance_Characters/main_bee.tscn" id="2_sb44p"]
 [ext_resource type="Texture2D" uid="uid://b7denawa16kdv" path="res://assets/models/mainBee_Bee_material.png" id="3_we7lj"]
 [ext_resource type="Script" path="res://components/job_resources/collecting_area.gd" id="4_dqx5w"]
-[ext_resource type="ArrayMesh" uid="uid://cucl0a2mxi44o" path="res://assets/meshes/tears_full_cargo.obj" id="4_vl6cy"]
+[ext_resource type="PackedScene" uid="uid://d2ii75h2ylpqf" path="res://scenes/particles/tears_full_cargo_particle.tscn" id="4_wphvn"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lcj0i"]
-
-[sub_resource type="Curve" id="Curve_q3s0w"]
-_data = [Vector2(0.0100335, 1), 0.0, 0.0, 0, 0, Vector2(0.993311, 0.0201885), 0.0, 0.0, 0, 0]
-point_count = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uh0dr"]
 albedo_texture = ExtResource("3_we7lj")
@@ -216,67 +212,16 @@ _data = {
 "idle": SubResource("Animation_01ocm")
 }
 
-[sub_resource type="Animation" id="Animation_fiu5l"]
-length = 0.001
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("mainBee/Armature/Skeleton3D:Wing_Right_Base")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0.507713, 2.11793, 0.98719)
-tracks/1/type = "position_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("mainBee/Armature/Skeleton3D:Wing_Left_Base")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, -0.50341, 2.11793, 1.02283)
-
-[sub_resource type="Animation" id="Animation_c338g"]
-resource_name = "flying"
-length = 0.1
-loop_mode = 1
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("mainBee/Armature/Skeleton3D:Wing_Right_Base")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0.507713, 2.11793, 0.98719, 0.0333333, 1, 0, 0, 0)
-tracks/1/type = "position_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("mainBee/Armature/Skeleton3D:Wing_Left_Base")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, -0.50341, 2.11793, 1.02283, 0.0333333, 1, 0, 0, 0)
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_i21t4"]
-_data = {
-"RESET": SubResource("Animation_fiu5l"),
-"flying": SubResource("Animation_c338g")
-}
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_40vqx"]
 radius = 11.68
 
-[node name="Bee_player" type="CharacterBody3D" groups=["Player"]]
+[node name="Bee_player" type="CharacterBody3D" node_paths=PackedStringArray("particle") groups=["Player"]]
 collision_layer = 5
 script = ExtResource("1_jivfb")
+particle = NodePath("mainBee/Armature/Full_Cargo_praticles")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_lcj0i")
-
-[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
-transform = Transform3D(-0.183013, -0.859789, -0.476727, 0.183013, -0.506236, 0.842752, -0.965926, 0.0669873, 0.25, 2.10955, 0.73686, -0.68239)
-emitting = false
-amount = 1
-lifetime = 2.0
-mesh = ExtResource("4_vl6cy")
-direction = Vector3(0, 0, 0)
-gravity = Vector3(0, -1, 0)
-scale_amount_curve = SubResource("Curve_q3s0w")
 
 [node name="mainBee" parent="." instance=ExtResource("2_sb44p")]
 
@@ -290,16 +235,13 @@ bones/15/rotation = Quaternion(8.24585e-09, 0.614555, 0.709247, 0.345385)
 surface_material_override/0 = SubResource("StandardMaterial3D_uh0dr")
 surface_material_override/1 = SubResource("StandardMaterial3D_tmebm")
 
+[node name="Full_Cargo_praticles" parent="mainBee/Armature" index="1" instance=ExtResource("4_wphvn")]
+
 [node name="AnimationPlayer" parent="mainBee" index="1"]
 libraries = {
 "": SubResource("AnimationLibrary_j7nin")
 }
 autoplay = "flying"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_i21t4")
-}
 
 [node name="Collecting_Area" type="Area3D" parent="."]
 collision_layer = 244

@@ -1,10 +1,15 @@
-[gd_scene load_steps=14 format=3 uid="uid://c344n8yqpqkd3"]
+[gd_scene load_steps=15 format=3 uid="uid://c344n8yqpqkd3"]
 
 [ext_resource type="PackedScene" uid="uid://dp4t1kecbnlmi" path="res://assets/models/planet.glb" id="1_qh0ds"]
 [ext_resource type="Script" path="res://scenes/buildings/planet.gd" id="2_tniu8"]
+[ext_resource type="Texture2D" uid="uid://wo5gofolndco" path="res://assets/images/planet/venus-tex.png" id="3_0llsl"]
 [ext_resource type="Texture2D" uid="uid://db0vplfts2cul" path="res://assets/images/planet/venus_atmosphere.png" id="3_jisxn"]
 [ext_resource type="PackedScene" uid="uid://b1dsdo0y2qcjt" path="res://components/resource/resource_point.tscn" id="3_prwa1"]
 [ext_resource type="PackedScene" uid="uid://itgxjcd0xb53" path="res://components/resource/resource_health_comp.tscn" id="4_jvtya"]
+[ext_resource type="PackedScene" uid="uid://cj7ax5jru20ve" path="res://components/planets/planet_particles.tscn" id="6_r7uue"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bbm1f"]
+albedo_texture = ExtResource("3_0llsl")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_58lmr"]
 transparency = 1
@@ -30,10 +35,22 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector3(0, 0, 0)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sphere:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_gdjsq"]
 resource_name = "rotate"
-length = 60.0
+length = 120.0
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -42,10 +59,22 @@ tracks/0/path = NodePath("MeshInstance3D:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 60),
+"times": PackedFloat32Array(0, 118.7),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sphere:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 119.633),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(6.28319, 0, 6.28319)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0g5q6"]
@@ -54,21 +83,15 @@ _data = {
 "rotate": SubResource("Animation_gdjsq")
 }
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jboam"]
-transparency = 1
-albedo_color = Color(0.239216, 0.239216, 0.239216, 0.160784)
-
-[sub_resource type="SphereMesh" id="SphereMesh_1gnxu"]
-material = SubResource("StandardMaterial3D_jboam")
-radius = 0.1
-height = 0.2
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_mtbjq"]
 radius = 22.86
 
 [node name="planet_venus" instance=ExtResource("1_qh0ds")]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 script = ExtResource("2_tniu8")
+
+[node name="Sphere" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_bbm1f")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
 mesh = SubResource("SphereMesh_i8j2e")
@@ -79,25 +102,7 @@ libraries = {
 }
 autoplay = "rotate"
 
-[node name="CPUParticles3D" type="CPUParticles3D" parent="." index="3"]
-amount = 16
-randomness = 1.0
-lifetime_randomness = 1.0
-mesh = SubResource("SphereMesh_1gnxu")
-emission_shape = 1
-emission_sphere_radius = 22.0
-direction = Vector3(1, 0, 1)
-spread = 180.0
-gravity = Vector3(1, 0, 1)
-initial_velocity_max = 12.0
-angular_velocity_max = 12.0
-damping_min = 0.1
-damping_max = 0.4
-angle_max = 360.0
-scale_amount_min = 0.3
-scale_amount_max = 0.5
-
-[node name="Nectar_Area" type="Area3D" parent="." index="4"]
+[node name="Nectar_Area" type="Area3D" parent="." index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 287.194, 0)
 collision_layer = 0
 collision_mask = 64
@@ -106,11 +111,13 @@ collision_mask = 64
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.1937, -9.43622, 0)
 shape = SubResource("SphereShape3D_mtbjq")
 
-[node name="Resource_Point" parent="." index="5" instance=ExtResource("3_prwa1")]
+[node name="Resource_Point" parent="." index="4" instance=ExtResource("3_prwa1")]
 
-[node name="Resource_Health_Comp" parent="." index="6" instance=ExtResource("4_jvtya")]
+[node name="Resource_Health_Comp" parent="." index="5" instance=ExtResource("4_jvtya")]
 max_resource_range = Vector2i(1000, 1000)
 
-[node name="SpotLight3D" type="SpotLight3D" parent="." index="7"]
+[node name="SpotLight3D" type="SpotLight3D" parent="." index="6"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5.14482, 0)
 spot_range = 8.4268
+
+[node name="CPUParticles3D2" parent="." index="7" instance=ExtResource("6_r7uue")]

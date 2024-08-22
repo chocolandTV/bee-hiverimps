@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bfm3xf60csbsb" path="res://assets/models/mainwasp.glb" id="1_o4gqr"]
 [ext_resource type="Script" path="res://scenes/units/base_wasp_behaviour.gd" id="2_5iqqv"]
 [ext_resource type="PackedScene" uid="uid://ch8tuj4883sgv" path="res://components/job_resources/collecting_area.tscn" id="2_bm481"]
+[ext_resource type="PackedScene" uid="uid://d2ii75h2ylpqf" path="res://scenes/particles/tears_full_cargo_particle.tscn" id="3_vcnx0"]
 
 [sub_resource type="Animation" id="Animation_fch4x"]
 length = 0.001
@@ -198,17 +199,18 @@ _data = {
 "idle": SubResource("Animation_01ocm")
 }
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_rap3b"]
-radius = 3.14513
-
-[node name="mainwasp" groups=["units"] instance=ExtResource("1_o4gqr")]
+[node name="mainwasp" node_paths=PackedStringArray("particle") groups=["units"] instance=ExtResource("1_o4gqr")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("2_5iqqv")
+particle = NodePath("Armature/Full_Cargo_Particles")
 
 [node name="Armature" parent="." index="0"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Armature" index="0"]
+[node name="Full_Cargo_Particles" parent="Armature" index="0" instance=ExtResource("3_vcnx0")]
+transform = Transform3D(-0.183013, -0.859789, -0.476727, 0.183013, -0.506236, 0.842752, -0.965926, 0.0669873, 0.25, 1.16269, 0.73686, 2.8716)
+
+[node name="Skeleton3D" parent="Armature" index="1"]
 bones/0/position = Vector3(0, 0, -2.08088)
 bones/1/position = Vector3(0, 0.882737, 0)
 bones/3/position = Vector3(4.39256e-17, 1.2463, -4.65661e-10)
@@ -228,16 +230,3 @@ autoplay = "flying"
 
 [node name="Collecting_Area" parent="." index="2" instance=ExtResource("2_bm481")]
 collision_layer = 180
-
-[node name="Timer" type="Timer" parent="." index="3"]
-wait_time = 5.0
-one_shot = true
-
-[node name="HitBox_Area" type="Area3D" parent="." index="4"]
-collision_layer = 0
-collision_mask = 256
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox_Area" index="0"]
-shape = SubResource("SphereShape3D_rap3b")
-
-[connection signal="area_entered" from="HitBox_Area" to="." method="on_enemy_entered"]

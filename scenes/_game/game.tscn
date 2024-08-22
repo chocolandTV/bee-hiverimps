@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://10o7abboi48p"]
+[gd_scene load_steps=28 format=3 uid="uid://10o7abboi48p"]
 
 [ext_resource type="PackedScene" uid="uid://wbvmp7qbi0xw" path="res://scenes/objects/hive_01.tscn" id="1_1exdv"]
 [ext_resource type="PackedScene" uid="uid://djdnup6u2od52" path="res://scenes/objects/sunf_lower.tscn" id="1_08la1"]
@@ -30,6 +30,18 @@ albedo_color = Color(1, 0.611765, 0, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_420oc"]
 albedo_color = Color(1, 1, 0, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ogqoe"]
+albedo_color = Color(0, 0.443137, 0, 1)
+rim_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_wslt6"]
+material = SubResource("StandardMaterial3D_ogqoe")
+size = Vector3(25, 1, 1)
+
+[sub_resource type="Curve" id="Curve_q2tig"]
+_data = [Vector2(0, 0.967033), 0.0, 0.0, 0, 0, Vector2(0.906355, 0.562584), -2.03447, -2.03447, 0, 0, Vector2(0.996656, 0.0114402), 0.0, 0.0, 0, 0]
+point_count = 3
+
 [node name="Game_World" type="Node3D" node_paths=PackedStringArray("world_enviroment", "directLight", "baum01", "baum02", "baum03")]
 script = ExtResource("1_cuhse")
 world_02 = ExtResource("2_5a1db")
@@ -39,12 +51,6 @@ directLight = NodePath("DirectionalLight3D")
 baum01 = NodePath("World_01/erdtree_BEE")
 baum02 = NodePath("World_01/erdtree_HORNET")
 baum03 = NodePath("World_01/erdtree_WASP")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource("7_63ppr")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.965926, 0.258819, 0, -0.258819, -0.965926, 0, 449.53, 0)
 
 [node name="World_01" type="Node3D" parent="."]
 
@@ -323,6 +329,17 @@ transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -1580.69, 0, 0)
 [node name="erdtree_WASP" parent="World_01" instance=ExtResource("5_jibn8")]
 transform = Transform3D(72.345, 0, 0, 0, 72.345, 0, 0, 0, 72.345, 1537, 0, 1534.61)
 
+[node name="Player" parent="." node_paths=PackedStringArray("camera") groups=["units"] instance=ExtResource("2_5dbd4")]
+transform = Transform3D(1, 0, 0, -3.55271e-15, 1, 0, 7.10543e-15, 0, 1, -33.5967, 203.845, -1908.45)
+fly_speed = 100.0
+camera = NodePath("../Camera3D")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("7_63ppr")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.965926, 0.258819, 0, -0.258819, -0.965926, 0, 449.53, 0)
+
 [node name="World_bounds" type="StaticBody3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="World_bounds"]
@@ -394,6 +411,7 @@ current_nectar = 20.0
 
 [node name="hive" parent="Hives/Bee_Hive" instance=ExtResource("1_1exdv")]
 transform = Transform3D(33, 0, 0, 0, 33, 0, 0, 0, 33, 0, 0, 0)
+visible = false
 
 [node name="Bee_sector" type="MeshInstance3D" parent="Hives/Bee_Hive"]
 transform = Transform3D(60, 0, 0, 0, 60, 0, 0, 0, 60, 0, -107.731, 0)
@@ -401,12 +419,21 @@ mesh = ExtResource("4_j13bd")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_420oc")
 
-[node name="Player" parent="." node_paths=PackedStringArray("camera") groups=["units"] instance=ExtResource("2_5dbd4")]
-transform = Transform3D(1, 0, 0, -3.55271e-15, 1, 0, 7.10543e-15, 0, 1, -33.5967, 203.845, -1908.45)
-camera = NodePath("../Camera3D")
-
 [node name="Camera3D" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_qhusv")]
 transform = Transform3D(-1, -3.19744e-14, -8.74228e-08, -2.26267e-08, 0.965926, 0.258819, 8.44439e-08, 0.258819, -0.965926, -0.06, 221.839, -1918.21)
 current = true
 player = NodePath("../Player")
 target_distance = 8.92
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+amount = 100
+lifetime = 10.0
+randomness = 1.0
+mesh = SubResource("BoxMesh_wslt6")
+emission_shape = 3
+emission_box_extents = Vector3(2000, 500, 1000)
+direction = Vector3(-50, 0, 0)
+spread = 180.0
+gravity = Vector3(-50, 0, 0)
+angular_velocity_max = 54.34
+scale_amount_curve = SubResource("Curve_q2tig")

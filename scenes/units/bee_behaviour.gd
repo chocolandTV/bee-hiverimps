@@ -1,8 +1,7 @@
 extends Node3D
 ######### get from Mother
-@onready var timer :Timer =$Timer
 @onready var visuals_object : Node3D =$Armature
-@onready var particle : CPUParticles3D  =$CPUParticles3D
+@export var particle : CPUParticles3D
 ###### FOLLOW VARIABLES
 var max_player_distance : float = 1000
 var min_player_distance : float = 100
@@ -29,28 +28,15 @@ enum UNIT_STATE {
 
 func _ready():
 	JobGlobalManager.increase_unit_upgrade.connect(on_upgrade)
-	var _units_flowers = get_tree().get_nodes_in_group("resource_point")
-	player = get_tree().get_first_node_in_group("Player")
-
-	for x in _units_flowers:
-		resource_list.append(x)
-	
 	current_state = UNIT_STATE.IDLE
 	JobGlobalManager.change_world.connect(on_world_change)
 
 func on_world_change():
-	
-	resource_list.clear()
-	var _units_flowers = get_tree().get_nodes_in_group("resource_point")
-	
-	for x in _units_flowers:
-		resource_list.append(x)
-	
 	current_state = UNIT_STATE.IDLE
 
 func set_stats(_faction, _hive, _speed, _flyspeed, _max_items):
 	### get data on birth
-	visuals_object.position = Vector3(randi_range(0,11),randi_range(0,11),randi_range(0,11)) *6.0
+	visuals_object.position = Vector3(randi_range(0,15),randi_range(0,15),randi_range(0,15))
 	faction = _faction
 	hive = _hive
 	speed = _speed
@@ -83,11 +69,13 @@ func handle_state():
 				current_state = UNIT_STATE.RETURNING
 				current_target = hive
 			else:
-				if unit_start_searching():
+				var _temp = ResourceListComponent.get_random_resource()
+				if _temp != null:
+					current_target = _temp
 					current_state = UNIT_STATE.COLLECTING
 				else:
 					current_state = UNIT_STATE.FOLLOW
-					current_target = player
+					current_target = ResourceListComponent.get_player_node()
 		UNIT_STATE.COLLECTING:
 			if items.size() >= max_items:
 				particle.emitting = true
@@ -142,18 +130,3 @@ func send_resource():
 		JobGlobalManager.add_resource(faction, x,1)
 	items.clear()
 	unit_start_searching()
-	
-    ### update ui
-
-func on_timer_timeout():
-	
-	if current_state == UNIT_STATE.IDLE:
-		unit_start_searching()
-
-func on_enemy_entered(area : Area3D):
-
-	timer.start()
-	current_state = UNIT_STATE.IDLE
-	for x in items:
-		area.get_parent().get_resource(x)
-	items.clear()
