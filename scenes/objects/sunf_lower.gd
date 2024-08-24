@@ -14,10 +14,10 @@ func _ready():
 	$Nectar_Area.area_exited.connect(on_area_exited)
 
 func on_area_entered(area : Area3D):
-	area.is_working(true, GAME_RESOURCE.TYPE.NECTAR, self)
+	area.is_working(true, Globals.TYPE.NECTAR, self)
 
 func on_area_exited(area : Area3D):
-	area.is_working(false, GAME_RESOURCE.TYPE.NECTAR, self)
+	area.is_working(false, Globals.TYPE.NECTAR, self)
 
 func on_collected():
 		health_component.get_damage()

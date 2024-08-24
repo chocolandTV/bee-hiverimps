@@ -3,6 +3,17 @@ signal sound_value_changed(type : int, value : float)
 signal player_mouse_changed(value :float)
 signal player_use_controller(value : bool)
 
+enum CLASS {
+	BEE,
+	WASP,
+	HORNET
+}
+enum TYPE {
+	WATER,
+	NECTAR,
+	ORGANIC,
+	HONEY
+}
 var player_settings = {
       "setting_volume_master" : 0.5,
       "setting_volume_sound" : 0.5,

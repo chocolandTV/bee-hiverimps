@@ -87,7 +87,6 @@ offset_left = -387.0
 offset_right = 387.0
 offset_bottom = 72.0
 grow_horizontal = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
@@ -218,7 +217,6 @@ anchor_bottom = 1.0
 offset_top = -25.0
 offset_right = 150.0
 grow_vertical = 0
-metadata/_edit_use_anchors_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="Speed_Debug"]
 layout_mode = 2
@@ -233,14 +231,21 @@ layout_mode = 2
 text = "Speed: X = 555"
 
 [node name="Altitute_Label" type="PanelContainer" parent="."]
-layout_mode = 2
-offset_left = 1039.0
-offset_top = 20.0
-offset_right = 1079.0
-offset_bottom = 668.0
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+grow_horizontal = 0
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_dr7lh")
 
-[node name="Label" type="Label" parent="Altitute_Label"]
+[node name="MarginContainer" type="MarginContainer" parent="Altitute_Label"]
+layout_mode = 2
+theme_override_constants/margin_right = 65
+
+[node name="Label" type="Label" parent="Altitute_Label/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
@@ -248,7 +253,7 @@ theme_override_font_sizes/font_size = 10
 theme_override_styles/normal = SubResource("StyleBoxFlat_uqnxe")
 text = "100 km"
 
-[node name="HSeparator" type="HSeparator" parent="Altitute_Label/Label"]
+[node name="HSeparator" type="HSeparator" parent="Altitute_Label/MarginContainer/Label"]
 layout_mode = 0
 offset_top = -2.0
 offset_right = 60.0
@@ -277,7 +282,7 @@ texture = ExtResource("3_k4111")
 expand_mode = 4
 
 [node name="New_Unit_Panel" type="PanelContainer" parent="."]
-layout_mode = 0
+layout_mode = 1
 offset_right = 40.0
 offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ig1p7")
@@ -408,11 +413,18 @@ horizontal_alignment = 1
 
 [node name="Win_Container" type="PanelContainer" parent="."]
 visible = false
-layout_mode = 0
-offset_left = 270.0
-offset_top = 208.0
-offset_right = 835.0
-offset_bottom = 461.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -282.5
+offset_top = -126.5
+offset_right = 282.5
+offset_bottom = 126.5
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("9_pc234")
 
 [node name="Panel" type="Panel" parent="Win_Container"]

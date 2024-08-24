@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://binnqbqikhi8s"]
 
 [ext_resource type="Texture2D" uid="uid://c50txqs0gt83" path="res://assets/images/flower_01.png" id="1_8orbh"]
-[ext_resource type="Script" path="res://scenes/game_resource/flower_resource_01.gd" id="1_15scy"]
+[ext_resource type="Script" path="res://scenes/Globals/flower_resource_01.gd" id="1_15scy"]
 [ext_resource type="StyleBox" uid="uid://bgo7voqqqdss2" path="res://resources/menu_themes/Drag_box_panel.tres" id="2_krkfy"]
 [ext_resource type="Texture2D" uid="uid://c0smc533805oj" path="res://assets/images/resource_nectar.png" id="3_y0bax"]
 

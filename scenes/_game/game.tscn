@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://10o7abboi48p"]
+[gd_scene load_steps=28 format=3 uid="uid://10o7abboi48p"]
 
 [ext_resource type="PackedScene" uid="uid://wbvmp7qbi0xw" path="res://scenes/objects/hive_01.tscn" id="1_1exdv"]
 [ext_resource type="PackedScene" uid="uid://djdnup6u2od52" path="res://scenes/objects/sunf_lower.tscn" id="1_08la1"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://bdkvlb4x5o5i6" path="res://scenes/units/spawning_bee.tscn" id="6_ymln0"]
 [ext_resource type="Environment" uid="uid://dqgx2xd3lwjpw" path="res://resources/enviroment.tres" id="7_63ppr"]
 [ext_resource type="PackedScene" uid="uid://d37l1ft2xicf4" path="res://scenes/objects/bee_comb_collectable.tscn" id="9_85m5b"]
+[ext_resource type="Script" path="res://scenes/objects/bee_comb_collectable.gd" id="9_331y3"]
 [ext_resource type="PackedScene" uid="uid://bmqna7yksp3c5" path="res://scenes/buildings/erdtree_small.tscn" id="14_8mvfi"]
 [ext_resource type="PackedScene" uid="uid://cd1jkoke3xldi" path="res://scenes/objects/erdtree.tscn" id="15_fkxq2"]
 
@@ -316,11 +317,13 @@ transform = Transform3D(0.0871558, 0, 0.996195, 0, 1, 0, -0.996195, 0, 0.0871558
 
 [node name="Objects" type="Node3D" parent="World_01"]
 
-[node name="bee_Comb_collectable" parent="World_01/Objects" instance=ExtResource("9_85m5b")]
+[node name="bee_Comb_collectable" type="Node3D" parent="World_01/Objects" groups=["honey"] instance=ExtResource("9_85m5b")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 259.036, -156.305)
+script = ExtResource("9_331y3")
 
-[node name="bee_Comb_collectable2" parent="World_01/Objects" instance=ExtResource("9_85m5b")]
+[node name="bee_Comb_collectable2" type="Node3D" parent="World_01/Objects" groups=["honey"] instance=ExtResource("9_85m5b")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -14.3128, 8.24979, 42.579)
+script = ExtResource("9_331y3")
 
 [node name="erdtree_BEE" parent="World_01" instance=ExtResource("14_8mvfi")]
 transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, -54.8746, 0, -1901.2)

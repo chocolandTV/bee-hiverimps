@@ -10,7 +10,7 @@ enum DIFFICULT{
 ##### DEFINE FACTION START SETTINGS AND DEFINES
 
 @export_category("Faction Defines")
-@export var current_faction : GAME_FACTION.CLASS
+@export var current_faction : Globals.CLASS
 @export var faction_difficult : DIFFICULT
 @export var faction_isPlayer : bool
 @export var unit_limit : int
@@ -64,22 +64,22 @@ func buy_unit():
 	if current_water > unit_cost * 10:
 		current_water -= unit_cost * 10
 		if faction_isPlayer:
-			Ui.update_resource_values(GAME_RESOURCE.TYPE.WATER, current_water)
+			GameUiManager.UI.update_resource_values(Globals.TYPE.WATER, current_water)
 
 	if current_nectar > unit_cost *5 :
 		current_nectar -= unit_cost * 5
 		if faction_isPlayer:
-			Ui.update_resource_values(GAME_RESOURCE.TYPE.NECTAR, current_nectar)
+			GameUiManager.UI.update_resource_values(Globals.TYPE.NECTAR, current_nectar)
 
 	if current_organic > unit_cost *2 :
 		current_organic -= unit_cost *2
 		if faction_isPlayer:
-			Ui.update_resource_values(GAME_RESOURCE.TYPE.ORGANIC, current_organic)
+			GameUiManager.UI.update_resource_values(Globals.TYPE.ORGANIC, current_organic)
 
 	if current_honey > unit_cost :
 		current_honey -= unit_cost
 		if faction_isPlayer:
-			Ui.update_resource_values(GAME_RESOURCE.TYPE.HONEY, current_honey)
+			GameUiManager.UI.update_resource_values(Globals.TYPE.HONEY, current_honey)
 	spawn_unit()
 
 	current_factionpower += unit_base_power_value
@@ -88,9 +88,9 @@ func buy_unit():
 	current_unit_count += 1
 
 	if faction_isPlayer:
-		Ui.update_quest(current_unit_count)
+		GameUiManager.UI.update_quest(current_unit_count)
 		if current_unit_count >= 100:
-			Ui.set_win_panel(true)
+			GameUiManager.UI.set_win_panel(true)
 
 	if current_unit_count >= upgrade_steps:
 		upgrade_steps += 10
@@ -98,47 +98,47 @@ func buy_unit():
 		print("FACTION UPGRADE %d : LEVEL %d" % [upgrade_steps, current_unit_max_capacity])
 		JobGlobalManager.global_increase_unit_upgrade(current_faction, current_unit_max_capacity)
 
-	Ui.update_faction_power(current_faction,current_factionpower)
+	GameUiManager.UI.update_faction_power(current_faction,current_factionpower)
 	
-func add_resource(_resource : GAME_RESOURCE.TYPE, _amount :int):
+func add_resource(_resource : Globals.TYPE, _amount :int):
 	match _resource:
-		GAME_RESOURCE.TYPE.WATER:
+		Globals.TYPE.WATER:
 			current_water += _amount
 			if faction_isPlayer:
-				Ui.update_resource_values(_resource, current_water)
-		GAME_RESOURCE.TYPE.NECTAR:
+				GameUiManager.UI.update_resource_values(_resource, current_water)
+		Globals.TYPE.NECTAR:
 			current_nectar += _amount
 			if faction_isPlayer:
-				Ui.update_resource_values(_resource, current_nectar)
-		GAME_RESOURCE.TYPE.HONEY:
+				GameUiManager.UI.update_resource_values(_resource, current_nectar)
+		Globals.TYPE.HONEY:
 			current_honey += _amount
 			if faction_isPlayer:
-				Ui.update_resource_values(_resource, current_honey)
-		GAME_RESOURCE.TYPE.ORGANIC:
+				GameUiManager.UI.update_resource_values(_resource, current_honey)
+		Globals.TYPE.ORGANIC:
 			current_organic += _amount
 			if faction_isPlayer:
-				Ui.update_resource_values(_resource, current_organic)
+				GameUiManager.UI.update_resource_values(_resource, current_organic)
 		_:
 			print("FACTION_RESOURCE ERROR: cant add new resource, invalid resource type.")
 
-func remove_resource(_resource : GAME_RESOURCE.TYPE, value : float):
+func remove_resource(_resource : Globals.TYPE, value : float):
 	match _resource:
-		GAME_RESOURCE.TYPE.WATER:
+		Globals.TYPE.WATER:
 			current_water -= value
 			if faction_isPlayer:
-				Ui.update_resource_values(_resource, current_water)
-		GAME_RESOURCE.TYPE.NECTAR:
+				GameUiManager.update_resource_values(_resource, current_water)
+		Globals.TYPE.NECTAR:
 			current_nectar -= value
 			if faction_isPlayer:
-				Ui.update_resource_values(_resource, current_nectar)
-		GAME_RESOURCE.TYPE.HONEY:
+				GameUiManager.UI.update_resource_values(_resource, current_nectar)
+		Globals.TYPE.HONEY:
 			current_honey -= value
 			if faction_isPlayer:
-				Ui.update_resource_values(_resource, current_honey)
-		GAME_RESOURCE.TYPE.ORGANIC:
+				GameUiManager.UI.update_resource_values(_resource, current_honey)
+		Globals.TYPE.ORGANIC:
 			current_organic -= value
 			if faction_isPlayer:
-				Ui.update_resource_values(_resource, current_organic)
+				GameUiManager.UI.update_resource_values(_resource, current_organic)
 		_:
 			print("FACTION_RESOURCE ERROR: cant remove resource, invalid resource type.")
 

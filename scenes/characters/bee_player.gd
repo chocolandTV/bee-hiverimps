@@ -4,7 +4,7 @@ extends CharacterBody3D
 # For smoother controller/mouse movement
 @export var acceleration := 3.5
 @export var acceleeration_damping := 0.5
-@export var faction : GAME_FACTION.CLASS
+@export var faction : Globals.CLASS
 # Mouse sensitivity for look around
 @export var mouse_sensitivity := 0.6
 
@@ -116,41 +116,41 @@ func _physics_process(_delta):
     velocity = velocity.move_toward(move_direction* speed, current_acceleration)
     move_and_slide()
 
-func get_resource(_resource : GAME_RESOURCE.TYPE):
+func get_resource(_resource : Globals.TYPE):
     if  item_count >= (max_items):
         particle.emitting = true
         return #### later drop nectar
-    if _resource == GAME_RESOURCE.TYPE.WATER:
+    if _resource == Globals.TYPE.WATER:
         items["water"] += 1
         item_count += 1
-        Ui.update_player_backpack(GAME_RESOURCE.TYPE.WATER,items["water"])
-    if _resource == GAME_RESOURCE.TYPE.NECTAR:
+        GameUiManager.UI.update_player_backpack(Globals.TYPE.WATER,items["water"])
+    if _resource == Globals.TYPE.NECTAR:
         items["nectar"] += 1
         item_count += 1
-        Ui.update_player_backpack(GAME_RESOURCE.TYPE.NECTAR,items["nectar"])
-    if _resource == GAME_RESOURCE.TYPE.ORGANIC:
+        GameUiManager.UI.update_player_backpack(Globals.TYPE.NECTAR,items["nectar"])
+    if _resource == Globals.TYPE.ORGANIC:
         items["organic"] +=1
         item_count += 1
-        Ui.update_player_backpack(GAME_RESOURCE.TYPE.ORGANIC,items["organic"])
-    if _resource == GAME_RESOURCE.TYPE.HONEY:
+        GameUiManager.UI.update_player_backpack(Globals.TYPE.ORGANIC,items["organic"])
+    if _resource == Globals.TYPE.HONEY:
         items["honey"] +=1
         item_count += 1
-        Ui.update_player_backpack(GAME_RESOURCE.TYPE.HONEY,items["honey"])
+        GameUiManager.UI.update_player_backpack(Globals.TYPE.HONEY,items["honey"])
 
 
 func send_resource():
 
-    JobGlobalManager.add_resource(faction, GAME_RESOURCE.TYPE.WATER, items["water"])
-    JobGlobalManager.add_resource(faction, GAME_RESOURCE.TYPE.NECTAR, items["nectar"])
-    JobGlobalManager.add_resource(faction, GAME_RESOURCE.TYPE.ORGANIC, items["organic"])
-    JobGlobalManager.add_resource(faction, GAME_RESOURCE.TYPE.HONEY, items["honey"])
+    JobGlobalManager.add_resource(faction, Globals.TYPE.WATER, items["water"])
+    JobGlobalManager.add_resource(faction, Globals.TYPE.NECTAR, items["nectar"])
+    JobGlobalManager.add_resource(faction, Globals.TYPE.ORGANIC, items["organic"])
+    JobGlobalManager.add_resource(faction, Globals.TYPE.HONEY, items["honey"])
 
     item_count = 0
     items["water"] = 0
     items["nectar"] = 0
     items["organic"] =0
     items["honey"] =0
-    Ui.clear_player_backpack()
+    GameUiManager.UI.clear_player_backpack()
     particle.emitting = false
 
 func on_upgrade(_faction, _value):

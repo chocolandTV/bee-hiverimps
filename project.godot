@@ -17,13 +17,16 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+GameUiManager="*res://scenes/autoloads/game_ui_manager.gd"
 Globals="*res://global/globals.tscn"
 JobGlobalManager="*res://components/jobs/job_global_manager.tscn"
-Ui="*res://scenes/menu/ui.tscn"
 ResourceListComponent="*res://scenes/autoloads/resource_list_component.tscn"
 
 [display]
 
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=3
 window/stretch/aspect="expand"
 
 [global_group]

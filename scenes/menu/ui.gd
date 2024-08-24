@@ -1,5 +1,5 @@
 extends Control
-
+class_name ui_class
 @onready var altitude_meter : PanelContainer =$Altitute_Label
 @onready var altitude_label : Label = $Altitute_Label/Label
 ############# PROGRESS BARS 
@@ -36,12 +36,13 @@ var player_node : CharacterBody3D
 var window_size : Vector2  =Vector2 (1920,1080)
 var game_allready_won : bool =false
 var _lategame = false
+var game_ui: game_ui_manager
 func _ready():
 	player_node = get_tree().get_nodes_in_group("Player")[0]
 	# DisplayServer.window_get_size()
 	# windows_size  =  get_viewport().get_visible_rect().size
 	window_size = get_viewport().get_window().size * 0.94
-	print(window_size)
+	game_ui = get_parent()
 
 func clear_player_backpack():
 	label_capacity_water.text = str(0)
@@ -57,41 +58,41 @@ func set_win_panel(_value : bool):
 		game_allready_won = true
 		win_container.on_win_menu(_value)
 
-func update_player_backpack(_resource : GAME_RESOURCE.TYPE, _value : int):
+func update_player_backpack(_resource : Globals.TYPE, _value : int):
 	match _resource:
-		GAME_RESOURCE.TYPE.WATER:
+		Globals.TYPE.WATER:
 			label_capacity_water.text = str(_value)
-		GAME_RESOURCE.TYPE.NECTAR:
+		Globals.TYPE.NECTAR:
 			label_capacity_nectar.text = str(_value)
-		GAME_RESOURCE.TYPE.ORGANIC:
+		Globals.TYPE.ORGANIC:
 			label_capacity_organic.text= str(_value)
-		GAME_RESOURCE.TYPE.HONEY:
+		Globals.TYPE.HONEY:
 			label_capacity_honey.text = str(_value)
 		_:
 			#default
 			print("Error update Resource_value, no matches on _Type were found : ", _resource)
 
-func update_resource_values(_type : GAME_RESOURCE.TYPE,_value : float):
+func update_resource_values(_type : Globals.TYPE,_value : float):
 	match _type:
-		GAME_RESOURCE.TYPE.WATER:
+		Globals.TYPE.WATER:
 			label_resource_water_value.text = str(_value)
-		GAME_RESOURCE.TYPE.NECTAR:
+		Globals.TYPE.NECTAR:
 			label_resource_nectar_value.text = str(_value)
-		GAME_RESOURCE.TYPE.ORGANIC:
+		Globals.TYPE.ORGANIC:
 			label_resource_organic_value.text= str(_value)
-		GAME_RESOURCE.TYPE.HONEY:
+		Globals.TYPE.HONEY:
 			label_resource_honey_value.text = str(_value)
 		_:
 			#default
 			print("Error update Resource_value, no matches on _Type were found : ", _type)
 
-func update_faction_power(_faction : GAME_FACTION.CLASS, _value : int):
+func update_faction_power(_faction : Globals.CLASS, _value : int):
 	match _faction:
-		GAME_FACTION.CLASS.BEE:
+		Globals.CLASS.BEE:
 			label_faction_beepower_value.text = str(_value)
-		GAME_FACTION.CLASS.WASP:
+		Globals.CLASS.WASP:
 			label_faction_wasppower_value.text = str(_value)
-		GAME_FACTION.CLASS.HORNET:
+		Globals.CLASS.HORNET:
 			label_resource_organic_value.text= str(_value)
 		_:
 			#default
@@ -102,34 +103,35 @@ func update_faction_power(_faction : GAME_FACTION.CLASS, _value : int):
 #######  PROGRESS BAR UPDATER
 
 ################################################################################################################
-func update_progressbar_resource(_type : GAME_RESOURCE.TYPE,_value : float):
+func update_progressbar_resource(_type : Globals.TYPE,_value : float):
 	match _type:
-		GAME_RESOURCE.TYPE.WATER:
+		Globals.TYPE.WATER:
 			progress_water.set_value_no_signal(_value)
-		GAME_RESOURCE.TYPE.NECTAR:
+		Globals.TYPE.NECTAR:
 			progress_nectar.set_value_no_signal(_value)
-		GAME_RESOURCE.TYPE.ORGANIC:
+		Globals.TYPE.ORGANIC:
 			progress_organic.set_value_no_signal(_value)
-		GAME_RESOURCE.TYPE.HONEY:
+		Globals.TYPE.HONEY:
 			progress_honey.set_value_no_signal(_value)
 		_:
 			#default
 			print("Error update progress Resource, no matches on _Type were found : ", _type)
 
-func update_progressbar_factionpower(_faction : GAME_FACTION.CLASS, _value : int):
+func update_progressbar_factionpower(_faction : Globals.CLASS, _value : int):
 	match _faction:
-		GAME_FACTION.CLASS.BEE:
+		Globals.CLASS.BEE:
 			progress_beepower.set_value_no_signal(_value)
-		GAME_FACTION.CLASS.WASP:
+		Globals.CLASS.WASP:
 			progress_wasppower.set_value_no_signal(_value)
-		GAME_FACTION.CLASS.HORNET:
+		Globals.CLASS.HORNET:
 			progress_hornetpower.set_value_no_signal(_value)
 		_:
 			#default
 			print("Error update progress FactionPower, no matches on _Type were found : ", _faction)
 
 func _process(_delta):
-	update_altitude()
+	if game_ui.current_state ==game_ui.GAME_STATE.RUNNING:
+		update_altitude()
 
 func update_altitude():
 	#set position  if min 0 and max 100km and if < 1 km show in meters

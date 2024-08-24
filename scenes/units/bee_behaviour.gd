@@ -6,14 +6,14 @@ extends Node3D
 var max_player_distance : float = 1000
 var min_player_distance : float = 100
 
-var faction : GAME_FACTION.CLASS
+var faction : Globals.CLASS
 var hive : Node3D
 var player : Node3D
 var speed := 35.0
 var fly_speed := 1.0
 var max_items : int = 5
 ### VARIABLE IS HOLDING
-var items : Array[GAME_RESOURCE.TYPE]
+var items : Array[Globals.TYPE]
 var current_target : Node3D
 var is_moving : bool = false
 var current_state : UNIT_STATE =  UNIT_STATE.IDLE
@@ -99,7 +99,7 @@ func move(_delta):
 		global_position = global_position.move_toward(current_target.global_position, speed *_delta)
 
 
-func get_resource(_resource : GAME_RESOURCE.TYPE):
+func get_resource(_resource : Globals.TYPE):
 	if items.size() >= (max_items):
 		return #### later drop nectar
 	items.append(_resource)
