@@ -34,7 +34,7 @@ var current_honey : float  = 0
 var current_factionpower : int = 0
 ########  current unit count
 var current_unit_count : int = 0
-var current_unit_max_capacity : int = 1
+var current_unit_max_capacity : int = 5
 var upgrade_steps : int = 10
 var is_buyable :bool = false
 func _ready():

@@ -13,30 +13,21 @@ var follow_target  =null
 # LAST LOOKAT POSITION
 var last_lookat
 
+
 func _ready():
 	follow_target = player
 	last_lookat = follow_target.global_transform.origin
 
 func _physics_process(_delta):
-	followTargetPos(_delta)
+	handle_rotation(_delta)
+	handle_position(_delta)
 
-func followTargetPos(_delta):
-	var delta_v = global_transform.origin - follow_target.global_transform.origin
-	var target_new_position = global_transform.origin
+func handle_rotation(_delta):
+	### get player rotation, move_towards in step
+	rotation.x = rotation.x.move_toward(follow_target.global_rotation.x,_delta * camera_look_speed)
+	rotation.y = rotation.y.move_toward(follow_target.global_rotation.y,_delta * camera_look_speed)
+	rotation.z = rotation.z.move_toward(follow_target.global_rotation.z,_delta * camera_look_speed)
 
-	delta_v.y = 0.0
-
-	if(delta_v.length() > target_distance):
-		delta_v= delta_v.normalized() * target_distance
-		delta_v.y = target_height
-		target_new_position = follow_target.global_transform.origin + delta_v
-	
-	else:
-		target_new_position.y = follow_target.global_transform.origin.y + target_height
-	
-	# SET NEW POSITION
-	global_transform.origin = global_transform.origin.lerp(target_new_position, _delta * camera_lerp_speed)
-	last_lookat = last_lookat.lerp(follow_target.global_transform.origin, _delta * camera_lerp_speed)
-
-	look_at(last_lookat, Vector3(0.0,1,0))
-	rotation.x = rotate_toward(rotation.x,follow_target.rotation.x,camera_look_speed)
+func handle_position(_delta):
+	###get player position, move_towards in steps
+	global_position.move_toward(

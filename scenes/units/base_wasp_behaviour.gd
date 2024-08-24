@@ -7,7 +7,8 @@ var faction : GAME_FACTION.CLASS
 var hive : Node3D
 var speed := 35.0
 var fly_speed := 1.0
-var max_items : int = 1
+var max_items : int = 5
+
 ### VARIABLE IS HOLDING
 var items : Array[GAME_RESOURCE.TYPE]
 var current_target : Node3D

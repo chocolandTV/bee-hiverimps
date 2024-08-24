@@ -1,15 +1,13 @@
 extends CharacterBody3D
 @export var speed := 35.0
 @export var fly_speed := 1.0
-
 # For smoother controller/mouse movement
 @export var acceleration := 3.5
 @export var acceleeration_damping := 0.5
 @export var faction : GAME_FACTION.CLASS
 # Mouse sensitivity for look around
 @export var mouse_sensitivity := 0.6
-@export var camera : Camera3D
-@export var clamp_angle : Vector2 = Vector2(-45, 45)
+
 @onready var bee_mesh : Node3D = $mainBee
 @onready var anim : AnimationPlayer = $mainBee/AnimationPlayer
 @export var particle : CPUParticles3D
@@ -17,7 +15,7 @@ extends CharacterBody3D
 const STRAFE_DAMPING : float = 0.75
 #move_towards
 var current_acceleration :float = 0.0
-
+var look_Y_axis_inverted : float = 1
 var move_direction : Vector3
 ##### ITEM VARS
 var items : Dictionary ={
@@ -26,7 +24,7 @@ var items : Dictionary ={
     "organic":0,
     "honey" : 0
 }
-var max_items : int = 1
+var max_items : int = 5
 var item_count : int = 0
 ######### mouse data
 var last_mouse_relative : Vector2
@@ -40,10 +38,15 @@ var current_rotation_y : float = 0
 
 #### Directions 
 var input_direction : Vector2
-var look_direction : Vector2 
+var look_direction : Vector2
 var fly_direction : float = 0.0
 
 func _ready():
+    if Globals.player_settings["Y_Axis_Inverted"]:
+        look_Y_axis_inverted = -1
+    else:
+        look_Y_axis_inverted  = 1
+
     Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
     JobGlobalManager.increase_unit_upgrade.connect(on_upgrade)
     JobGlobalManager.change_world.connect(on_world_change)
@@ -60,6 +63,7 @@ func on_world_change():
     items["honey"] =0
 
 func _input(event):
+
     input_direction = Input.get_vector("move_right", "move_left", "move_backward", "move_forward")
     if event.is_action_pressed("move_up"):
         fly_relative = 1
@@ -70,12 +74,32 @@ func _input(event):
     if event.is_action_released("move_down"):
         fly_relative = 0
 
+    if event is InputEventJoypadMotion:
+        if event.axis == JOY_AXIS_RIGHT_X:
+            look_direction.x = event.axis_value
+        if event.axis == JOY_AXIS_RIGHT_Y:
+            look_direction.y = event.axis_value
     if event is InputEventMouseMotion:
         #get new mouseposition
         mouse_relative = event.relative
+    else:
+        mouse_relative = Vector2.ZERO
 
 func _process(_delta):
-    bee_mesh.rotate_y(-mouse_relative.x * (mouse_sensitivity / 1000))
+    if mouse_relative != Vector2.ZERO:
+        bee_mesh.rotate_y(-mouse_relative.x * (mouse_sensitivity / 1000))
+        bee_mesh.rotate_x(-mouse_relative.y * (mouse_sensitivity / 1000))
+        var smoothrot = lerpf(bee_mesh.global_rotation.z,0, 0.5*_delta)
+        bee_mesh.global_rotation.z = smoothrot
+        print(-mouse_relative.x * (mouse_sensitivity / 1000))
+    elif look_direction != Vector2.ZERO:
+        bee_mesh.rotate_y(-look_direction.x * (mouse_sensitivity)/25)
+        bee_mesh.rotate_x(-look_direction.y * (mouse_sensitivity)/25)
+        var smoothrot = lerpf(bee_mesh.global_rotation.z,0, 0.5 *_delta)
+        bee_mesh.global_rotation.z = smoothrot
+        
+
+
     if input_direction.length() ==0:
         anim.play("idle")
     else:

@@ -8,16 +8,15 @@ var min_player_distance : float = 100
 
 var faction : GAME_FACTION.CLASS
 var hive : Node3D
+var player : Node3D
 var speed := 35.0
 var fly_speed := 1.0
-var max_items : int = 1
+var max_items : int = 5
 ### VARIABLE IS HOLDING
 var items : Array[GAME_RESOURCE.TYPE]
 var current_target : Node3D
 var is_moving : bool = false
 var current_state : UNIT_STATE =  UNIT_STATE.IDLE
-var player
-var resource_list : Array[Node3D] = []
 
 enum UNIT_STATE {
 	IDLE,
@@ -30,6 +29,7 @@ func _ready():
 	JobGlobalManager.increase_unit_upgrade.connect(on_upgrade)
 	current_state = UNIT_STATE.IDLE
 	JobGlobalManager.change_world.connect(on_world_change)
+	player = ResourceListComponent.get_player_node()
 
 func on_world_change():
 	current_state = UNIT_STATE.IDLE
@@ -75,7 +75,7 @@ func handle_state():
 					current_state = UNIT_STATE.COLLECTING
 				else:
 					current_state = UNIT_STATE.FOLLOW
-					current_target = ResourceListComponent.get_player_node()
+					current_target = player
 		UNIT_STATE.COLLECTING:
 			if items.size() >= max_items:
 				particle.emitting = true
@@ -83,8 +83,6 @@ func handle_state():
 				current_target = hive
 				### PARTICLES FINISHED COLLECTING
 			elif current_target.get_parent().health_component.current_resource <= 0:
-				### delete from array
-				resource_list.erase(current_target)
 				current_state = UNIT_STATE.IDLE
 		UNIT_STATE.FOLLOW:
 			if player.global_position.distance_to(global_position) < min_player_distance:
@@ -94,24 +92,6 @@ func handle_state():
 				current_state = UNIT_STATE.IDLE
 				particle.emitting = false
 
-func get_new_target() -> Node3D:
-	var _close_targets =resource_list.filter(
-		func(_resource):
-			return _resource.global_position.distance_to(global_position)< max_player_distance
-	)
-	if _close_targets.is_empty():
-		return null
-	else:
-		return _close_targets.pick_random()
-
-func unit_start_searching() -> bool :
-	var _temp_target = get_new_target()
-
-	if _temp_target != null:
-		current_target = _temp_target
-		return true
-	else:
-		return false
 
 func move(_delta):
 
@@ -129,4 +109,3 @@ func send_resource():
 	for x in items:
 		JobGlobalManager.add_resource(faction, x,1)
 	items.clear()
-	unit_start_searching()
