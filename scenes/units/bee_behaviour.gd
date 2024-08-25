@@ -30,6 +30,10 @@ func _ready():
 	current_state = UNIT_STATE.IDLE
 	JobGlobalManager.change_world.connect(on_world_change)
 	player = ResourceListComponent.get_player_node()
+	ResourceListComponent.deleted_resource_point.connect(on_resource_delete)
+
+func on_resource_delete():
+	current_target = ResourceListComponent.get_random_resource()
 
 func on_world_change():
 	current_state = UNIT_STATE.IDLE

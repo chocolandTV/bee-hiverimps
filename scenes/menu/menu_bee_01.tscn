@@ -1,0 +1,149 @@
+[gd_scene load_steps=10 format=3 uid="uid://lk0eoji387th"]
+
+[ext_resource type="Texture2D" uid="uid://cshb0ddjx3gb0" path="res://assets/images/bee_prototype.png" id="1_6kkpu"]
+[ext_resource type="Script" path="res://scenes/menu/menu_bee_01.gd" id="1_xv12g"]
+[ext_resource type="Texture2D" uid="uid://c0smc533805oj" path="res://assets/images/resource_nectar.png" id="2_7l8pk"]
+
+[sub_resource type="Animation" id="Animation_6arrt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bee_01:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Bee_01:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Bee_01/TextureRect:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_47cge"]
+resource_name = "flying"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bee_01:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.975, 0.975), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Bee_01:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 1), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Bee_01/TextureRect:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.945, 0.945), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_nl8fw"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bee_01:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.466667, 1),
+"transitions": PackedFloat32Array(1, 1.36604, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 1), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d0bpp"]
+_data = {
+"RESET": SubResource("Animation_6arrt"),
+"flying": SubResource("Animation_47cge"),
+"idle": SubResource("Animation_nl8fw")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oq231"]
+size = Vector2(8.5, 8.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tia7e"]
+
+[node name="MenuBee_01" type="CharacterBody2D"]
+script = ExtResource("1_xv12g")
+
+[node name="Bee_01" type="TextureRect" parent="."]
+offset_right = 16.0
+offset_bottom = 16.0
+texture = ExtResource("1_6kkpu")
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="Bee_01"]
+visible = false
+layout_mode = 0
+offset_left = 5.0
+offset_top = 10.0
+offset_right = 13.0
+offset_bottom = 18.0
+texture = ExtResource("2_7l8pk")
+expand_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_d0bpp")
+}
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(9, 10)
+shape = SubResource("RectangleShape2D_oq231")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(8, 10)
+shape = SubResource("CircleShape2D_tia7e")

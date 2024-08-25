@@ -1,7 +1,7 @@
 extends Control
 class_name ui_class
 @onready var altitude_meter : PanelContainer =$Altitute_Label
-@onready var altitude_label : Label = $Altitute_Label/Label
+@onready var altitude_label : Label = $Altitute_Label/MarginContainer/Label
 ############# PROGRESS BARS 
 @onready var progress_water: ProgressBar =$PanelContainer/MarginContainer/GridContainer/Progress_Water
 @onready var progress_nectar: ProgressBar =$PanelContainer/MarginContainer/GridContainer/Progress_Nectar
@@ -31,7 +31,8 @@ class_name ui_class
 @onready var quest_label : Label =$New_Unit_Panel/MarginContainer/Panel/MarginContainer/VBoxContainer/Quest_Label
 ############# value win screen
 @onready var win_container : PanelContainer =$Win_Container
-
+#################  player speed vbox script
+@onready var play_vbox_container : VBoxContainer  = $Speed_Debug/MarginContainer/VBoxContainer
 var player_node : CharacterBody3D
 var window_size : Vector2  =Vector2 (1920,1080)
 var game_allready_won : bool =false
@@ -43,6 +44,9 @@ func _ready():
 	# windows_size  =  get_viewport().get_visible_rect().size
 	window_size = get_viewport().get_window().size * 0.94
 	game_ui = get_parent()
+
+func update_player_node_speed_ui(value: CharacterBody3D):
+	play_vbox_container.set_player(value)
 
 func clear_player_backpack():
 	label_capacity_water.text = str(0)

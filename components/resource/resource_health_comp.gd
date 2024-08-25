@@ -3,7 +3,7 @@ class_name resource_health_component
 
 
 @export var max_resource_range : Vector2i
-
+@export var resource_object : Node3D
 var max_resource : float
 var current_resource : float
 
@@ -17,7 +17,7 @@ func get_damage():
 	current_resource -=1
 	if current_resource <= 0:
 		get_parent().scale = Vector3.ZERO
-		get_parent().visible = false
+		ResourceListComponent.delete_resource(resource_object)
 	set_scale()
 
 func set_scale():

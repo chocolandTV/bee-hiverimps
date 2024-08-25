@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://dcswj41ke6553"]
 
-[ext_resource type="Script" path="res://components/jobs/sub_global_handler/hive_manager.gd" id="1_dr8h4"]
+[ext_resource type="Script" path="res://components/RESOURCES/sub_global_handler/hive_manager.gd" id="1_dr8h4"]
 [ext_resource type="PackedScene" uid="uid://gaj7ce8ijy8d" path="res://scenes/characters/Instance_Characters/base_wasp.tscn" id="2_jhybf"]
 [ext_resource type="PackedScene" uid="uid://wbvmp7qbi0xw" path="res://scenes/objects/hive_01.tscn" id="3_cueol"]
 [ext_resource type="ArrayMesh" uid="uid://digv65gkf8ylv" path="res://assets/meshes/circle_mesh.obj" id="4_4n28e"]

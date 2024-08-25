@@ -37,6 +37,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_huhl7"]
 resource_name = "rotate_sun"
 length = 250.0
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -58,37 +59,76 @@ _data = {
 
 [node name="main_menu" type="Node3D"]
 
-[node name="World_01" type="Node3D" parent="."]
+[node name="Menu_world" type="Node3D" parent="."]
 
-[node name="Enviroment" type="Node3D" parent="World_01"]
+[node name="Enviroment" type="Node3D" parent="Menu_world"]
 
-[node name="grass_11" parent="World_01/Enviroment" instance=ExtResource("4_om33r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 467.324, 183.065, -661.006)
+[node name="grass_11" parent="Menu_world/Enviroment" instance=ExtResource("4_om33r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 467.324, 183.065, -227.377)
 
-[node name="Grass11" parent="World_01/Enviroment" instance=ExtResource("5_f14iw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 465.023, 182.501, -661.006)
+[node name="Grass11" parent="Menu_world/Enviroment" instance=ExtResource("5_f14iw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 465.023, 182.501, -227.377)
 
-[node name="Flowers" type="Node3D" parent="World_01"]
+[node name="grass_12" parent="Menu_world/Enviroment" instance=ExtResource("4_om33r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 513.656, 167.82, -227.377)
 
-[node name="sunfLower" parent="World_01/Flowers" instance=ExtResource("7_8vlh3")]
+[node name="Grass12" parent="Menu_world/Enviroment" instance=ExtResource("5_f14iw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 511.355, 167.256, -227.377)
+
+[node name="grass_13" parent="Menu_world/Enviroment" instance=ExtResource("4_om33r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 553.925, 182.08, -227.377)
+
+[node name="Grass13" parent="Menu_world/Enviroment" instance=ExtResource("5_f14iw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 551.624, 181.516, -227.377)
+
+[node name="grass_14" parent="Menu_world/Enviroment" instance=ExtResource("4_om33r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 605.719, 167.113, -227.377)
+
+[node name="Grass14" parent="Menu_world/Enviroment" instance=ExtResource("5_f14iw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 652.086, 166.549, -227.377)
+
+[node name="Grass15" parent="Menu_world/Enviroment" instance=ExtResource("5_f14iw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 227.337, 182.501, -227.377)
+
+[node name="grass_15" parent="Menu_world/Enviroment" instance=ExtResource("4_om33r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 275.97, 167.82, -227.377)
+
+[node name="Grass16" parent="Menu_world/Enviroment" instance=ExtResource("5_f14iw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 273.669, 167.256, -227.377)
+
+[node name="grass_16" parent="Menu_world/Enviroment" instance=ExtResource("4_om33r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 316.239, 182.08, -227.377)
+
+[node name="Grass17" parent="Menu_world/Enviroment" instance=ExtResource("5_f14iw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 313.938, 181.516, -227.377)
+
+[node name="grass_17" parent="Menu_world/Enviroment" instance=ExtResource("4_om33r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 368.032, 167.113, -227.377)
+
+[node name="Grass18" parent="Menu_world/Enviroment" instance=ExtResource("5_f14iw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 414.4, 166.549, -227.377)
+
+[node name="Flowers" type="Node3D" parent="Menu_world"]
+
+[node name="sunfLower" parent="Menu_world/Flowers" instance=ExtResource("7_8vlh3")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 481.084, 0, -411.826)
 
-[node name="SpotLight3D" type="SpotLight3D" parent="World_01/Flowers/sunfLower"]
+[node name="SpotLight3D" type="SpotLight3D" parent="Menu_world/Flowers/sunfLower"]
 light_color = Color(1, 1, 0, 1)
 light_energy = 3.013
 shadow_enabled = true
 spot_range = 68.381
 spot_angle = 80.09
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Menu_world"]
 environment = ExtResource("13_o181y")
 
-[node name="World_bounds" type="StaticBody3D" parent="."]
+[node name="World_bounds" type="StaticBody3D" parent="Menu_world"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World_bounds"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Menu_world/World_bounds"]
 shape = SubResource("WorldBoundaryShape3D_bp3jq")
 
-[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+[node name="CPUParticles3D" type="CPUParticles3D" parent="Menu_world"]
 amount = 100
 lifetime = 10.0
 randomness = 1.0
@@ -117,9 +157,4 @@ transform = Transform3D(0.376223, -0.287851, 0.88068, 0, 0.950516, 0.310677, -0.
 libraries = {
 "": SubResource("AnimationLibrary_eixyx")
 }
-
-[node name="Menu" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+autoplay = "rotate_sun"

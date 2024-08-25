@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bhpjo4gtrj6kh"]
 
-[ext_resource type="Script" path="res://components/jobs/job_global_manager.gd" id="1_4sy83"]
+[ext_resource type="Script" path="res://components/RESOURCES/job_global_manager.gd" id="1_4sy83"]
 [ext_resource type="PackedScene" uid="uid://bpo68rp3mcser" path="res://scenes/objects/planet_earth.tscn" id="2_a51du"]
 [ext_resource type="PackedScene" uid="uid://c344n8yqpqkd3" path="res://scenes/buildings/planet_venus.tscn" id="3_st365"]
 [ext_resource type="PackedScene" uid="uid://g7wbhbdwvpcs" path="res://scenes/buildings/planet_mars.tscn" id="4_h0n3q"]

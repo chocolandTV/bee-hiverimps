@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bpj8hrbmy3pji"]
+[gd_scene load_steps=12 format=3 uid="uid://bpj8hrbmy3pji"]
 
 [ext_resource type="PackedScene" uid="uid://be4lj8i4fcp4m" path="res://assets/models/grass_02.glb" id="1_ibjbq"]
 [ext_resource type="PackedScene" uid="uid://b1dsdo0y2qcjt" path="res://components/resource/resource_point.tscn" id="2_kw17i"]
@@ -18,6 +18,68 @@ size = Vector3(5, 5, 5)
 [sub_resource type="Curve" id="Curve_yqnh3"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.983278, 0.00269175), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="Animation" id="Animation_qwou5"]
+resource_name = "idle"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("grass:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.43333, 5),
+"transitions": PackedFloat32Array(1, 0.435275, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.20944, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("grass:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.43333, 5),
+"transitions": PackedFloat32Array(1, 0.707107, 1),
+"update": 0,
+"values": [Vector3(2.5, 2.5, 2.5), Vector3(2.3, 2.3, 2.3), Vector3(2.5, 2.5, 2.5)]
+}
+
+[sub_resource type="Animation" id="Animation_ldpwr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("grass:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("grass:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(2.5, 2.5, 2.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_63e8p"]
+_data = {
+"RESET": SubResource("Animation_ldpwr"),
+"idle": SubResource("Animation_qwou5")
+}
 
 [node name="grass_02" groups=["organic"] instance=ExtResource("1_ibjbq")]
 script = ExtResource("2_scj0k")
@@ -58,3 +120,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.773289, 52.9619, -0.666401
 
 [node name="Resource_Health_Comp" parent="." index="5" instance=ExtResource("4_63qu5")]
 max_resource_range = Vector2i(25, 55)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6"]
+libraries = {
+"": SubResource("AnimationLibrary_63e8p")
+}
+autoplay = "idle"

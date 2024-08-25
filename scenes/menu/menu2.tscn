@@ -1,0 +1,168 @@
+[gd_scene load_steps=10 format=3 uid="uid://cu5u0ycvloabp"]
+
+[ext_resource type="Script" path="res://scenes/game_ui/menu.gd" id="1_edmjk"]
+[ext_resource type="Texture2D" uid="uid://dkn70353l3nyb" path="res://assets/images/comb_background.png" id="2_rhsuf"]
+[ext_resource type="PackedScene" uid="uid://lk0eoji387th" path="res://scenes/menu/menu_bee_01.tscn" id="3_j76qd"]
+[ext_resource type="Texture2D" uid="uid://bqylnrmcdtxdr" path="res://assets/images/UI/UI_Button.png" id="4_1yb6t"]
+[ext_resource type="Texture2D" uid="uid://r0spclmf6nj8" path="res://assets/images/LOGO.png" id="4_6kxea"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2ldsw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cxfae"]
+radius = 368.91
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cd1jn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3kou0"]
+
+[node name="Menu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_edmjk")
+
+[node name="Background_Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="Background_Panel"]
+modulate = Color(1, 1, 1, 0.156863)
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_rhsuf")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="Unit_Container" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_2ldsw")
+
+[node name="MenuBee_01" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+
+[node name="SunFlower_Area" type="Area2D" parent="."]
+position = Vector2(1376, 499)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SunFlower_Area"]
+shape = SubResource("CircleShape2D_cxfae")
+debug_color = Color(1, 0.6, 0, 0.419608)
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 1080.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_cd1jn")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+
+[node name="Panel" type="Panel" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3kou0")
+
+[node name="Logo" type="TextureRect" parent="PanelContainer/MarginContainer/Panel"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_left = -97.0
+offset_top = 5.0
+offset_right = 253.0
+offset_bottom = 355.0
+texture = ExtResource("4_6kxea")
+expand_mode = 1
+
+[node name="Start" type="Panel" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3kou0")
+
+[node name="Start_Texture" type="TextureRect" parent="PanelContainer/MarginContainer/Start"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_left = -20.0
+offset_top = 330.0
+offset_right = 180.0
+offset_bottom = 530.0
+texture = ExtResource("4_1yb6t")
+expand_mode = 1
+
+[node name="Label-start" type="Label" parent="PanelContainer/MarginContainer/Start/Start_Texture"]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 200.0
+theme_override_colors/font_shadow_color = Color(0.279301, 0.166221, 4.81308e-08, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 9
+theme_override_font_sizes/font_size = 50
+text = "Start"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Settings" type="Panel" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3kou0")
+
+[node name="Setting_Texture" type="TextureRect" parent="PanelContainer/MarginContainer/Settings"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_left = -20.0
+offset_top = 530.0
+offset_right = 180.0
+offset_bottom = 730.0
+texture = ExtResource("4_1yb6t")
+expand_mode = 1
+
+[node name="Credits" type="Panel" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3kou0")
+
+[node name="Credit_Texture" type="TextureRect" parent="PanelContainer/MarginContainer/Credits"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_left = -20.0
+offset_top = 730.0
+offset_right = 180.0
+offset_bottom = 930.0
+texture = ExtResource("4_1yb6t")
+expand_mode = 1
+
+[node name="Exit" type="Panel" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3kou0")
+
+[node name="Exit_Texture" type="TextureRect" parent="PanelContainer/MarginContainer/Exit"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_left = 1612.0
+offset_top = 870.0
+offset_right = 1812.0
+offset_bottom = 1070.0
+texture = ExtResource("4_1yb6t")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -349.5
+offset_right = 349.5
+offset_bottom = 137.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0.279301, 0.166221, 4.81308e-08, 1)
+theme_override_constants/shadow_offset_x = 6
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/shadow_outline_size = 10
+theme_override_font_sizes/font_size = 100
+text = "Bee Hiverimps"
+horizontal_alignment = 1
+vertical_alignment = 2

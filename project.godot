@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameUiManager="*res://scenes/autoloads/game_ui_manager.gd"
 Globals="*res://global/globals.tscn"
+GameUiManager="*res://scenes/autoloads/game_ui_manager.tscn"
 JobGlobalManager="*res://components/jobs/job_global_manager.tscn"
 ResourceListComponent="*res://scenes/autoloads/resource_list_component.tscn"
 

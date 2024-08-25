@@ -52,7 +52,7 @@ func _ready():
     JobGlobalManager.change_world.connect(on_world_change)
     ResourceListComponent.update_player_node(self)
     ResourceListComponent.update_resource_list()
-
+    GameUiManager.UI.update_player_node_speed_ui(self)
 func on_world_change():
     global_position = Vector3.ZERO
     velocity = Vector3.ZERO

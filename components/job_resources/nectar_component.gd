@@ -25,7 +25,7 @@ func hide_nectar():
 
 func nectar_collected():
 	print("add global nectar")
-	JobGlobalManager.increment_job_currency(Globals.JOBS.NECTAR)
+	JobGlobalManager.increment_job_currency(Globals.RESOURCES.NECTAR)
 	hide_nectar()
 
 func _on_area_2d_area_entered(_area:Area2D):

@@ -14,8 +14,6 @@ var items : Array[Globals.TYPE]
 var current_target : Node3D
 var is_moving : bool = false
 var current_state : UNIT_STATE =  UNIT_STATE.IDLE
-var resource_list : Array[Node3D] = []
-
 enum UNIT_STATE {
 	IDLE,
 	COLLECTING,
@@ -24,13 +22,12 @@ enum UNIT_STATE {
 
 func _ready():
 	JobGlobalManager.increase_unit_upgrade.connect(on_upgrade)
-	var _units_flowers = get_tree().get_nodes_in_group("resource_point")
-	
-	for x in _units_flowers:
-		resource_list.append(x)
-	
 	current_state = UNIT_STATE.IDLE
 	JobGlobalManager.change_world.connect(on_world_change)
+	ResourceListComponent.deleted_resource_point.connect(on_resource_delete)
+
+func on_resource_delete():
+	current_target = ResourceListComponent.get_random_resource()
 
 func on_world_change():
 	current_state = UNIT_STATE.IDLE
@@ -55,9 +52,7 @@ func _physics_process(_delta):
 	move(_delta)
 	look_at(current_target.global_position, Vector3.UP)
 
-
 func handle_state():
-
 	match current_state:
 		UNIT_STATE.IDLE:
 			## if cargo full
@@ -79,8 +74,6 @@ func handle_state():
 				current_target = hive
 				### PARTICLES FINISHED COLLECTING
 			elif current_target.get_parent().health_component.current_resource <= 0:
-				### delete from array
-				resource_list.erase(current_target)
 				current_state = UNIT_STATE.IDLE
 		UNIT_STATE.RETURNING:
 			if items.size() <= 0:

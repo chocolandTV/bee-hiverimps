@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/autoloads/game_ui_manager.gd" id="1_4wouy"]
 [ext_resource type="PackedScene" uid="uid://c01xrshddxx6h" path="res://scenes/menu/ui.tscn" id="2_m4mr4"]
-[ext_resource type="Script" path="res://scenes/game_ui/menu.gd" id="3_v1x00"]
+[ext_resource type="PackedScene" uid="uid://cu5u0ycvloabp" path="res://scenes/menu/menu2.tscn" id="3_iqw1d"]
 
 [node name="Game_UI_Manager" type="Control"]
 layout_mode = 3
@@ -17,7 +17,5 @@ script = ExtResource("1_4wouy")
 visible = false
 layout_mode = 1
 
-[node name="Menu" type="Control" parent="."]
-process_mode = 3
-anchors_preset = 0
-script = ExtResource("3_v1x00")
+[node name="Menu" parent="." instance=ExtResource("3_iqw1d")]
+layout_mode = 1

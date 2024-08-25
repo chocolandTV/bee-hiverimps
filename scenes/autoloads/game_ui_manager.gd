@@ -15,6 +15,7 @@ func _ready():
 	MENU = get_child(1)
 	print(UI)
 	print(MENU)
+	current_state = GAME_STATE.RUNNING
 func change_game_state(value : GAME_STATE):
 	match value:
 		GAME_STATE.MENU:

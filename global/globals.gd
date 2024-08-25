@@ -8,7 +8,7 @@ enum CLASS {
 	WASP,
 	HORNET
 }
-enum TYPE {
+enum RESOURCES {
 	WATER,
 	NECTAR,
 	ORGANIC,

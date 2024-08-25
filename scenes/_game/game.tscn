@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://10o7abboi48p"]
+[gd_scene load_steps=27 format=3 uid="uid://10o7abboi48p"]
 
 [ext_resource type="PackedScene" uid="uid://wbvmp7qbi0xw" path="res://scenes/objects/hive_01.tscn" id="1_1exdv"]
 [ext_resource type="PackedScene" uid="uid://djdnup6u2od52" path="res://scenes/objects/sunf_lower.tscn" id="1_08la1"]
@@ -18,7 +18,6 @@
 [ext_resource type="PackedScene" uid="uid://bdkvlb4x5o5i6" path="res://scenes/units/spawning_bee.tscn" id="6_ymln0"]
 [ext_resource type="Environment" uid="uid://dqgx2xd3lwjpw" path="res://resources/enviroment.tres" id="7_63ppr"]
 [ext_resource type="PackedScene" uid="uid://d37l1ft2xicf4" path="res://scenes/objects/bee_comb_collectable.tscn" id="9_85m5b"]
-[ext_resource type="Script" path="res://scenes/objects/bee_comb_collectable.gd" id="9_331y3"]
 [ext_resource type="PackedScene" uid="uid://bmqna7yksp3c5" path="res://scenes/buildings/erdtree_small.tscn" id="14_8mvfi"]
 [ext_resource type="PackedScene" uid="uid://cd1jkoke3xldi" path="res://scenes/objects/erdtree.tscn" id="15_fkxq2"]
 
@@ -317,13 +316,11 @@ transform = Transform3D(0.0871558, 0, 0.996195, 0, 1, 0, -0.996195, 0, 0.0871558
 
 [node name="Objects" type="Node3D" parent="World_01"]
 
-[node name="bee_Comb_collectable" type="Node3D" parent="World_01/Objects" groups=["honey"] instance=ExtResource("9_85m5b")]
+[node name="bee_Comb_collectable" parent="World_01/Objects" instance=ExtResource("9_85m5b")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 259.036, -156.305)
-script = ExtResource("9_331y3")
 
-[node name="bee_Comb_collectable2" type="Node3D" parent="World_01/Objects" groups=["honey"] instance=ExtResource("9_85m5b")]
+[node name="bee_Comb_collectable2" parent="World_01/Objects" instance=ExtResource("9_85m5b")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -14.3128, 8.24979, 42.579)
-script = ExtResource("9_331y3")
 
 [node name="erdtree_BEE" parent="World_01" instance=ExtResource("14_8mvfi")]
 transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, -54.8746, 0, -1901.2)
@@ -356,16 +353,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1541.21, 233.974, 1532.28)
 script = ExtResource("1_js5e2")
 current_faction = 1
 faction_difficult = 1
-unit_limit = 100
+unit_limit = 1000
 faction_sector_object = NodePath("wasp_sector")
 facton_sector_objects_size = 1.0
 faction_hive = NodePath("hive")
 unit_main_prefab = ExtResource("2_02epc")
-unit_cost = 2
-unit_speed = 50.0
+unit_cost = 20
+unit_speed = 100.0
 unit_base_wingpower = 5.0
 unit_base_power_value = 25
-current_nectar = 200.0
+current_nectar = 50.0
 
 [node name="hive" parent="Hives/Wasp_Hive" instance=ExtResource("1_1exdv")]
 transform = Transform3D(56.075, 0, 0, 0, 56.075, 0, 0, 0, 56.075, 0, 0, 0)
@@ -380,16 +377,16 @@ surface_material_override/0 = SubResource("StandardMaterial3D_2gvh5")
 script = ExtResource("1_js5e2")
 current_faction = 2
 faction_difficult = 2
-unit_limit = 50
+unit_limit = 500
 faction_sector_object = NodePath("hornet_sector")
 facton_sector_objects_size = 1.0
 faction_hive = NodePath("hive")
 unit_main_prefab = ExtResource("3_74ffo")
-unit_cost = 5
-unit_speed = 100.0
+unit_cost = 50
+unit_speed = 200.0
 unit_base_wingpower = 5.0
 unit_base_power_value = 25
-current_nectar = 200.0
+current_nectar = 100.0
 
 [node name="hive" parent="Hives/Hornet_Hive" instance=ExtResource("1_1exdv")]
 transform = Transform3D(77, 0, 0, 0, 77, 0, 0, 0, 77, -1579.05, 1141.04, 41.7412)
@@ -409,13 +406,13 @@ faction_sector_object = NodePath("Bee_sector")
 facton_sector_objects_size = 1.0
 faction_hive = NodePath("hive")
 unit_main_prefab = ExtResource("6_ymln0")
-unit_speed = 40.0
+unit_cost = 10
+unit_speed = 80.0
 unit_base_power_value = 5
 current_nectar = 20.0
 
 [node name="hive" parent="Hives/Bee_Hive" instance=ExtResource("1_1exdv")]
 transform = Transform3D(33, 0, 0, 0, 33, 0, 0, 0, 33, 0, 0, 0)
-visible = false
 
 [node name="Bee_sector" type="MeshInstance3D" parent="Hives/Bee_Hive"]
 transform = Transform3D(60, 0, 0, 0, 60, 0, 0, 0, 60, 0, -107.731, 0)
