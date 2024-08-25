@@ -20,8 +20,8 @@ func update_resource_list():
 func delete_resource(node : Node3D):
 	resource_list.erase(node)
 	deleted_resource_point.emit()
-	
-	node.get_parent().queue_free()
+	if !node.get_parent().is_queued_for_deletion():
+		node.get_parent().queue_free()
 
 func update_player_node(_value : Node3D):
 	player = _value

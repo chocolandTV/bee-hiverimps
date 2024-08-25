@@ -29,7 +29,7 @@ func on_area_exited(area : Area3D):
 func on_timer_timeout():
 	for x in collectors:
 		if !first_collector:
-			JobGlobalManager.add_resource(x.faction, Globals.TYPE.HONEY, 1)
+			JobGlobalManager.add_resource(x.faction, Globals.RESOURCES.HONEY, 1)
 			anim.play("collected")
 			first_collector = true
 			# effect animation collected

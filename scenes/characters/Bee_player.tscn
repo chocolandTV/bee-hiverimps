@@ -479,6 +479,8 @@ surface_material_override/0 = SubResource("StandardMaterial3D_uh0dr")
 surface_material_override/1 = SubResource("StandardMaterial3D_tmebm")
 
 [node name="Full_Cargo_praticles" parent="mainBee/Armature" instance=ExtResource("4_wphvn")]
+transform = Transform3D(0.12941, -0.711516, 0.69065, 0.224144, 0.699469, 0.678603, -0.965926, 0.0669873, 0.25, 0.687009, 0.73686, -2.53755)
+emitting = false
 
 [node name="Camera3D" type="Camera3D" parent="mainBee/Armature"]
 transform = Transform3D(-1, -1.51808e-08, -8.60946e-08, 0, 0.984808, -0.173648, 8.74228e-08, -0.173648, -0.984808, 0, 2, -10)

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="bee-hiverimps"
-run/main_scene="res://scenes/_game/game.tscn"
+run/main_scene="res://scenes/_game/main_menu.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://icon.svg"
 

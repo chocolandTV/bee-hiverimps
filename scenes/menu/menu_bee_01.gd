@@ -12,6 +12,7 @@ var mouse_position : Vector2 = Vector2.ZERO
 func _input(event):
 	if event.is_action_pressed("left_click"):
 		mouse_position = get_global_mouse_position()
+		print(mouse_position)
 func _physics_process(_delta):
 	handle_movement(_delta)
 

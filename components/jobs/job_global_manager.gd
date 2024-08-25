@@ -15,6 +15,7 @@ signal change_world()
 
 func set_difficult():
 	pass
+
 func set_faction_manager(_faction : Globals.CLASS, _data : HiveManager):
 	match _faction:
 		Globals.CLASS.BEE:
@@ -25,7 +26,7 @@ func set_faction_manager(_faction : Globals.CLASS, _data : HiveManager):
 			faction_hornet = _data
 		_:
 			print("Error, no faction selected")
-func add_resource(_faction : Globals.CLASS, _resource : Globals.TYPE, _amount : int):
+func add_resource(_faction : Globals.CLASS, _resource : Globals.RESOURCES, _amount : int):
 	match _faction:
 		Globals.CLASS.BEE:
 			faction_bee.add_resource(_resource, _amount)

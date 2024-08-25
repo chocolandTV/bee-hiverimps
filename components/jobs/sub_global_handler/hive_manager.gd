@@ -46,40 +46,40 @@ func _process(_delta):
 		is_buyable = false
 
 func check_resource() -> bool:
-	if current_water > unit_cost * 20:
-		print(" can buy with water")
+	if current_water > (unit_cost + current_unit_count):
+		print("New_Unit:  cost: %s Faction %s : unitcount: %s" %[ "Water", current_faction, current_unit_count])
 		return true
-	if current_nectar > unit_cost *10 :
-		print(" can buy with nectar")
+	if current_nectar > (unit_cost + current_unit_count) :
+		print("New_Unit:  %s Faction %s : unitcount: %s" %[ "Nectar", current_faction, current_unit_count])
 		return true
-	if current_organic > unit_cost *10 :
-		print(" can buy with organic")
+	if current_organic > (unit_cost + current_unit_count) :
+		print("New_Unit:  %s Faction %s : unitcount: %s" %[ "Organic", current_faction, current_unit_count])
 		return true
-	if current_honey > unit_cost * 5:
-		print(" can buy with honey")
+	if current_honey > (unit_cost + current_unit_count):
+		print("New_Unit:  %s Faction %s : unitcount: %s" %[ "Honey", current_faction, current_unit_count])
 		return true
 	return false
 
 func buy_unit():
-	if current_water > unit_cost * 10:
-		current_water -= unit_cost * 10
+	if current_water > (unit_cost + current_unit_count):
+		current_water -= (unit_cost + current_unit_count)
 		if faction_isPlayer:
-			GameUiManager.UI.update_resource_values(Globals.TYPE.WATER, current_water)
+			GameUiManager.UI.update_resource_values(Globals.RESOURCES.WATER, current_water)
 
-	if current_nectar > unit_cost *5 :
-		current_nectar -= unit_cost * 5
+	if current_nectar > (unit_cost + current_unit_count):
+		current_nectar -= (unit_cost + current_unit_count)
 		if faction_isPlayer:
-			GameUiManager.UI.update_resource_values(Globals.TYPE.NECTAR, current_nectar)
+			GameUiManager.UI.update_resource_values(Globals.RESOURCES.NECTAR, current_nectar)
 
-	if current_organic > unit_cost *2 :
-		current_organic -= unit_cost *2
+	if current_organic > (unit_cost + current_unit_count):
+		current_organic -= (unit_cost + current_unit_count)
 		if faction_isPlayer:
-			GameUiManager.UI.update_resource_values(Globals.TYPE.ORGANIC, current_organic)
+			GameUiManager.UI.update_resource_values(Globals.RESOURCES.ORGANIC, current_organic)
 
-	if current_honey > unit_cost :
-		current_honey -= unit_cost
+	if current_honey > (unit_cost + current_unit_count) :
+		current_honey -= (unit_cost + current_unit_count)
 		if faction_isPlayer:
-			GameUiManager.UI.update_resource_values(Globals.TYPE.HONEY, current_honey)
+			GameUiManager.UI.update_resource_values(Globals.RESOURCES.HONEY, current_honey)
 	spawn_unit()
 
 	current_factionpower += unit_base_power_value
@@ -95,47 +95,52 @@ func buy_unit():
 	if current_unit_count >= upgrade_steps:
 		upgrade_steps += 10
 		current_unit_max_capacity += 2
-		print("FACTION UPGRADE %d : LEVEL %d" % [upgrade_steps, current_unit_max_capacity])
+		print("FACTION UPGRADE %d : LEVEL %d" % [float(upgrade_steps)/10, current_unit_max_capacity])
 		JobGlobalManager.global_increase_unit_upgrade(current_faction, current_unit_max_capacity)
 
 	GameUiManager.UI.update_faction_power(current_faction,current_factionpower)
+	GameUiManager.UI.update_progressbar_factionpower(current_faction, current_factionpower)
 	
-func add_resource(_resource : Globals.TYPE, _amount :int):
+func add_resource(_resource : Globals.RESOURCES, _amount :int):
 	match _resource:
-		Globals.TYPE.WATER:
+		Globals.RESOURCES.WATER:
 			current_water += _amount
 			if faction_isPlayer:
 				GameUiManager.UI.update_resource_values(_resource, current_water)
-		Globals.TYPE.NECTAR:
+				GameUiManager.UI.update_progressbar_resource(_resource, current_water)
+		Globals.RESOURCES.NECTAR:
 			current_nectar += _amount
 			if faction_isPlayer:
 				GameUiManager.UI.update_resource_values(_resource, current_nectar)
-		Globals.TYPE.HONEY:
+				GameUiManager.UI.update_progressbar_resource(_resource, current_nectar)
+		Globals.RESOURCES.HONEY:
 			current_honey += _amount
 			if faction_isPlayer:
 				GameUiManager.UI.update_resource_values(_resource, current_honey)
-		Globals.TYPE.ORGANIC:
+				GameUiManager.UI.update_progressbar_resource(_resource, current_honey)
+		Globals.RESOURCES.ORGANIC:
 			current_organic += _amount
 			if faction_isPlayer:
 				GameUiManager.UI.update_resource_values(_resource, current_organic)
+				GameUiManager.UI.update_progressbar_resource(_resource, current_organic)
 		_:
 			print("FACTION_RESOURCE ERROR: cant add new resource, invalid resource type.")
 
-func remove_resource(_resource : Globals.TYPE, value : float):
+func remove_resource(_resource : Globals.RESOURCES, value : float):
 	match _resource:
-		Globals.TYPE.WATER:
+		Globals.RESOURCES.WATER:
 			current_water -= value
 			if faction_isPlayer:
 				GameUiManager.update_resource_values(_resource, current_water)
-		Globals.TYPE.NECTAR:
+		Globals.RESOURCES.NECTAR:
 			current_nectar -= value
 			if faction_isPlayer:
 				GameUiManager.UI.update_resource_values(_resource, current_nectar)
-		Globals.TYPE.HONEY:
+		Globals.RESOURCES.HONEY:
 			current_honey -= value
 			if faction_isPlayer:
 				GameUiManager.UI.update_resource_values(_resource, current_honey)
-		Globals.TYPE.ORGANIC:
+		Globals.RESOURCES.ORGANIC:
 			current_organic -= value
 			if faction_isPlayer:
 				GameUiManager.UI.update_resource_values(_resource, current_organic)

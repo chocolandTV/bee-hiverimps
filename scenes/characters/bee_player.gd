@@ -91,7 +91,7 @@ func _process(_delta):
         bee_mesh.rotate_x(-mouse_relative.y * (mouse_sensitivity / 1000))
         var smoothrot = lerpf(bee_mesh.global_rotation.z,0, 0.5*_delta)
         bee_mesh.global_rotation.z = smoothrot
-        print(-mouse_relative.x * (mouse_sensitivity / 1000))
+
     elif look_direction != Vector2.ZERO:
         bee_mesh.rotate_y(-look_direction.x * (mouse_sensitivity)/25)
         bee_mesh.rotate_x(-look_direction.y * (mouse_sensitivity)/25)
@@ -116,34 +116,34 @@ func _physics_process(_delta):
     velocity = velocity.move_toward(move_direction* speed, current_acceleration)
     move_and_slide()
 
-func get_resource(_resource : Globals.TYPE):
-    if  item_count >= (max_items):
-        particle.emitting = true
-        return #### later drop nectar
-    if _resource == Globals.TYPE.WATER:
+func get_resource(_resource : Globals.RESOURCES):
+    if _resource == Globals.RESOURCES.WATER:
         items["water"] += 1
         item_count += 1
-        GameUiManager.UI.update_player_backpack(Globals.TYPE.WATER,items["water"])
-    if _resource == Globals.TYPE.NECTAR:
+        GameUiManager.UI.update_player_backpack(Globals.RESOURCES.WATER,items["water"])
+    if _resource == Globals.RESOURCES.NECTAR:
         items["nectar"] += 1
         item_count += 1
-        GameUiManager.UI.update_player_backpack(Globals.TYPE.NECTAR,items["nectar"])
-    if _resource == Globals.TYPE.ORGANIC:
+        GameUiManager.UI.update_player_backpack(Globals.RESOURCES.NECTAR,items["nectar"])
+    if _resource == Globals.RESOURCES.ORGANIC:
         items["organic"] +=1
         item_count += 1
-        GameUiManager.UI.update_player_backpack(Globals.TYPE.ORGANIC,items["organic"])
-    if _resource == Globals.TYPE.HONEY:
+        GameUiManager.UI.update_player_backpack(Globals.RESOURCES.ORGANIC,items["organic"])
+    if _resource == Globals.RESOURCES.HONEY:
         items["honey"] +=1
         item_count += 1
-        GameUiManager.UI.update_player_backpack(Globals.TYPE.HONEY,items["honey"])
+        GameUiManager.UI.update_player_backpack(Globals.RESOURCES.HONEY,items["honey"])
+    if  item_count >= (max_items):
+        print("play particle")
+        particle.emitting = true
 
 
 func send_resource():
 
-    JobGlobalManager.add_resource(faction, Globals.TYPE.WATER, items["water"])
-    JobGlobalManager.add_resource(faction, Globals.TYPE.NECTAR, items["nectar"])
-    JobGlobalManager.add_resource(faction, Globals.TYPE.ORGANIC, items["organic"])
-    JobGlobalManager.add_resource(faction, Globals.TYPE.HONEY, items["honey"])
+    JobGlobalManager.add_resource(faction, Globals.RESOURCES.WATER, items["water"])
+    JobGlobalManager.add_resource(faction, Globals.RESOURCES.NECTAR, items["nectar"])
+    JobGlobalManager.add_resource(faction, Globals.RESOURCES.ORGANIC, items["organic"])
+    JobGlobalManager.add_resource(faction, Globals.RESOURCES.HONEY, items["honey"])
 
     item_count = 0
     items["water"] = 0
@@ -158,3 +158,6 @@ func on_upgrade(_faction, _value):
         max_items += _value
         speed += _value
         fly_speed += (_value /10)
+
+func is_full_cargo() -> bool:
+    return item_count >= (max_items)

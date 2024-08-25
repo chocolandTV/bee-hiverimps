@@ -107,26 +107,26 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oq231"]
-size = Vector2(8.5, 8.5)
+size = Vector2(13, 11)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tia7e"]
+radius = 15.0333
 
 [node name="MenuBee_01" type="CharacterBody2D"]
 script = ExtResource("1_xv12g")
 
 [node name="Bee_01" type="TextureRect" parent="."]
-offset_right = 16.0
-offset_bottom = 16.0
+offset_right = 32.0
+offset_bottom = 32.0
 texture = ExtResource("1_6kkpu")
 expand_mode = 1
 
 [node name="TextureRect" type="TextureRect" parent="Bee_01"]
-visible = false
 layout_mode = 0
-offset_left = 5.0
-offset_top = 10.0
-offset_right = 13.0
-offset_bottom = 18.0
+offset_left = 17.0
+offset_top = 23.0
+offset_right = 25.0
+offset_bottom = 31.0
 texture = ExtResource("2_7l8pk")
 expand_mode = 1
 
@@ -137,13 +137,15 @@ libraries = {
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(9, 10)
+position = Vector2(16.5, 18.5)
 shape = SubResource("RectangleShape2D_oq231")
 
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2(9, 9)
 collision_layer = 2
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(8, 10)
 shape = SubResource("CircleShape2D_tia7e")
+debug_color = Color(0.807828, 0.41401, 1.92523e-07, 0.42)

@@ -8,10 +8,10 @@ func _ready():
 	$Grass_Area.area_exited.connect(on_area_exited)
 
 func on_area_entered(area : Area3D):
-	area.is_working(true, Globals.TYPE.ORGANIC, self)
+	area.is_working(true, Globals.RESOURCES.ORGANIC, self)
 
 func on_area_exited(area : Area3D):
-	area.is_working(false, Globals.TYPE.ORGANIC, self)
+	area.is_working(false, Globals.RESOURCES.ORGANIC, self)
 
 func on_collected():
 

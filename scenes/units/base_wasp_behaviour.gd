@@ -10,7 +10,7 @@ var fly_speed := 1.0
 var max_items : int = 5
 
 ### VARIABLE IS HOLDING
-var items : Array[Globals.TYPE]
+var items : Array[Globals.RESOURCES]
 var current_target : Node3D
 var is_moving : bool = false
 var current_state : UNIT_STATE =  UNIT_STATE.IDLE
@@ -28,13 +28,14 @@ func _ready():
 
 func on_resource_delete():
 	current_target = ResourceListComponent.get_random_resource()
+	current_state = UNIT_STATE.COLLECTING
 
 func on_world_change():
 	current_state = UNIT_STATE.IDLE
 
 func set_stats(_faction, _hive, _speed, _flyspeed, _max_items):
 	### get data on birth
-	visuals_object.position = Vector3(randi_range(0,15),randi_range(0,15),randi_range(0,15))
+	visuals_object.position = Vector3(randf_range(-1,1),randf_range(-1,1),randf_range(-1,1))
 	faction = _faction
 	hive = _hive
 	speed = _speed
@@ -83,7 +84,7 @@ func move(_delta):
 	if current_state != UNIT_STATE.IDLE and global_position.distance_to(current_target.global_position)> 5:
 		global_position = global_position.move_toward(current_target.global_position, speed *_delta)
 
-func get_resource(_resource : Globals.TYPE):
+func get_resource(_resource : Globals.RESOURCES):
 	if items.size() >= (max_items):
 		return #### later drop nectar
 	items.append(_resource)
@@ -93,3 +94,7 @@ func send_resource():
 	for x in items:
 		JobGlobalManager.add_resource(faction, x,1)
 	items.clear()
+
+
+func is_full_cargo() -> bool:
+	return (items.size() >= max_items)

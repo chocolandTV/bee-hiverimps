@@ -1,19 +1,30 @@
-[gd_scene load_steps=10 format=3 uid="uid://cu5u0ycvloabp"]
+[gd_scene load_steps=15 format=3 uid="uid://cu5u0ycvloabp"]
 
 [ext_resource type="Script" path="res://scenes/game_ui/menu.gd" id="1_edmjk"]
 [ext_resource type="Texture2D" uid="uid://dkn70353l3nyb" path="res://assets/images/comb_background.png" id="2_rhsuf"]
 [ext_resource type="PackedScene" uid="uid://lk0eoji387th" path="res://scenes/menu/menu_bee_01.tscn" id="3_j76qd"]
 [ext_resource type="Texture2D" uid="uid://bqylnrmcdtxdr" path="res://assets/images/UI/UI_Button.png" id="4_1yb6t"]
 [ext_resource type="Texture2D" uid="uid://r0spclmf6nj8" path="res://assets/images/LOGO.png" id="4_6kxea"]
+[ext_resource type="Texture2D" uid="uid://8x43jph1unf5" path="res://assets/images/UI/nectar_icon.png" id="6_j6tdo"]
+[ext_resource type="Script" path="res://scenes/menu/Button_texture.gd" id="6_nq1cr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cofwm"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2ldsw"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_cxfae"]
-radius = 368.91
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cd1jn"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3kou0"]
+
+[sub_resource type="Curve" id="Curve_nwrhn"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.598662, 0.991252), 0.0, 0.0, 0, 0, Vector2(0.983278, 0.0114402), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cxfae"]
+radius = 368.91
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ofg4q"]
+radius = 98.8
 
 [node name="Menu" type="Control"]
 process_mode = 3
@@ -26,9 +37,14 @@ grow_vertical = 2
 script = ExtResource("1_edmjk")
 
 [node name="Background_Panel" type="Panel" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_cofwm")
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="Background_Panel"]
 modulate = Color(1, 1, 1, 0.156863)
@@ -40,62 +56,66 @@ expand_mode = 1
 stretch_mode = 1
 
 [node name="Unit_Container" type="Panel" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_2ldsw")
 
 [node name="MenuBee_01" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+position = Vector2(748, -60)
 
-[node name="SunFlower_Area" type="Area2D" parent="."]
-position = Vector2(1376, 499)
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SunFlower_Area"]
-shape = SubResource("CircleShape2D_cxfae")
-debug_color = Color(1, 0.6, 0, 0.419608)
-
-[node name="PanelContainer" type="PanelContainer" parent="."]
-layout_mode = 0
-offset_right = 500.0
-offset_bottom = 1080.0
+[node name="Button_PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 100.0
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_cd1jn")
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Button_PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 100
 
-[node name="Panel" type="Panel" parent="PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Button_PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="Button_PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(350, 350)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3kou0")
 
-[node name="Logo" type="TextureRect" parent="PanelContainer/MarginContainer/Panel"]
+[node name="Logo" type="TextureRect" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Panel"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
-offset_left = -97.0
-offset_top = 5.0
-offset_right = 253.0
-offset_bottom = 355.0
+offset_right = 350.0
+offset_bottom = 350.0
 texture = ExtResource("4_6kxea")
 expand_mode = 1
 
-[node name="Start" type="Panel" parent="PanelContainer/MarginContainer"]
+[node name="Start" type="Panel" parent="Button_PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3kou0")
 
-[node name="Start_Texture" type="TextureRect" parent="PanelContainer/MarginContainer/Start"]
-custom_minimum_size = Vector2(128, 128)
+[node name="Start_Texture" type="TextureRect" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Start" node_paths=PackedStringArray("timer", "particle", "area", "menu_ui")]
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
-offset_left = -20.0
-offset_top = 330.0
-offset_right = 180.0
-offset_bottom = 530.0
+offset_right = 200.0
+offset_bottom = 200.0
+pivot_offset = Vector2(100, 100)
 texture = ExtResource("4_1yb6t")
 expand_mode = 1
+script = ExtResource("6_nq1cr")
+timer = NodePath("../../../../Button_Timer")
+particle = NodePath("../../../../../Button_Particles")
+area = NodePath("../../../../../Area_Container/Area2D_Start")
+menu_ui = NodePath("../../../../..")
 
-[node name="Label-start" type="Label" parent="PanelContainer/MarginContainer/Start/Start_Texture"]
-layout_mode = 0
+[node name="Label-start" type="Label" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Start/Start_Texture"]
+layout_mode = 1
 offset_right = 200.0
 offset_bottom = 200.0
 theme_override_colors/font_shadow_color = Color(0.279301, 0.166221, 4.81308e-08, 1)
@@ -107,47 +127,127 @@ text = "Start"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Settings" type="Panel" parent="PanelContainer/MarginContainer"]
+[node name="Settings" type="Panel" parent="Button_PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3kou0")
 
-[node name="Setting_Texture" type="TextureRect" parent="PanelContainer/MarginContainer/Settings"]
+[node name="Setting_Texture" type="TextureRect" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Settings" node_paths=PackedStringArray("timer", "particle", "area", "menu_ui")]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
-offset_left = -20.0
-offset_top = 530.0
-offset_right = 180.0
-offset_bottom = 730.0
+offset_right = 200.0
+offset_bottom = 200.0
+pivot_offset = Vector2(100, 100)
 texture = ExtResource("4_1yb6t")
 expand_mode = 1
+script = ExtResource("6_nq1cr")
+timer = NodePath("../../../../Button_Timer")
+particle = NodePath("../../../../../Button_Particles")
+next_state = 3
+area = NodePath("../../../../../Area_Container/Area2D_Settings")
+menu_ui = NodePath("../../../../..")
 
-[node name="Credits" type="Panel" parent="PanelContainer/MarginContainer"]
+[node name="Label-settings" type="Label" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Settings/Setting_Texture"]
+layout_mode = 1
+offset_right = 200.0
+offset_bottom = 200.0
+theme_override_colors/font_shadow_color = Color(0.279301, 0.166221, 4.81308e-08, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 9
+theme_override_font_sizes/font_size = 35
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Credits" type="Panel" parent="Button_PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3kou0")
 
-[node name="Credit_Texture" type="TextureRect" parent="PanelContainer/MarginContainer/Credits"]
+[node name="Credit_Texture" type="TextureRect" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Credits" node_paths=PackedStringArray("timer", "particle", "area", "menu_ui")]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
-offset_left = -20.0
-offset_top = 730.0
-offset_right = 180.0
-offset_bottom = 930.0
+offset_right = 200.0
+offset_bottom = 200.0
+pivot_offset = Vector2(100, 100)
 texture = ExtResource("4_1yb6t")
 expand_mode = 1
+script = ExtResource("6_nq1cr")
+timer = NodePath("../../../../Button_Timer")
+particle = NodePath("../../../../../Button_Particles")
+next_state = 4
+area = NodePath("../../../../../Area_Container/Area2D_Credits")
+menu_ui = NodePath("../../../../..")
 
-[node name="Exit" type="Panel" parent="PanelContainer/MarginContainer"]
+[node name="Label-Credits" type="Label" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Credits/Credit_Texture"]
+layout_mode = 1
+offset_right = 200.0
+offset_bottom = 200.0
+theme_override_colors/font_shadow_color = Color(0.279301, 0.166221, 4.81308e-08, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 9
+theme_override_font_sizes/font_size = 35
+text = "Credits"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Exit" type="Panel" parent="Button_PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3kou0")
 
-[node name="Exit_Texture" type="TextureRect" parent="PanelContainer/MarginContainer/Exit"]
+[node name="Exit_Texture" type="TextureRect" parent="Button_PanelContainer/MarginContainer/Exit" node_paths=PackedStringArray("timer", "particle", "area", "menu_ui")]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 offset_left = 1612.0
 offset_top = 870.0
 offset_right = 1812.0
 offset_bottom = 1070.0
+pivot_offset = Vector2(100, 100)
 texture = ExtResource("4_1yb6t")
 expand_mode = 1
+script = ExtResource("6_nq1cr")
+timer = NodePath("../../../Button_Timer")
+particle = NodePath("../../../../Button_Particles")
+next_state = 5
+area = NodePath("../../../../Area_Container/Area2D_Quit")
+menu_ui = NodePath("../../../..")
+
+[node name="Label-Credits2" type="Label" parent="Button_PanelContainer/MarginContainer/Exit/Exit_Texture"]
+layout_mode = 1
+offset_right = 200.0
+offset_bottom = 200.0
+theme_override_colors/font_shadow_color = Color(0.279301, 0.166221, 4.81308e-08, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 9
+theme_override_font_sizes/font_size = 35
+text = "Quit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button_Timer" type="Timer" parent="Button_PanelContainer"]
+wait_time = 0.4
+
+[node name="Button_Particles" type="CPUParticles2D" parent="."]
+position = Vector2(180, 430)
+emitting = false
+explosiveness = 1.0
+randomness = 1.0
+texture = ExtResource("6_j6tdo")
+direction = Vector2(5, 5)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 100.0
+angular_velocity_max = 33.0
+linear_accel_max = 7.0
+radial_accel_max = 3.0
+angle_max = 720.0
+scale_amount_min = 0.3
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_nwrhn")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
@@ -166,3 +266,50 @@ theme_override_font_sizes/font_size = 100
 text = "Bee Hiverimps"
 horizontal_alignment = 1
 vertical_alignment = 2
+
+[node name="Area_Container" type="Node2D" parent="."]
+
+[node name="SunFlower_Area" type="Area2D" parent="Area_Container"]
+position = Vector2(1376, 499)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area_Container/SunFlower_Area"]
+shape = SubResource("CircleShape2D_cxfae")
+debug_color = Color(1, 0.6, 0, 0.419608)
+
+[node name="Area2D_Start" type="Area2D" parent="Area_Container"]
+position = Vector2(203, 452)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area_Container/Area2D_Start"]
+shape = SubResource("CircleShape2D_ofg4q")
+debug_color = Color(1, 0.6, 0, 0.419608)
+
+[node name="Area2D_Settings" type="Area2D" parent="Area_Container"]
+position = Vector2(200, 662)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area_Container/Area2D_Settings"]
+shape = SubResource("CircleShape2D_ofg4q")
+debug_color = Color(1, 0.6, 0, 0.419608)
+
+[node name="Area2D_Credits" type="Area2D" parent="Area_Container"]
+position = Vector2(199, 867)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area_Container/Area2D_Credits"]
+shape = SubResource("CircleShape2D_ofg4q")
+debug_color = Color(1, 0.6, 0, 0.419608)
+
+[node name="Area2D_Quit" type="Area2D" parent="Area_Container"]
+position = Vector2(1812, 974)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area_Container/Area2D_Quit"]
+shape = SubResource("CircleShape2D_ofg4q")
+debug_color = Color(1, 0.6, 0, 0.419608)

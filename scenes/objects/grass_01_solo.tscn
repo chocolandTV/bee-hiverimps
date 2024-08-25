@@ -120,7 +120,8 @@ scale_amount_curve = SubResource("Curve_ts4yx")
 [node name="Resource_Point" parent="." index="5" instance=ExtResource("3_eenty")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.77329, 52.9619, -0.666401)
 
-[node name="Resource_Health_Comp" parent="." index="6" instance=ExtResource("4_x3xvb")]
+[node name="Resource_Health_Comp" parent="." index="6" node_paths=PackedStringArray("resource_object") instance=ExtResource("4_x3xvb")]
 max_resource_range = Vector2i(5, 25)
+resource_object = NodePath("../Resource_Point")
 
 [connection signal="timeout" from="Timer" to="." method="on_timer_timeout"]

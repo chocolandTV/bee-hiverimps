@@ -359,10 +359,10 @@ facton_sector_objects_size = 1.0
 faction_hive = NodePath("hive")
 unit_main_prefab = ExtResource("2_02epc")
 unit_cost = 20
-unit_speed = 100.0
+unit_speed = 50.0
 unit_base_wingpower = 5.0
-unit_base_power_value = 25
-current_nectar = 50.0
+unit_base_power_value = 5
+current_nectar = 100.0
 
 [node name="hive" parent="Hives/Wasp_Hive" instance=ExtResource("1_1exdv")]
 transform = Transform3D(56.075, 0, 0, 0, 56.075, 0, 0, 0, 56.075, 0, 0, 0)
@@ -376,17 +376,17 @@ surface_material_override/0 = SubResource("StandardMaterial3D_2gvh5")
 [node name="Hornet_Hive" type="Node3D" parent="Hives" node_paths=PackedStringArray("faction_sector_object", "faction_hive")]
 script = ExtResource("1_js5e2")
 current_faction = 2
-faction_difficult = 2
-unit_limit = 500
+faction_difficult = 1
+unit_limit = 1000
 faction_sector_object = NodePath("hornet_sector")
 facton_sector_objects_size = 1.0
 faction_hive = NodePath("hive")
 unit_main_prefab = ExtResource("3_74ffo")
 unit_cost = 50
-unit_speed = 200.0
-unit_base_wingpower = 5.0
+unit_speed = 40.0
+unit_base_wingpower = 2.0
 unit_base_power_value = 25
-current_nectar = 100.0
+current_nectar = 110.0
 
 [node name="hive" parent="Hives/Hornet_Hive" instance=ExtResource("1_1exdv")]
 transform = Transform3D(77, 0, 0, 0, 77, 0, 0, 0, 77, -1579.05, 1141.04, 41.7412)

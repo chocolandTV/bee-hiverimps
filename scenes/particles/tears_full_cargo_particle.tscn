@@ -3,16 +3,17 @@
 [ext_resource type="ArrayMesh" uid="uid://cucl0a2mxi44o" path="res://assets/meshes/tears_full_cargo.obj" id="1_xludt"]
 
 [sub_resource type="Curve" id="Curve_q3s0w"]
-_data = [Vector2(0.0100335, 1), 0.0, 0.0, 0, 0, Vector2(0.993311, 0.0201885), 0.0, 0.0, 0, 0]
+_data = [Vector2(0.00334448, 1), 0.0, 0.0, 0, 0, Vector2(0.993311, 0.0201885), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [node name="Full_Cargo_Particles" type="CPUParticles3D"]
-transform = Transform3D(-0.183013, -0.859789, -0.476727, 0.183013, -0.506236, 0.842752, -0.965926, 0.0669873, 0.25, 1.49579, 0.73686, -0.68239)
-emitting = false
+transform = Transform3D(0.12941, -0.711516, 0.69065, 0.224144, 0.699469, 0.678603, -0.965926, 0.0669873, 0.25, 1.49579, 0.73686, -0.68239)
 amount = 1
-lifetime = 2.0
+lifetime = 4.0
 local_coords = true
 mesh = ExtResource("1_xludt")
 direction = Vector3(0, 0, 0)
-gravity = Vector3(0, 0, 0)
+spread = 0.0
+gravity = Vector3(0, -0.05, -0.05)
+scale_amount_min = 0.0
 scale_amount_curve = SubResource("Curve_q3s0w")

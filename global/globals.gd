@@ -4,15 +4,23 @@ signal player_mouse_changed(value :float)
 signal player_use_controller(value : bool)
 
 enum CLASS {
-	BEE,
-	WASP,
-	HORNET
+      BEE,
+       WASP,
+      HORNET
 }
 enum RESOURCES {
-	WATER,
-	NECTAR,
-	ORGANIC,
-	HONEY
+      WATER,
+      NECTAR,
+      ORGANIC,
+      HONEY
+}
+enum MENU_STATE {
+      START_GAME,
+      RESUME,
+      MAIN,
+      SETTINGS,
+      CREDITS,
+      QUIT
 }
 var player_settings = {
       "setting_volume_master" : 0.5,

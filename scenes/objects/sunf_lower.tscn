@@ -91,5 +91,6 @@ autoplay = "sun_flower_dance"
 
 [node name="Resource_Point" parent="." index="4" instance=ExtResource("5_wkubj")]
 
-[node name="Resource_Health_Comp" parent="." index="5" instance=ExtResource("7_qq7ek")]
+[node name="Resource_Health_Comp" parent="." index="5" node_paths=PackedStringArray("resource_object") instance=ExtResource("7_qq7ek")]
 max_resource_range = Vector2i(1000, 5000)
+resource_object = NodePath("../Resource_Point")
