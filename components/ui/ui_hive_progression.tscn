@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbqwxq1iwplvm"]
-
-[ext_resource type="Script" path="res://components/ui/ui_hive_progression.gd" id="1_d5ja0"]
-
-[node name="UI_Hive_Progression" type="Node"]
-script = ExtResource("1_d5ja0")

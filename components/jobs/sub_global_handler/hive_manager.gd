@@ -95,6 +95,13 @@ func buy_unit():
 	if current_unit_count >= upgrade_steps:
 		upgrade_steps += 10
 		current_unit_max_capacity += 2
+		### filter faction
+		if current_faction == Globals.CLASS.BEE:
+			GameUiManager.UI.set_player_info_box("Bees upgraded,Speed:%d,Capacity:%d" % [unit_speed + current_unit_max_capacity, current_unit_max_capacity])
+		if current_faction == Globals.CLASS.WASP:
+			GameUiManager.UI.set_player_info_box("Wasps upgraded,Speed:%d,Capacity:%d" % [unit_speed + current_unit_max_capacity, current_unit_max_capacity])
+		if current_faction == Globals.CLASS.HORNET:
+			GameUiManager.UI.set_player_info_box("Hornets upgraded,Speed:%d,Capacity:%d" % [unit_speed + current_unit_max_capacity, current_unit_max_capacity])
 		print("FACTION UPGRADE %d : LEVEL %d" % [float(upgrade_steps)/10, current_unit_max_capacity])
 		JobGlobalManager.global_increase_unit_upgrade(current_faction, current_unit_max_capacity)
 

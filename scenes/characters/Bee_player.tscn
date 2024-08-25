@@ -482,8 +482,11 @@ surface_material_override/1 = SubResource("StandardMaterial3D_tmebm")
 transform = Transform3D(0.12941, -0.711516, 0.69065, 0.224144, 0.699469, 0.678603, -0.965926, 0.0669873, 0.25, 0.687009, 0.73686, -2.53755)
 emitting = false
 
-[node name="Camera3D" type="Camera3D" parent="mainBee/Armature"]
-transform = Transform3D(-1, -1.51808e-08, -8.60946e-08, 0, 0.984808, -0.173648, 8.74228e-08, -0.173648, -0.984808, 0, 2, -10)
+[node name="SpringArm3D" type="SpringArm3D" parent="mainBee/Armature"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 2, -10)
+
+[node name="Camera3D" type="Camera3D" parent="mainBee/Armature/SpringArm3D"]
+transform = Transform3D(-1, -1.51808e-08, -8.60947e-08, -7.64274e-15, -0.984808, 0.173648, -8.74228e-08, 0.173648, 0.984808, 0, 0, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="mainBee"]
 libraries = {

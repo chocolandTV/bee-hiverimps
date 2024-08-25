@@ -134,8 +134,9 @@ func get_resource(_resource : Globals.RESOURCES):
         item_count += 1
         GameUiManager.UI.update_player_backpack(Globals.RESOURCES.HONEY,items["honey"])
     if  item_count >= (max_items):
-        print("play particle")
+
         particle.emitting = true
+        GameUiManager.UI.set_player_backpack_full(true)
 
 
 func send_resource():
@@ -152,6 +153,7 @@ func send_resource():
     items["honey"] =0
     GameUiManager.UI.clear_player_backpack()
     particle.emitting = false
+    GameUiManager.UI.set_player_backpack_full(false)
 
 func on_upgrade(_faction, _value):
     if(_faction == faction):

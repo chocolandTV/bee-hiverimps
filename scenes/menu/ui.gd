@@ -34,6 +34,8 @@ class_name ui_class
 @onready var win_container : PanelContainer =$Win_Container
 #################  player speed vbox script
 @onready var play_vbox_container : VBoxContainer  = $Speed_Debug/MarginContainer/VBoxContainer
+################ player infobox
+@onready var player_info_box_label : Label = $Speed_Debug/MarginContainer/VBoxContainer/Label_chat
 var player_node : CharacterBody3D
 var window_size : Vector2  =Vector2 (1920,1080)
 var game_allready_won : bool =false
@@ -70,6 +72,24 @@ func set_win_panel(_value : bool):
 	if _value and !game_allready_won:
 		game_allready_won = true
 		win_container.on_win_menu(_value)
+############# IF BACKPACK IS FULL
+func set_player_backpack_full(_value : bool):
+	if _value:
+		label_capacity_water.modulate = Color.RED
+		label_capacity_nectar.modulate = Color.RED
+		label_capacity_organic.modulate = Color.RED
+		label_capacity_honey.modulate = Color.RED
+		player_info_box_label.text = "You can`t carry anymore, go back to hive"
+	else:
+		label_capacity_water.modulate = Color.WHITE
+		label_capacity_nectar.modulate = Color.WHITE
+		label_capacity_organic.modulate = Color.WHITE
+		label_capacity_honey.modulate = Color.WHITE
+		if player_info_box_label.text == "You can`t carry anymore, go back to hive":
+			player_info_box_label.text = ""
+
+func set_player_info_box(_text : String):
+	player_info_box_label.text = _text
 
 func update_player_backpack(_resource : Globals.RESOURCES, _value : int):
 	match _resource:

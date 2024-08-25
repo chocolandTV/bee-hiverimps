@@ -122,6 +122,7 @@ texture = ExtResource("1_6kkpu")
 expand_mode = 1
 
 [node name="TextureRect" type="TextureRect" parent="Bee_01"]
+visible = false
 layout_mode = 0
 offset_left = 17.0
 offset_top = 23.0

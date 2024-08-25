@@ -11,13 +11,12 @@ func _ready():
 	GameUiManager.button_shooted.connect(on_other_button_shooted)
 	area.area_entered.connect(on_area_entered)
 	area.area_exited.connect(on_area_exited)
+	timer.timeout.connect(on_timer_timeout)
 
-func _process(_delta):
-	if scale <= Vector2.ONE:
-		scale += Vector2.ONE * _delta * 10
 
 func on_timer_timeout():
 	if is_collecting:
+		print("scaling button")
 		scale -= Vector2.ONE * (0.01 * units)
 
 	#### IF BUTTON IS COLLECTED
@@ -33,9 +32,9 @@ func on_area_entered(_area : Area2D):
 	if units == 0:
 		timer.start()
 		particle.emitting = true
-		particle.position = position
+
+		is_collecting =true
 	units += 1
-	is_collecting =true
 
 func on_area_exited(_area : Area2D):
 	if units <= 1:
