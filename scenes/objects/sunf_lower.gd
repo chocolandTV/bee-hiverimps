@@ -4,6 +4,8 @@ extends Node3D
 @onready var particles : CPUParticles3D = $CPUParticles3D
 @onready var resource_point: Node3D = $Resource_Point
 @onready var health_component : resource_health_component = $Resource_Health_Comp
+@onready var audio_sunflower : AudioStreamPlayer3D = $Resource_Point/Audio_Sunflower
+
 var max_nectar : float
 var current_nectar : float
 
@@ -23,6 +25,7 @@ func on_collected():
 		health_component.get_damage()
 		particles.emitting = true
 		current_sunflower_collected += 1
+		audio_sunflower.play()
 		if current_sunflower_collected >= 100:
 			spawn_honey_comb()
 			current_sunflower_collected = 0

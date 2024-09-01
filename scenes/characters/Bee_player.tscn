@@ -1,16 +1,19 @@
-[gd_scene load_steps=17 format=4 uid="uid://bakjg7lmdboxx"]
+[gd_scene load_steps=20 format=4 uid="uid://bakjg7lmdboxx"]
 
 [ext_resource type="Script" path="res://scenes/characters/bee_player.gd" id="1_jivfb"]
-[ext_resource type="Texture2D" uid="uid://b7denawa16kdv" path="res://assets/models/mainBee_Bee_material.png" id="3_we7lj"]
+[ext_resource type="Texture2D" uid="uid://b7denawa16kdv" path="res://assets/models/mainBee_Bee_material.png" id="2_1j87a"]
+[ext_resource type="PackedScene" uid="uid://d2ii75h2ylpqf" path="res://scenes/particles/tears_full_cargo_particle.tscn" id="3_67qt3"]
 [ext_resource type="Script" path="res://components/job_resources/collecting_area.gd" id="4_dqx5w"]
-[ext_resource type="PackedScene" uid="uid://d2ii75h2ylpqf" path="res://scenes/particles/tears_full_cargo_particle.tscn" id="4_wphvn"]
+[ext_resource type="PackedScene" uid="uid://duoxd41oyl7j3" path="res://components/sound/audio_3d_component.tscn" id="4_ft1e5"]
+[ext_resource type="AudioStream" uid="uid://c5rw1oqov8h1s" path="res://assets/sounds/bee_buzzing_01.mp3" id="5_6wftt"]
+[ext_resource type="AudioStream" uid="uid://4hn4ovixk1ul" path="res://assets/sounds/collect_sound_01.mp3" id="6_2pxh8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lcj0i"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6dksb"]
 resource_name = "BeeBody"
 cull_mode = 2
-albedo_texture = ExtResource("3_we7lj")
+albedo_texture = ExtResource("2_1j87a")
 roughness = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8r5f"]
@@ -117,7 +120,7 @@ bind/18/bone = -1
 bind/18/pose = Transform3D(0.80355, -0.397312, 0.443226, 0.443226, 0.89641, -1.49012e-08, -0.397313, 0.19645, 0.89641, -0.0480973, -2.65622, -0.0137055)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uh0dr"]
-albedo_texture = ExtResource("3_we7lj")
+albedo_texture = ExtResource("2_1j87a")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tmebm"]
 transparency = 1
@@ -323,12 +326,11 @@ _data = {
 [sub_resource type="SphereShape3D" id="SphereShape3D_40vqx"]
 radius = 11.68
 
-[node name="Bee_player" type="CharacterBody3D" node_paths=PackedStringArray("particle") groups=["Player"]]
+[node name="Bee_player" type="CharacterBody3D" groups=["Player"]]
 collision_layer = 5
 script = ExtResource("1_jivfb")
 speed = 80.0
 fly_speed = 2.0
-particle = NodePath("mainBee/Armature/Full_Cargo_praticles")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_lcj0i")
@@ -478,7 +480,7 @@ skin = SubResource("Skin_kdfct")
 surface_material_override/0 = SubResource("StandardMaterial3D_uh0dr")
 surface_material_override/1 = SubResource("StandardMaterial3D_tmebm")
 
-[node name="Full_Cargo_praticles" parent="mainBee/Armature" instance=ExtResource("4_wphvn")]
+[node name="Full_Cargo_praticles" parent="mainBee/Armature" instance=ExtResource("3_67qt3")]
 transform = Transform3D(0.12941, -0.711516, 0.69065, 0.224144, 0.699469, 0.678603, -0.965926, 0.0669873, 0.25, 0.687009, 0.73686, -2.53755)
 emitting = false
 
@@ -493,6 +495,14 @@ libraries = {
 "": SubResource("AnimationLibrary_j7nin")
 }
 autoplay = "flying"
+
+[node name="Audio_on_buzzing" parent="mainBee" instance=ExtResource("4_ft1e5")]
+stream = ExtResource("5_6wftt")
+bus = &"SFX"
+
+[node name="Audio_On_Collect" parent="mainBee" instance=ExtResource("4_ft1e5")]
+stream = ExtResource("6_2pxh8")
+bus = &"SFX"
 
 [node name="Collecting_Area" type="Area3D" parent="."]
 collision_layer = 244

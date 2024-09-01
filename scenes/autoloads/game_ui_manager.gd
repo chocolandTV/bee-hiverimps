@@ -14,16 +14,25 @@ enum GAME_STATE {
 }
 var current_state : GAME_STATE = GAME_STATE.MENU
 signal button_shooted()
-#signal game_started()
+signal game_started()
 signal game_paused()
 signal game_resume()
 
 func _ready():
+	get_tree().paused = true
 	UI = get_child(0)
 	MENU = get_child(1)
 
 	ResourceLoader.load_threaded_request(game_scene)
 	spawn_game_scene = ResourceLoader.load_threaded_get(game_scene)
+func _input(event):
+	if event.is_action_pressed("menu"):
+		if current_state == GAME_STATE.RUNNING:
+			on_game_paused()
+		elif current_state == GAME_STATE.PAUSED:
+			on_game_resumed()
+		else:
+			print("INPUT_EVENT: MENU ERROR current state %s" % current_state)
 
 func change_game_state(value : GAME_STATE):
 	match value:
@@ -36,11 +45,13 @@ func change_game_state(value : GAME_STATE):
 			get_tree().paused = true
 			MENU.visible =true
 			UI.visible = false
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		GAME_STATE.RUNNING:
 			current_state = GAME_STATE.RUNNING
 			get_tree().paused = false
 			MENU.visible =false
 			UI.visible = true
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		_:
 			print("errror Gamestate")
 
@@ -50,9 +61,9 @@ func on_button_shooted():
 
 func on_game_started():
 	print("GAME_UI_MANAGER: GAME STARTED")
-	# game_started.emit()
-	# change_game_state(GAME_STATE.RUNNING)
-	# get_tree().change_scene_to_packed.call_deferred(spawn_game_scene)
+	game_started.emit()
+	change_game_state(GAME_STATE.RUNNING)
+	get_tree().change_scene_to_packed.call_deferred(spawn_game_scene)
 
 func on_game_paused():
 	game_paused.emit()

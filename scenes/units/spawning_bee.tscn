@@ -1,10 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://bdkvlb4x5o5i6"]
+[gd_scene load_steps=15 format=3 uid="uid://bdkvlb4x5o5i6"]
 
 [ext_resource type="PackedScene" uid="uid://blryktpc55md8" path="res://assets/models/mainBee.glb" id="1_qjt5v"]
 [ext_resource type="Texture2D" uid="uid://b7denawa16kdv" path="res://assets/models/mainBee_Bee_material.png" id="2_qx53l"]
 [ext_resource type="Script" path="res://scenes/units/bee_behaviour.gd" id="2_srrj5"]
 [ext_resource type="PackedScene" uid="uid://ch8tuj4883sgv" path="res://components/job_resources/collecting_area.tscn" id="4_216ih"]
 [ext_resource type="PackedScene" uid="uid://d2ii75h2ylpqf" path="res://scenes/particles/tears_full_cargo_particle.tscn" id="4_iyxra"]
+[ext_resource type="PackedScene" uid="uid://duoxd41oyl7j3" path="res://components/sound/audio_3d_component.tscn" id="6_hkenn"]
+[ext_resource type="AudioStream" uid="uid://c5rw1oqov8h1s" path="res://assets/sounds/bee_buzzing_01.mp3" id="7_54kt4"]
+[ext_resource type="AudioStream" uid="uid://4hn4ovixk1ul" path="res://assets/sounds/collect_sound_01.mp3" id="8_a7hsp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uh0dr"]
 albedo_texture = ExtResource("2_qx53l")
@@ -247,3 +250,14 @@ autoplay = "flying"
 
 [node name="Collecting_Area" parent="." index="2" instance=ExtResource("4_216ih")]
 collision_layer = 180
+
+[node name="Buzzing" parent="." index="3" instance=ExtResource("6_hkenn")]
+stream = ExtResource("7_54kt4")
+pitch_scale = 1.58
+bus = &"SFX"
+
+[node name="Collecting" parent="." index="4" instance=ExtResource("6_hkenn")]
+stream = ExtResource("8_a7hsp")
+volume_db = 9.697
+pitch_scale = 1.27
+bus = &"SFX"

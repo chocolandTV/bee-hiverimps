@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://djdnup6u2od52" path="res://scenes/objects/sunf_lower.tscn" id="1_08la1"]
 [ext_resource type="PackedScene" uid="uid://b3ksoestnon2y" path="res://scenes/objects/grass_02_bulk.tscn" id="1_8xcln"]
 [ext_resource type="Script" path="res://scenes/_game/game.gd" id="1_cuhse"]
-[ext_resource type="Script" path="res://components/jobs/sub_global_handler/hive_manager.gd" id="1_js5e2"]
 [ext_resource type="PackedScene" uid="uid://gaj7ce8ijy8d" path="res://scenes/characters/Instance_Characters/base_wasp.tscn" id="2_02epc"]
 [ext_resource type="PackedScene" uid="uid://0cygv7nn5a46" path="res://scenes/World/world_02.tscn" id="2_5a1db"]
 [ext_resource type="PackedScene" uid="uid://bakjg7lmdboxx" path="res://scenes/characters/Bee_player.tscn" id="2_5dbd4"]
@@ -22,6 +21,178 @@
 [ext_resource type="PackedScene" uid="uid://cd1jkoke3xldi" path="res://scenes/objects/erdtree.tscn" id="15_fkxq2"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_bp3jq"]
+
+[sub_resource type="GDScript" id="GDScript_sjs0d"]
+script/source = "extends Node3D
+class_name HiveManager
+
+enum DIFFICULT{
+	EASY =0,
+	NORMAL = 1,
+	HARD = 2,
+	INSANE= 5
+}
+##### DEFINE FACTION START SETTINGS AND DEFINES
+
+@export_category(\"Faction Defines\")
+@export var current_faction : Globals.CLASS
+@export var faction_difficult : DIFFICULT
+@export var faction_isPlayer : bool
+@export var unit_limit : int
+@export var faction_sector_object : MeshInstance3D
+@export var facton_sector_objects_size: float
+@export var faction_hive : Node3D
+####### UNIT SETUP
+
+@export_category(\"Unit Settings\")
+@export var unit_main_prefab : PackedScene
+@export var unit_cost : int = 1
+@export var unit_speed : float = 35
+@export var unit_base_wingpower :float = 1
+@export var unit_base_power_value : int = 1
+#### INGAME VARIABLES - CURRENT GAMES
+
+var current_water : float = 0
+@export  var current_nectar : float  = 0
+var current_organic : float = 0
+var current_honey : float  = 0
+var current_factionpower : int = 0
+########  current unit count
+var current_unit_count : int = 0
+var current_unit_max_capacity : int = 5
+var upgrade_steps : int = 10
+var is_buyable :bool = false
+func _ready():
+	JobGlobalManager.set_faction_manager(current_faction, self)
+func _process(_delta):
+	is_buyable = check_resource()
+	if is_buyable:
+		buy_unit()
+		is_buyable = false
+
+func check_resource() -> bool:
+	if current_water > (unit_cost + current_unit_count):
+		print(\"New_Unit:  cost: %s Faction %s : unitcount: %s\" %[ \"Water\", current_faction, current_unit_count])
+		return true
+	if current_nectar > (unit_cost + current_unit_count) :
+		print(\"New_Unit:  %s Faction %s : unitcount: %s\" %[ \"Nectar\", current_faction, current_unit_count])
+		return true
+	if current_organic > (unit_cost + current_unit_count) :
+		print(\"New_Unit:  %s Faction %s : unitcount: %s\" %[ \"Organic\", current_faction, current_unit_count])
+		return true
+	if current_honey > (unit_cost + current_unit_count):
+		print(\"New_Unit:  %s Faction %s : unitcount: %s\" %[ \"Honey\", current_faction, current_unit_count])
+		return true
+	return false
+
+func buy_unit():
+	if current_water > (unit_cost + current_unit_count):
+		current_water -= (unit_cost + current_unit_count)
+		if faction_isPlayer:
+			GameUiManager.UI.update_resource_values(Globals.RESOURCES.WATER, current_water)
+
+	if current_nectar > (unit_cost + current_unit_count):
+		current_nectar -= (unit_cost + current_unit_count)
+		if faction_isPlayer:
+			GameUiManager.UI.update_resource_values(Globals.RESOURCES.NECTAR, current_nectar)
+
+	if current_organic > (unit_cost + current_unit_count):
+		current_organic -= (unit_cost + current_unit_count)
+		if faction_isPlayer:
+			GameUiManager.UI.update_resource_values(Globals.RESOURCES.ORGANIC, current_organic)
+
+	if current_honey > (unit_cost + current_unit_count) :
+		current_honey -= (unit_cost + current_unit_count)
+		if faction_isPlayer:
+			GameUiManager.UI.update_resource_values(Globals.RESOURCES.HONEY, current_honey)
+	spawn_unit()
+
+	current_factionpower += unit_base_power_value
+	faction_sector_object.scale += Vector3(unit_base_power_value,unit_base_power_value,unit_base_power_value) *facton_sector_objects_size
+	##### UPGRADE CAPACITY
+	current_unit_count += 1
+
+	if faction_isPlayer:
+		GameUiManager.UI.update_quest(current_unit_count)
+		if current_unit_count >= 100:
+			GameUiManager.UI.set_win_panel(true)
+
+	if current_unit_count >= upgrade_steps:
+		upgrade_steps += 10
+		current_unit_max_capacity += 2
+		### filter faction
+		if current_faction == Globals.CLASS.BEE:
+			GameUiManager.UI.set_player_info_box(\"Bees upgraded,Speed:%d,Capacity:%d\" % [unit_speed + current_unit_max_capacity, current_unit_max_capacity])
+		if current_faction == Globals.CLASS.WASP:
+			GameUiManager.UI.set_player_info_box(\"Wasps upgraded,Speed:%d,Capacity:%d\" % [unit_speed + current_unit_max_capacity, current_unit_max_capacity])
+		if current_faction == Globals.CLASS.HORNET:
+			GameUiManager.UI.set_player_info_box(\"Hornets upgraded,Speed:%d,Capacity:%d\" % [unit_speed + current_unit_max_capacity, current_unit_max_capacity])
+		print(\"FACTION UPGRADE %d : LEVEL %d\" % [float(upgrade_steps)/10, current_unit_max_capacity])
+		JobGlobalManager.global_increase_unit_upgrade(current_faction, current_unit_max_capacity)
+
+	GameUiManager.UI.update_faction_power(current_faction,current_factionpower)
+	GameUiManager.UI.update_progressbar_factionpower(current_faction, current_factionpower)
+	
+func add_resource(_resource : Globals.RESOURCES, _amount :int):
+	match _resource:
+		Globals.RESOURCES.WATER:
+			current_water += _amount
+			if faction_isPlayer:
+				GameUiManager.UI.update_resource_values(_resource, current_water)
+				GameUiManager.UI.update_progressbar_resource(_resource, current_water)
+		Globals.RESOURCES.NECTAR:
+			current_nectar += _amount
+			if faction_isPlayer:
+				GameUiManager.UI.update_resource_values(_resource, current_nectar)
+				GameUiManager.UI.update_progressbar_resource(_resource, current_nectar)
+		Globals.RESOURCES.HONEY:
+			current_honey += _amount
+			if faction_isPlayer:
+				GameUiManager.UI.update_resource_values(_resource, current_honey)
+				GameUiManager.UI.update_progressbar_resource(_resource, current_honey)
+		Globals.RESOURCES.ORGANIC:
+			current_organic += _amount
+			if faction_isPlayer:
+				GameUiManager.UI.update_resource_values(_resource, current_organic)
+				GameUiManager.UI.update_progressbar_resource(_resource, current_organic)
+		_:
+			print(\"FACTION_RESOURCE ERROR: cant add new resource, invalid resource type.\")
+
+func remove_resource(_resource : Globals.RESOURCES, value : float):
+	match _resource:
+		Globals.RESOURCES.WATER:
+			current_water -= value
+			if faction_isPlayer:
+				GameUiManager.update_resource_values(_resource, current_water)
+		Globals.RESOURCES.NECTAR:
+			current_nectar -= value
+			if faction_isPlayer:
+				GameUiManager.UI.update_resource_values(_resource, current_nectar)
+		Globals.RESOURCES.HONEY:
+			current_honey -= value
+			if faction_isPlayer:
+				GameUiManager.UI.update_resource_values(_resource, current_honey)
+		Globals.RESOURCES.ORGANIC:
+			current_organic -= value
+			if faction_isPlayer:
+				GameUiManager.UI.update_resource_values(_resource, current_organic)
+		_:
+			print(\"FACTION_RESOURCE ERROR: cant remove resource, invalid resource type.\")
+
+func start_planets(_instance : PackedScene):
+	var instance = _instance.instantiate()
+	get_child(0).add_child(instance)
+	instance.global_position = get_child(0).global_position
+	get_child(0).get_child(0).visible = false
+func spawn_unit():
+	#### prefab
+	var instance = unit_main_prefab.instantiate()
+	add_child(instance)
+	instance.global_position = global_position
+	###give stats
+	instance.set_stats(current_faction, faction_hive, unit_speed + current_unit_max_capacity, unit_base_wingpower + current_unit_max_capacity, current_unit_max_capacity)
+
+"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2gvh5"]
 albedo_color = Color(1, 0.611765, 0, 1)
@@ -253,7 +424,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -123.5, 0, 352.842)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88.2067, 0, 392.183)
 
 [node name="grass_25" parent="World_01/Enviroment" instance=ExtResource("1_8xcln")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -123.5, 0, -1738.3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -123.5, 0, -1214.62)
 
 [node name="Grass25" parent="World_01/Enviroment" instance=ExtResource("2_rmus4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.3282, 0, 449.096)
@@ -285,7 +456,6 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 193.47
 
 [node name="sunfLower8" parent="World_01/Flowers" instance=ExtResource("1_08la1")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 187.49)
-visible = false
 
 [node name="sunfLower9" parent="World_01/Flowers" instance=ExtResource("1_08la1")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -427, 0, 211)
@@ -314,6 +484,24 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 561.14
 [node name="sunfLower_Object7" parent="World_01/Flowers" instance=ExtResource("1_08la1")]
 transform = Transform3D(0.0871558, 0, 0.996195, 0, 1, 0, -0.996195, 0, 0.0871558, 0, 0, 656.868)
 
+[node name="sunfLower_Object8" parent="World_01/Flowers" instance=ExtResource("1_08la1")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 344.141, 0, -920.507)
+
+[node name="sunfLower_Object9" parent="World_01/Flowers" instance=ExtResource("1_08la1")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -526.272, 0, -765.071)
+
+[node name="sunfLower_Object10" parent="World_01/Flowers" instance=ExtResource("1_08la1")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1038.52, 0, -945.938)
+
+[node name="sunfLower_Object11" parent="World_01/Flowers" instance=ExtResource("1_08la1")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 718, 0, 1329.72)
+
+[node name="sunfLower_Object12" parent="World_01/Flowers" instance=ExtResource("1_08la1")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 302.974, 0, 845.835)
+
+[node name="sunfLower_Object13" parent="World_01/Flowers" instance=ExtResource("1_08la1")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1251.61, 0, -692.44)
+
 [node name="Objects" type="Node3D" parent="World_01"]
 
 [node name="bee_Comb_collectable" parent="World_01/Objects" instance=ExtResource("9_85m5b")]
@@ -323,16 +511,16 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 259
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -14.3128, 8.24979, 42.579)
 
 [node name="erdtree_BEE" parent="World_01" instance=ExtResource("14_8mvfi")]
-transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, -54.8746, 0, -1901.2)
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, -54.8746, 0, -1377.52)
 
 [node name="erdtree_HORNET" parent="World_01" instance=ExtResource("15_fkxq2")]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -1580.69, 0, 0)
 
 [node name="erdtree_WASP" parent="World_01" instance=ExtResource("5_jibn8")]
-transform = Transform3D(72.345, 0, 0, 0, 72.345, 0, 0, 0, 72.345, 1537, 0, 1534.61)
+transform = Transform3D(72.345, 0, 0, 0, 72.345, 0, 0, 0, 72.345, 1197.55, 0, 729.951)
 
 [node name="Player" parent="." groups=["units"] instance=ExtResource("2_5dbd4")]
-transform = Transform3D(1, 0, 0, -3.55271e-15, 1, 0, 7.10543e-15, 0, 1, -33.5967, 203.845, -1908.45)
+transform = Transform3D(1, 0, 0, -3.55271e-15, 1, 0, 7.10543e-15, 0, 1, -33.5967, 203.845, -1384.77)
 fly_speed = 100.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -350,7 +538,7 @@ shape = SubResource("WorldBoundaryShape3D_bp3jq")
 
 [node name="Wasp_Hive" type="Node3D" parent="Hives" node_paths=PackedStringArray("faction_sector_object", "faction_hive")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1541.21, 233.974, 1532.28)
-script = ExtResource("1_js5e2")
+script = SubResource("GDScript_sjs0d")
 current_faction = 1
 faction_difficult = 1
 unit_limit = 1000
@@ -365,16 +553,16 @@ unit_base_power_value = 5
 current_nectar = 100.0
 
 [node name="hive" parent="Hives/Wasp_Hive" instance=ExtResource("1_1exdv")]
-transform = Transform3D(56.075, 0, 0, 0, 56.075, 0, 0, 0, 56.075, 0, 0, 0)
+transform = Transform3D(56.075, 0, 0, 0, 56.075, 0, 0, 0, 56.075, -339.45, 0, -804.659)
 
 [node name="wasp_sector" type="MeshInstance3D" parent="Hives/Wasp_Hive"]
-transform = Transform3D(400, 0, 0, 0, 400, 0, 0, 0, 400, -28.1118, -305.601, -5.63306)
+transform = Transform3D(400, 0, 0, 0, 400, 0, 0, 0, 400, -367.562, -305.601, -810.292)
 mesh = ExtResource("4_j13bd")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_2gvh5")
 
 [node name="Hornet_Hive" type="Node3D" parent="Hives" node_paths=PackedStringArray("faction_sector_object", "faction_hive")]
-script = ExtResource("1_js5e2")
+script = SubResource("GDScript_sjs0d")
 current_faction = 2
 faction_difficult = 1
 unit_limit = 1000
@@ -398,7 +586,7 @@ surface_material_override/0 = ExtResource("5_mdvfb")
 
 [node name="Bee_Hive" type="Node3D" parent="Hives" node_paths=PackedStringArray("faction_sector_object", "faction_hive")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.3986, 81.7285, -1901.72)
-script = ExtResource("1_js5e2")
+script = SubResource("GDScript_sjs0d")
 faction_difficult = 1
 faction_isPlayer = true
 unit_limit = 10000
@@ -412,10 +600,10 @@ unit_base_power_value = 5
 current_nectar = 20.0
 
 [node name="hive" parent="Hives/Bee_Hive" instance=ExtResource("1_1exdv")]
-transform = Transform3D(33, 0, 0, 0, 33, 0, 0, 0, 33, 0, 0, 0)
+transform = Transform3D(33, 0, 0, 0, 33, 0, 0, 0, 33, 0, 0, 523.683)
 
 [node name="Bee_sector" type="MeshInstance3D" parent="Hives/Bee_Hive"]
-transform = Transform3D(60, 0, 0, 0, 60, 0, 0, 0, 60, 0, -107.731, 0)
+transform = Transform3D(60, 0, 0, 0, 60, 0, 0, 0, 60, 0, -107.731, 523.683)
 mesh = ExtResource("4_j13bd")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_420oc")

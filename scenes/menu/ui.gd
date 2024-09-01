@@ -40,6 +40,7 @@ var player_node : CharacterBody3D
 var window_size : Vector2  =Vector2 (1920,1080)
 var game_allready_won : bool =false
 var _lategame = false
+var is_game_running: bool = false
 var game_ui: game_ui_manager
 ###################### oldValues definded UI
 var old_vars : Array[int] = [0,0,0,0]
@@ -47,17 +48,20 @@ var old_height : float = 0
 func _ready():
 	window_size = get_viewport().get_window().size * 0.94
 	game_ui = get_parent()
-	# GameUiManager.on_game_started().connect(on_game_start)
+	
 
 func on_game_start():
+	print("Start UI ELEMENT")
+	
 	player_node = get_tree().get_nodes_in_group("Player")[0]
-	# DisplayServer.window_get_size()
-	# windows_size  =  get_viewport().get_visible_rect().size
-	# window_size = get_viewport().get_window().size * 0.94
-	# game_ui = get_parent()
+	is_game_running =true
+
 
 func update_player_node_speed_ui(value: CharacterBody3D):
+	print("Start UI ELEMENT")
+	player_node = value
 	play_vbox_container.set_player(value)
+	is_game_running =true
 
 func clear_player_backpack():
 	label_capacity_water.text = str(0)
@@ -72,6 +76,7 @@ func set_win_panel(_value : bool):
 	if _value and !game_allready_won:
 		game_allready_won = true
 		win_container.on_win_menu(_value)
+		AudioManager.Emit_Sound(AudioManager.SOUND_TYPE.s_ui_game_win)
 ############# IF BACKPACK IS FULL
 func set_player_backpack_full(_value : bool):
 	if _value:
@@ -132,7 +137,6 @@ func update_faction_power(_faction : Globals.CLASS, _value : int):
 			print("Error update FactionPower _value, no matches on _Type were found : ", _faction)
 ################################################################################################################
 
-
 #######  PROGRESS BAR UPDATER
 
 ################################################################################################################
@@ -182,21 +186,19 @@ func update_progressbar_factionpower(_faction : Globals.CLASS, _value : int):
 			print("Error update progress FactionPower, no matches on _Type were found : ", _faction)
 
 func _process(_delta):
-	if game_ui.current_state == game_ui.GAME_STATE.RUNNING:
+	if is_game_running:
 		update_altitude()
 
 func update_altitude():
-	if altitude_meter.position.y != old_height:
-		#set position  if min 0 and max 100km and if < 1 km show in meters
-		old_height = window_size.y - (player_node.global_position.y / 10000 *window_size.y) + (window_size.y * 0.03)
-		altitude_meter.position.y= old_height
-		altitude_label.text = "%6.3f m" % (player_node.global_position.y / 500)
-		if (player_node.global_position.y ) > 1750:
-			altitude_label.text = "%4.0f m" % (player_node.global_position.y *10)
-			if (player_node.global_position.y) > 5000:
-				altitude_label.text = "%3.2f km" % (player_node.global_position.y /100)
-				if (player_node.global_position.y) > 10000:
-					altitude_label.text = "%3.2f AU" % (player_node.global_position.y)
-					if !_lategame:
-						_lategame = true
-						JobGlobalManager.switch_game_to_late()
+	old_height = window_size.y - (player_node.global_position.y / 10000 *window_size.y) + (window_size.y * 0.03)
+	altitude_meter.position.y= old_height
+	altitude_label.text = "%6.3f m" % (player_node.global_position.y / 500)
+	if (player_node.global_position.y ) > 1750:
+		altitude_label.text = "%4.0f m" % (player_node.global_position.y *10)
+		if (player_node.global_position.y) > 5000:
+			altitude_label.text = "%3.2f km" % (player_node.global_position.y /100)
+			if (player_node.global_position.y) > 10000:
+				altitude_label.text = "%3.2f AU" % (player_node.global_position.y)
+				if !_lategame:
+					_lategame = true
+					JobGlobalManager.switch_game_to_late()

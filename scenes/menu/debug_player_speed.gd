@@ -1,12 +1,9 @@
 extends VBoxContainer
 
 @onready var label_x : Label = $Label_x
-
 var player_node : CharacterBody3D = null
-func _ready():
-	pass
-func set_player(value: CharacterBody3D):
 
+func set_player(value: CharacterBody3D):
 	player_node = value
 
 func _process(_delta):

@@ -2,6 +2,9 @@ extends Node3D
 ######### get from Mother
 
 @onready var visuals_object : Node3D =$Armature
+@onready var sound_buzzing : AudioStreamPlayer3D = $Buzzing
+@onready var sound_collecting : AudioStreamPlayer3D =$Collecting
+
 @export var particle : CPUParticles3D
 var faction : Globals.CLASS
 var hive : Node3D
@@ -77,6 +80,8 @@ func handle_state():
 			elif current_target.get_parent().health_component.current_resource <= 0:
 				current_state = UNIT_STATE.IDLE
 		UNIT_STATE.RETURNING:
+			if !sound_buzzing.playing:
+				sound_buzzing.play()
 			if items.size() <= 0:
 				particle.emitting = false
 				current_state = UNIT_STATE.IDLE
@@ -86,8 +91,9 @@ func move(_delta):
 
 func get_resource(_resource : Globals.RESOURCES):
 	if items.size() >= (max_items):
-		return #### later drop nectar
+		return #### if item drop sometime
 	items.append(_resource)
+	sound_collecting.play()
 	
 
 func send_resource():

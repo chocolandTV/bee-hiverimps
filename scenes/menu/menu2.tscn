@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cu5u0ycvloabp"]
+[gd_scene load_steps=14 format=3 uid="uid://cu5u0ycvloabp"]
 
 [ext_resource type="Script" path="res://scenes/game_ui/menu.gd" id="1_edmjk"]
 [ext_resource type="Texture2D" uid="uid://dkn70353l3nyb" path="res://assets/images/comb_background.png" id="2_rhsuf"]
@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://r0spclmf6nj8" path="res://assets/images/LOGO.png" id="4_6kxea"]
 [ext_resource type="Texture2D" uid="uid://8x43jph1unf5" path="res://assets/images/UI/nectar_icon.png" id="6_j6tdo"]
 [ext_resource type="Script" path="res://scenes/menu/Button_texture.gd" id="6_nq1cr"]
-[ext_resource type="Script" path="res://scenes/menu/sun_flower_area.gd" id="7_5em1h"]
+[ext_resource type="Script" path="res://scenes/menu/unit_container.gd" id="7_ewrci"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cofwm"]
 
@@ -19,16 +19,9 @@
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.598662, 0.991252), 0.0, 0.0, 0, 0, Vector2(0.983278, 0.0114402), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_cxfae"]
-radius = 368.91
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_ofg4q"]
-radius = 98.8
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2ldsw"]
 
 [node name="Menu" type="Control"]
-process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,6 +31,7 @@ grow_vertical = 2
 script = ExtResource("1_edmjk")
 
 [node name="Background_Panel" type="Panel" parent="."]
+process_mode = 2
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,6 +40,15 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_cofwm")
 metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="Background_Panel"]
+modulate = Color(1, 1, 1, 0.156863)
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_rhsuf")
+expand_mode = 1
+stretch_mode = 1
 
 [node name="Logo" type="TextureRect" parent="Background_Panel"]
 custom_minimum_size = Vector2(128, 128)
@@ -58,17 +61,9 @@ offset_top = 8.0
 offset_right = -364.0
 offset_bottom = 136.0
 grow_horizontal = 2
+pivot_offset = Vector2(64, 64)
 texture = ExtResource("4_6kxea")
 expand_mode = 1
-
-[node name="TextureRect" type="TextureRect" parent="Background_Panel"]
-modulate = Color(1, 1, 1, 0.156863)
-layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-texture = ExtResource("2_rhsuf")
-expand_mode = 1
-stretch_mode = 1
 
 [node name="Label" type="Label" parent="Background_Panel"]
 layout_mode = 1
@@ -89,6 +84,7 @@ horizontal_alignment = 1
 vertical_alignment = 2
 
 [node name="Button_PanelContainer" type="PanelContainer" parent="."]
+process_mode = 2
 custom_minimum_size = Vector2(450, 1080)
 layout_mode = 1
 anchors_preset = 9
@@ -98,20 +94,24 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_cd1jn")
 
 [node name="MarginContainer" type="MarginContainer" parent="Button_PanelContainer"]
+process_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/margin_left = 100
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Button_PanelContainer/MarginContainer"]
+process_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
 
 [node name="Start_Panel" type="Panel" parent="Button_PanelContainer/MarginContainer/VBoxContainer"]
+process_mode = 2
 custom_minimum_size = Vector2(256, 256)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3egl7")
 
-[node name="Start_Texture" type="TextureRect" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Start_Panel" node_paths=PackedStringArray("timer", "particle", "area", "menu_ui")]
+[node name="Start_Texture" type="TextureRect" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Start_Panel" node_paths=PackedStringArray("timer", "particle", "unit_panel", "menu_ui")]
+process_mode = 2
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 offset_right = 256.0
@@ -121,10 +121,11 @@ texture = ExtResource("4_1yb6t")
 script = ExtResource("6_nq1cr")
 timer = NodePath("Button_Start_Timer")
 particle = NodePath("Button__Start_Particles")
-area = NodePath("../../../../../Area_Container/Area2D_Start")
+unit_panel = NodePath("../../../../../Unit_Container")
 menu_ui = NodePath("../../../../..")
 
-[node name="Label-start" type="Label" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Start_Panel/Start_Texture"]
+[node name="Label_start" type="Label" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Start_Panel/Start_Texture"]
+process_mode = 2
 layout_mode = 1
 offset_left = 22.0
 offset_top = 27.0
@@ -140,9 +141,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Button_Start_Timer" type="Timer" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Start_Panel/Start_Texture"]
+process_mode = 2
 wait_time = 0.4
 
 [node name="Button__Start_Particles" type="CPUParticles2D" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Start_Panel/Start_Texture"]
+process_mode = 2
 position = Vector2(130, 128)
 emitting = false
 explosiveness = 1.0
@@ -161,11 +164,13 @@ scale_amount_max = 0.5
 scale_amount_curve = SubResource("Curve_nwrhn")
 
 [node name="Settings_Panel" type="Panel" parent="Button_PanelContainer/MarginContainer/VBoxContainer"]
+process_mode = 2
 custom_minimum_size = Vector2(256, 256)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3egl7")
 
-[node name="Setting_Texture" type="TextureRect" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Settings_Panel" node_paths=PackedStringArray("timer", "particle", "area", "menu_ui")]
+[node name="Setting_Texture" type="TextureRect" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Settings_Panel" node_paths=PackedStringArray("timer", "particle", "unit_panel", "menu_ui")]
+process_mode = 2
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 offset_right = 256.0
@@ -176,10 +181,11 @@ script = ExtResource("6_nq1cr")
 timer = NodePath("Button_Setting_Timer")
 particle = NodePath("Button__Setting_Particles")
 next_state = 3
-area = NodePath("../../../../../Area_Container/Area2D_Settings")
+unit_panel = NodePath("../../../../../Unit_Container")
 menu_ui = NodePath("../../../../..")
 
 [node name="Label-settings" type="Label" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Settings_Panel/Setting_Texture"]
+process_mode = 2
 layout_mode = 1
 offset_left = 22.0
 offset_top = 27.0
@@ -195,9 +201,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Button_Setting_Timer" type="Timer" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Settings_Panel/Setting_Texture"]
+process_mode = 2
 wait_time = 0.4
 
 [node name="Button__Setting_Particles" type="CPUParticles2D" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Settings_Panel/Setting_Texture"]
+process_mode = 2
 position = Vector2(130, 128)
 emitting = false
 explosiveness = 1.0
@@ -216,11 +224,13 @@ scale_amount_max = 0.5
 scale_amount_curve = SubResource("Curve_nwrhn")
 
 [node name="Credits_Panel" type="Panel" parent="Button_PanelContainer/MarginContainer/VBoxContainer"]
+process_mode = 2
 custom_minimum_size = Vector2(256, 256)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3egl7")
 
-[node name="Credit_Texture" type="TextureRect" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Credits_Panel" node_paths=PackedStringArray("timer", "particle", "area", "menu_ui")]
+[node name="Credit_Texture" type="TextureRect" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Credits_Panel" node_paths=PackedStringArray("timer", "particle", "unit_panel", "menu_ui")]
+process_mode = 2
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 offset_right = 256.0
@@ -231,10 +241,11 @@ script = ExtResource("6_nq1cr")
 timer = NodePath("Button_Credits_Timer")
 particle = NodePath("Button__Credits_Particles")
 next_state = 4
-area = NodePath("../../../../../Area_Container/Area2D_Credits")
+unit_panel = NodePath("../../../../../Unit_Container")
 menu_ui = NodePath("../../../../..")
 
 [node name="Label-Credits" type="Label" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Credits_Panel/Credit_Texture"]
+process_mode = 2
 layout_mode = 1
 offset_left = 22.0
 offset_top = 27.0
@@ -250,9 +261,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Button_Credits_Timer" type="Timer" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Credits_Panel/Credit_Texture"]
+process_mode = 2
 wait_time = 0.4
 
 [node name="Button__Credits_Particles" type="CPUParticles2D" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Credits_Panel/Credit_Texture"]
+process_mode = 2
 position = Vector2(130, 128)
 emitting = false
 explosiveness = 1.0
@@ -271,11 +284,13 @@ scale_amount_max = 0.5
 scale_amount_curve = SubResource("Curve_nwrhn")
 
 [node name="Exit_Panel" type="Panel" parent="Button_PanelContainer/MarginContainer/VBoxContainer"]
+process_mode = 2
 custom_minimum_size = Vector2(256, 256)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3egl7")
 
-[node name="Exit_Texture" type="TextureRect" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Exit_Panel" node_paths=PackedStringArray("timer", "particle", "area", "menu_ui")]
+[node name="Exit_Texture" type="TextureRect" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Exit_Panel" node_paths=PackedStringArray("timer", "particle", "unit_panel", "menu_ui")]
+process_mode = 2
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 offset_right = 256.0
@@ -286,10 +301,11 @@ script = ExtResource("6_nq1cr")
 timer = NodePath("Button_Quit_Timer")
 particle = NodePath("Button_Quit_Particles")
 next_state = 5
-area = NodePath("../../../../../Area_Container/Area2D_Quit")
+unit_panel = NodePath("../../../../../Unit_Container")
 menu_ui = NodePath("../../../../..")
 
 [node name="Label-Credits2" type="Label" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Exit_Panel/Exit_Texture"]
+process_mode = 2
 layout_mode = 1
 offset_left = 31.0
 offset_top = 27.0
@@ -305,9 +321,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Button_Quit_Timer" type="Timer" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Exit_Panel/Exit_Texture"]
+process_mode = 2
 wait_time = 0.4
 
 [node name="Button_Quit_Particles" type="CPUParticles2D" parent="Button_PanelContainer/MarginContainer/VBoxContainer/Exit_Panel/Exit_Texture"]
+process_mode = 2
 position = Vector2(130, 128)
 emitting = false
 explosiveness = 1.0
@@ -325,73 +343,8 @@ scale_amount_min = 0.3
 scale_amount_max = 0.5
 scale_amount_curve = SubResource("Curve_nwrhn")
 
-[node name="Area_Container" type="Node2D" parent="."]
-
-[node name="SunFlower_Area" type="Area2D" parent="Area_Container"]
-position = Vector2(1376, 499)
-collision_layer = 0
-collision_mask = 2
-script = ExtResource("7_5em1h")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area_Container/SunFlower_Area"]
-shape = SubResource("CircleShape2D_cxfae")
-debug_color = Color(1, 0.6, 0, 0.419608)
-
-[node name="sunflower_Particles" type="CPUParticles2D" parent="Area_Container/SunFlower_Area"]
-emitting = false
-amount = 25
-explosiveness = 1.0
-randomness = 1.0
-texture = ExtResource("6_j6tdo")
-direction = Vector2(5, 5)
-spread = 180.0
-gravity = Vector2(0, 0)
-initial_velocity_min = 55.0
-initial_velocity_max = 222.0
-angular_velocity_max = 55.0
-linear_accel_max = 7.0
-radial_accel_max = 3.0
-angle_max = 720.0
-scale_amount_max = 2.0
-scale_amount_curve = SubResource("Curve_nwrhn")
-
-[node name="Area2D_Start" type="Area2D" parent="Area_Container"]
-position = Vector2(229, 127)
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area_Container/Area2D_Start"]
-shape = SubResource("CircleShape2D_ofg4q")
-debug_color = Color(1, 0.6, 0, 0.419608)
-
-[node name="Area2D_Settings" type="Area2D" parent="Area_Container"]
-position = Vector2(231, 390)
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area_Container/Area2D_Settings"]
-shape = SubResource("CircleShape2D_ofg4q")
-debug_color = Color(1, 0.6, 0, 0.419608)
-
-[node name="Area2D_Credits" type="Area2D" parent="Area_Container"]
-position = Vector2(229, 650)
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area_Container/Area2D_Credits"]
-shape = SubResource("CircleShape2D_ofg4q")
-debug_color = Color(1, 0.6, 0, 0.419608)
-
-[node name="Area2D_Quit" type="Area2D" parent="Area_Container"]
-position = Vector2(235, 906)
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area_Container/Area2D_Quit"]
-shape = SubResource("CircleShape2D_ofg4q")
-debug_color = Color(1, 0.6, 0, 0.419608)
-
 [node name="Unit_Container" type="Panel" parent="."]
+process_mode = 2
 z_index = 1
 custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 1
@@ -401,94 +354,114 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_2ldsw")
+script = ExtResource("7_ewrci")
 
 [node name="MenuBee_01" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(1239, 1182)
 
 [node name="MenuBee_02" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
-position = Vector2(958, 1143)
+position = Vector2(534, -102)
 
 [node name="MenuBee_03" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(1457, 1225)
 
 [node name="MenuBee_04" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(1995, 1107)
 
 [node name="MenuBee_05" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(2045, 975)
 
 [node name="MenuBee_06" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(2066, 736)
 
 [node name="MenuBee_07" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(1667, 1171)
 
 [node name="MenuBee_08" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(2037, 441)
 
 [node name="MenuBee_09" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(2141, 294)
 
 [node name="MenuBee_10" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(769, 1174)
 
 [node name="MenuBee_11" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(1998, 34)
 
 [node name="MenuBee_12" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(766, 1304)
 
 [node name="MenuBee_13" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(1873, -89)
 
 [node name="MenuBee_14" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(1842, 1246)
 
 [node name="MenuBee_15" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(741, -96)
 
 [node name="MenuBee_16" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(1588, -90)
 
 [node name="MenuBee_17" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(1477, -79)
 
 [node name="MenuBee_18" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(1333, -56)
 
 [node name="MenuBee_19" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(1199, -49)
 
 [node name="MenuBee_20" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(1080, -58)
 
 [node name="MenuBee_21" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(959, -64)
 
 [node name="MenuBee_22" parent="Unit_Container" instance=ExtResource("3_j76qd")]
+process_mode = 2
 z_index = 1
 position = Vector2(833, -87)
-
-[connection signal="area_entered" from="Area_Container/SunFlower_Area" to="Area_Container/SunFlower_Area" method="_on_area_entered"]
-[connection signal="area_exited" from="Area_Container/SunFlower_Area" to="Area_Container/SunFlower_Area" method="_on_area_exited"]

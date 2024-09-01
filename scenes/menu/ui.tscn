@@ -10,8 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://8x43jph1unf5" path="res://assets/images/UI/nectar_icon.png" id="8_uty0f"]
 [ext_resource type="Script" path="res://scenes/menu/win_container.gd" id="9_pc234"]
 [ext_resource type="Texture2D" uid="uid://bfywbuaobuol6" path="res://assets/images/UI/organic_icon.png" id="9_r0uc4"]
-[ext_resource type="Texture2D" uid="uid://bkq51wk4kbcl2" path="res://assets/images/frame_01.png" id="10_amjny"]
 [ext_resource type="Texture2D" uid="uid://bo3v20q26rqbo" path="res://assets/images/UI/honey_icon.png" id="10_jsnur"]
+[ext_resource type="Texture2D" uid="uid://ba1nd5wktit8r" path="res://assets/images/frame_02.png" id="12_vigb8"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dr7lh"]
 
@@ -486,7 +486,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="Center_cursor"]
 layout_mode = 2
-texture = ExtResource("10_amjny")
+texture = ExtResource("12_vigb8")
 expand_mode = 2
 
 [connection signal="pressed" from="Win_Container/Panel/Button" to="Win_Container" method="on_win_menu" binds= [false]]

@@ -1,10 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://djdnup6u2od52"]
+[gd_scene load_steps=15 format=3 uid="uid://djdnup6u2od52"]
 
 [ext_resource type="PackedScene" uid="uid://dxx52n1q2yx82" path="res://assets/models/sunfLower.glb" id="1_dtwdj"]
 [ext_resource type="Script" path="res://scenes/objects/sunf_lower.gd" id="2_8etbr"]
 [ext_resource type="PackedScene" uid="uid://d37l1ft2xicf4" path="res://scenes/objects/bee_comb_collectable.tscn" id="3_4o65q"]
 [ext_resource type="Material" uid="uid://cs3ll1hdkv0kw" path="res://resources/materials/sunf_lower_Particlesystem.tres" id="3_qtf4r"]
 [ext_resource type="PackedScene" uid="uid://b1dsdo0y2qcjt" path="res://components/resource/resource_point.tscn" id="5_wkubj"]
+[ext_resource type="PackedScene" uid="uid://duoxd41oyl7j3" path="res://components/sound/audio_3d_component.tscn" id="6_oshj3"]
+[ext_resource type="AudioStream" uid="uid://cm6fbmrkoal6y" path="res://assets/sounds/sunflower_sound_on_collect.mp3" id="7_1i8x5"]
 [ext_resource type="PackedScene" uid="uid://itgxjcd0xb53" path="res://components/resource/resource_health_comp.tscn" id="7_qq7ek"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_osmr8"]
@@ -90,6 +92,10 @@ libraries = {
 autoplay = "sun_flower_dance"
 
 [node name="Resource_Point" parent="." index="4" instance=ExtResource("5_wkubj")]
+
+[node name="Audio_Sunflower" parent="Resource_Point" index="0" instance=ExtResource("6_oshj3")]
+stream = ExtResource("7_1i8x5")
+bus = &"SFX"
 
 [node name="Resource_Health_Comp" parent="." index="5" node_paths=PackedStringArray("resource_object") instance=ExtResource("7_qq7ek")]
 max_resource_range = Vector2i(1000, 5000)

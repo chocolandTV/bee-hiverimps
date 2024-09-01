@@ -10,7 +10,7 @@ extends CharacterBody3D
 
 @onready var bee_mesh : Node3D = $mainBee
 @onready var anim : AnimationPlayer = $mainBee/AnimationPlayer
-@export var particle : CPUParticles3D
+@onready var particle : CPUParticles3D =$mainBee/Armature/Full_Cargo_praticles
 #CONST
 const STRAFE_DAMPING : float = 0.75
 #move_towards
@@ -51,7 +51,7 @@ func _ready():
     JobGlobalManager.increase_unit_upgrade.connect(on_upgrade)
     JobGlobalManager.change_world.connect(on_world_change)
     ResourceListComponent.update_player_node(self)
-    ResourceListComponent.update_resource_list()
+    ResourceListComponent.reset_resource_list()
     GameUiManager.UI.update_player_node_speed_ui(self)
 func on_world_change():
     global_position = Vector3.ZERO

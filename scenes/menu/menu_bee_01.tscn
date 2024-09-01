@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://lk0eoji387th"]
+[gd_scene load_steps=9 format=3 uid="uid://lk0eoji387th"]
 
 [ext_resource type="Texture2D" uid="uid://cshb0ddjx3gb0" path="res://assets/images/bee_prototype.png" id="1_6kkpu"]
 [ext_resource type="Script" path="res://scenes/menu/menu_bee_01.gd" id="1_xv12g"]
-[ext_resource type="Texture2D" uid="uid://c0smc533805oj" path="res://assets/images/resource_nectar.png" id="2_7l8pk"]
 
 [sub_resource type="Animation" id="Animation_6arrt"]
 length = 0.001
@@ -25,18 +24,6 @@ tracks/1/path = NodePath("Bee_01:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Bee_01/TextureRect:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -70,18 +57,6 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, 1), Vector2(0, 0)]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Bee_01/TextureRect:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(0.945, 0.945), Vector2(1, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_nl8fw"]
 resource_name = "idle"
@@ -113,22 +88,15 @@ size = Vector2(13, 11)
 radius = 15.0333
 
 [node name="MenuBee_01" type="CharacterBody2D"]
+z_index = 5
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_xv12g")
 
 [node name="Bee_01" type="TextureRect" parent="."]
 offset_right = 32.0
 offset_bottom = 32.0
 texture = ExtResource("1_6kkpu")
-expand_mode = 1
-
-[node name="TextureRect" type="TextureRect" parent="Bee_01"]
-visible = false
-layout_mode = 0
-offset_left = 17.0
-offset_top = 23.0
-offset_right = 25.0
-offset_bottom = 31.0
-texture = ExtResource("2_7l8pk")
 expand_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

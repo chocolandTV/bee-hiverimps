@@ -1,25 +1,30 @@
 extends CharacterBody2D
 
 var speed : float = 50
-var lerp_speed: float = 10
-var is_holding_nectar : bool = true
 var is_right: bool = true
 
 ###########
 var mouse_position : Vector2 = Vector2.ZERO
 var current_acceleration: float = 0.0
 var acceleration : float = 10
-var acceleeration_damping : float = 0.9
+var acceleeration_damping : float = 0.4
 ################### SCALE VARS BEE DIRECTION
+var is_active :bool = true
 
-@onready var nectar_sprite : TextureRect =$Bee_01/TextureRect
 @onready var visuals : TextureRect =$Bee_01
+func _ready():
+	GameUiManager.game_started.connect(on_game_started)
+	GameUiManager.game_resume.connect(on_game_resumed)
+	GameUiManager.game_paused.connect(on_game_paused)
+
 func _input(event):
 	if event.is_action_pressed("left_click"):
-		mouse_position = get_global_mouse_position()
+		if is_active:
+			mouse_position = get_global_mouse_position()
 
 func _physics_process(_delta):
-	handle_movement(_delta)
+	if is_active:
+		handle_movement(_delta)
 
 func handle_movement(_delta : float):
 	if input_direction().length() !=0:
@@ -39,8 +44,19 @@ func handle_movement(_delta : float):
 		else:
 			velocity = Vector2.ZERO
 
-
-func on_nectar_set(_value : bool):
-	nectar_sprite.visible = _value
 func input_direction() ->Vector2:
 	return Vector2 (mouse_position - position)
+
+func go_sleeping():
+	is_active = false
+	mouse_position = Vector2.ZERO
+
+func go_active():
+	is_active =true
+
+func on_game_paused():
+	go_active()
+func on_game_started():
+	go_sleeping()
+func on_game_resumed():
+	go_sleeping()

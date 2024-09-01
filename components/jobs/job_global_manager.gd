@@ -46,5 +46,6 @@ func switch_game_to_late():
 	faction_bee.start_planets(bee_earth)
 	faction_wasp.start_planets(wasp_venus)
 	faction_hornet.start_planets(hornet_mars)
+	GameUiManager.UI.set_player_info_box("Evolved: you have ascended. Gratulations.")
 	#CREATE WORLD 2
 	change_world.emit()

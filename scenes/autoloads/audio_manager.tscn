@@ -1,0 +1,41 @@
+[gd_scene load_steps=9 format=3 uid="uid://1ut6bjv127ns"]
+
+[ext_resource type="Script" path="res://scenes/autoloads/audio_manager.gd" id="1_l27mq"]
+[ext_resource type="AudioStream" uid="uid://by44vlvbv36t" path="res://assets/sounds/click_sound_01.mp3" id="2_jp3jr"]
+[ext_resource type="AudioStream" uid="uid://dh3glqicxf8e6" path="res://assets/sounds/ui_game_over.mp3" id="3_4hgt1"]
+[ext_resource type="AudioStream" uid="uid://b0yama6abe870" path="res://assets/sounds/ui_game_win.mp3" id="4_g3c3s"]
+[ext_resource type="AudioStream" uid="uid://bl0ctv6dql4ms" path="res://assets/sounds/ambience_01.mp3" id="5_gp37t"]
+[ext_resource type="AudioStream" uid="uid://bn8o1h31ibv38" path="res://assets/sounds/ambience_02.mp3" id="6_bdy5m"]
+[ext_resource type="AudioStream" uid="uid://72errme8o8td" path="res://assets/sounds/ambience_03.mp3" id="7_0357l"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lj741"]
+playback_mode = 1
+streams_count = 3
+stream_0/stream = ExtResource("5_gp37t")
+stream_1/stream = ExtResource("6_bdy5m")
+stream_2/stream = ExtResource("7_0357l")
+
+[node name="Audio_Manager" type="Node"]
+script = ExtResource("1_l27mq")
+
+[node name="ui_click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_jp3jr")
+bus = &"SFX"
+
+[node name="ui_game_over" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_4hgt1")
+bus = &"SFX"
+
+[node name="ui_game_win" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_g3c3s")
+bus = &"SFX"
+
+[node name="game_ambience" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_lj741")
+bus = &"Ambience"
+
+[node name="game_music" type="AudioStreamPlayer" parent="."]
+bus = &"Music"
+
+[node name="game_menu" type="AudioStreamPlayer" parent="."]
+bus = &"Music"

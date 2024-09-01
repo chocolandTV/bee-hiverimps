@@ -1,9 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://gaj7ce8ijy8d"]
+[gd_scene load_steps=12 format=3 uid="uid://gaj7ce8ijy8d"]
 
 [ext_resource type="PackedScene" uid="uid://bfm3xf60csbsb" path="res://assets/models/mainwasp.glb" id="1_o4gqr"]
 [ext_resource type="Script" path="res://scenes/units/base_wasp_behaviour.gd" id="2_5iqqv"]
 [ext_resource type="PackedScene" uid="uid://ch8tuj4883sgv" path="res://components/job_resources/collecting_area.tscn" id="2_bm481"]
 [ext_resource type="PackedScene" uid="uid://d2ii75h2ylpqf" path="res://scenes/particles/tears_full_cargo_particle.tscn" id="3_vcnx0"]
+[ext_resource type="PackedScene" uid="uid://duoxd41oyl7j3" path="res://components/sound/audio_3d_component.tscn" id="5_gs47a"]
+[ext_resource type="AudioStream" uid="uid://4hn4ovixk1ul" path="res://assets/sounds/collect_sound_01.mp3" id="6_j7nr8"]
+[ext_resource type="AudioStream" uid="uid://c5rw1oqov8h1s" path="res://assets/sounds/bee_buzzing_01.mp3" id="7_81vx4"]
 
 [sub_resource type="Animation" id="Animation_fch4x"]
 length = 0.001
@@ -230,3 +233,14 @@ autoplay = "flying"
 
 [node name="Collecting_Area" parent="." index="2" instance=ExtResource("2_bm481")]
 collision_layer = 180
+
+[node name="Buzzing" parent="." index="3" instance=ExtResource("5_gs47a")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+stream = ExtResource("7_81vx4")
+pitch_scale = 0.81
+bus = &"SFX"
+
+[node name="Collecting" parent="." index="4" instance=ExtResource("5_gs47a")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+stream = ExtResource("6_j7nr8")
+bus = &"SFX"

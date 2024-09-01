@@ -10,17 +10,3 @@ script = ExtResource("1_cw868")
 bee_earth = ExtResource("2_a51du")
 wasp_venus = ExtResource("3_st365")
 hornet_mars = ExtResource("4_h0n3q")
-
-[node name="Timer_Water" type="Timer" parent="."]
-
-[node name="Timer_Nectar" type="Timer" parent="."]
-
-[node name="Timer_Organic" type="Timer" parent="."]
-
-[node name="Timer_Honey" type="Timer" parent="."]
-
-[node name="Timer_Bee_Power" type="Timer" parent="."]
-
-[node name="Timer_Wasp_Power" type="Timer" parent="."]
-
-[node name="Timer_Hornet_Power" type="Timer" parent="."]

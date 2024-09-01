@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cu5u0ycvloabp" path="res://scenes/menu/menu2.tscn" id="3_iqw1d"]
 
 [node name="Game_UI_Manager" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,8 +15,10 @@ grow_vertical = 2
 script = ExtResource("1_4wouy")
 
 [node name="UI" parent="." instance=ExtResource("2_m4mr4")]
+process_mode = 1
 visible = false
 layout_mode = 1
 
 [node name="Menu" parent="." instance=ExtResource("3_iqw1d")]
+process_mode = 2
 layout_mode = 1

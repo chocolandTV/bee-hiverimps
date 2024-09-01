@@ -1,6 +1,8 @@
 extends Node3D
 ######### get from Mother
 @onready var visuals_object : Node3D =$Armature
+@onready var sound_buzzing : AudioStreamPlayer3D = $Buzzing
+@onready var sound_collecting : AudioStreamPlayer3D =$Collecting
 @export var particle : CPUParticles3D
 ###### FOLLOW VARIABLES
 var max_player_distance : float = 2500
